@@ -1,3 +1,4 @@
+
 console.log("Initiallizing Firebase...");
 // Initialize Firebase
 var config = {
@@ -43,6 +44,7 @@ $('#loginbtn').click(function () {
 
     }
     else {
+        alert("Worng Username/ Password. Please Try again.");
         promise.catch(e => console.log(e.message));
     }
 
