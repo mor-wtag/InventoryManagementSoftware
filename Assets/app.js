@@ -8,10 +8,12 @@ var config = {
     storageBucket: "inventorymanagementsoftware-gp.appspot.com",
     messagingSenderId: "451262431109"
 };
+
 var initialize = firebase.initializeApp(config);
 if (initialize) {
     console.log("Firebase initialized");
 }
+
 // get all elements
 
 const txtemail = $('#UserName_ID');
