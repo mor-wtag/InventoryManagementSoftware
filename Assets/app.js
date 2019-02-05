@@ -8,7 +8,7 @@ $('.load-4').hide();
 var config = {
     apiKey: "AIzaSyAPITJ_b82lngDCMBkqOP4sf28fogy_QMc",
     authDomain: "inventorymanagementsoftware-gp.firebaseapp.com",
-    databaseURL: "https://inventorymanagementsoftware-gp.firebaseio.com",
+    databaseURL: "https://inventorymanagementsoftware-gp.firebaseio.com/",
     projectId: "inventorymanagementsoftware-gp",
     storageBucket: "inventorymanagementsoftware-gp.appspot.com",
     messagingSenderId: "451262431109"
@@ -19,14 +19,11 @@ if (initialize) {
     console.log("Firebase initialized");
 }
 
-
-
 // RealTime listener
 firebase.auth().onAuthStateChanged( firebaseUser => {
     if (firebaseUser){
         Current_UID = firebaseUser.uid;
         console.log("Already Signed in...");
-
     }
     else{
         console.log('Not logged in...');
@@ -99,9 +96,25 @@ $('#loginbtn').click(function () {
     //     }
     // else {
         
-    //     window.location.href = "User_page.html";
+    //     window.location.href = "User_page.html";  
+    });
+});
+
+//Working with Firebase database
+
+const preObject = $('#object');
     
-        
+    //Create database references
+
+    const dbRefObject = firebase.database().ref().child('object');
+
+    //Sync Object Changes
+
+    dbRefObject.on('value', snap => {
+        preObject.innerText = JSON.stringify(snap.val(), null, 3);
+        console.log(snap.val());
+
     });
 
-});
+
+
