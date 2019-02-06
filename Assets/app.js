@@ -103,10 +103,12 @@ $('#loginbtn').click(function () {
 //Working with Firebase database
 
 const preObject = $('#object');
+const ulList = $('#list')
     
     //Create database references
 
     const dbRefObject = firebase.database().ref().child('object');
+    
 
     //Sync Object Changes
 
@@ -115,6 +117,5 @@ const preObject = $('#object');
         console.log(snap.val());
 
     });
-
 
 
