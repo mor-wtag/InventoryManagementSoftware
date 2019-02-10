@@ -10,27 +10,42 @@
             html, body{
                 padding:0;
                 margin:0;
-                width:100vw;
-                height:100vh;
+                background: linear-gradient(45deg, #35394a 0%, #1f222e 100%);
+                /* width:98vw;
+                height:100vh; */
             }
 
             /* database table css */
             #databaseTable{
                 display: flex;
-                /* height: 300px; */
                 justify-content: center;
                 align-items: center;
                 text-align: center;
                 border-collapse: collapse;
                 width: 100%;
+                position:relative;
+                margin-top: 10%;
             }
             th, td {
                 text-align: left;
                 padding: 8px;
                 text-align: center;
+                border-top:1px solid black;
+            }
+            tr:nth-child(odd) {
+                background-color: #f2f2f2;
             }
             tr:nth-child(even) {
-                background-color: #f2f2f2;
+                background-color: white;
+            }
+            #databaseTableBody{
+                top:20%;
+                position:relative;
+                display: flex;
+                /* height: 300px; */
+                justify-content: center;
+                align-items: center;
+                text-align: center;s
             }
             
         </style>
@@ -41,25 +56,24 @@
         <ul id="list"></ul>
 
         <table id= 'databaseTable'>
-            <th>
-                <tr>
-                    <td>sl no.</td>
-                    <td>Item Description</td>
-                    <td>Unit of Measurement</td>
-                    <td>Quantity</td>
-                    <td>Unit Rate<br>(inclusive Tax only)</td>
-                    <td>VAT</td>
-                    <td>Unit Rate<br>(inclusive Tax & VAT)</td>
-                    <td>Total Amount<br>(inclusive Tax & VAT)</td>
-                    <td>Main Contract no.</td>
-                    <td>Vendor</td>
-                    <td>Novated contract No.</td>
-                    <td>Date <br>(of BOQ posted)</td>
-                    <td>Order no.</td>
-                    <td>PR no.</td>
-                    <td>Date<br> (of PR posted)</td>
-                </tr>
-            </th>
+            <tr>
+                    <th>sl no.</th>
+                    <th>Item Description</th>
+                    <th>Unit of Measurement</th>
+                    <th>Quantity</th>
+                    <th>Unit Rate<br>(inclusive Tax only)</th>
+                    <th>VAT</th>
+                    <th>Unit Rate<br>(inclusive Tax & VAT)</th>
+                    <th>Total Amount<br>(inclusive Tax & VAT)</th>
+                    <th>Main Contract no.</th>
+                    <th>Vendor</th>
+                    <th>Novated contract No.</th>
+                    <th>Date <br>(of BOQ posted)</th>
+                    <th>Order no.</th>
+                    <th>PR no.</th>
+                    <th>Date<br> (of PR posted)</th>
+            </tr>
+
             <tbody id="databaseTableBody">
 
             </tbody>

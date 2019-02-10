@@ -82,11 +82,13 @@ $('#loginbtn').click(function () {
     const promise = auth.signInWithEmailAndPassword(email, password).then(function(user){
         Current_UID = user.uid;
         console.log("Logged in successfully...");
+        alert('Logged in successfully');
     }, function(err) {
         console.log(err.code);
         $("#Login_After_Title").html('Authentication Failed');
         Error_String = err.code.substr(5);
         $("#Login_After_Para").html('Error ID: ' + Error_String) ;
+        alert('Incorrect Username/Password');
     });
 
     
@@ -145,7 +147,7 @@ const dbObject = $('#databaseTable');
 
         //appending elements into the databaseTable
 
-
+        $('#databaseTable').append("<tr><td>"+sl+"</td><td>"+itemDes+"</td><td>"+uom+"</td><td>"+qty+"</td><td>"+rate_incTax+"</td><td>"+vat+"</td><td>"+rate_incVatTax+"</td><td>"+totalAmount+"</td><td>"+contractNo_main+"</td><td>"+vendor_main+"</td><td>"+contractNo_novated+"</td><td>"+date_BOQ+"</td><td>"+orderNo+"</td><td>"+prNo+"</td><td>"+date_PR+"</td></tr>")
 
         
         console.log('itemDes: '+itemDes);
