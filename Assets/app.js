@@ -102,20 +102,62 @@ $('#loginbtn').click(function () {
 
 //Working with Firebase database
 
-const preObject = $('#object');
-const ulList = $('#list')
+// const preObject = $('#object');
+// const ulList = $('#list');
+const dbObject = $('#databaseTable');
     
     //Create database references
 
-    const dbRefObject = firebase.database().ref().child('object');
-    
+    const dbRefObject = firebase.database().ref().child('Database');
+    const dbRefElement = dbRefObject.child('sl');
+    // const dbRefElement2 = dbRefElement.child('01');
 
     //Sync Object Changes
 
-    dbRefObject.on('value', snap => {
-        preObject.innerText = JSON.stringify(snap.val(), null, 3);
+    dbRefElement.on('value', snap => {
+        dbObject.html(JSON.stringify(snap.val(), null, 3));
+        // console.log(snap.val());
+    });
+
+    //Snyc database changes
+
+    dbRefElement.on('child_added', snap => {
+
+        //referencing all the child elements
+
+        let sl = snap.child("sl").val();
+        let itemDes = snap.child("itemDes").val();
+        let uom = snap.child("uom").val();
+        let qty = snap.child("qty").val();
+        let rate_incTax = snap.child("rate_incTax").val();
+        let vat = snap.child("vat").val();
+        let rate_incVatTax = snap.child("rate_incVatTax").val();
+        let totalAmount = snap.child("totalAmount").val();
+        let orderNo = snap.child("orderNo").val();
+        let date_BOQ = snap.child("date_BOQ").val();
+        let contractNo_main = snap.child("contractNo_main").val();
+        let vendor_main = snap.child("vendor_main").val();
+        let contractNo_novated = snap.child("contractNo_novated").val();
+        let prNo = snap.child("prNo").val();
+        let date_PR = snap.child("date_PR").val();
+
+
+        
+        console.log('itemDes: '+itemDes);
+        console.log('orderNo: '+orderNo);
+        console.log('contractNo_novated: '+contractNo_novated);
+
+        dbObject.html(JSON.stringify(snap.val(), null, 3));
+
         console.log(snap.val());
 
+
+        // const li = $("html").add("li");
+        // li.html(snap.val());
+        // ulList.append(li);
+
+        // ulList.html(JSON.stringify(snap.val(), null, 3));
+        // console.log(snap.val());
     });
 
 
