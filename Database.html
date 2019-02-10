@@ -4,6 +4,36 @@
         <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
   <!-- <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-auth.js"></script> -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+        <style>
+
+            html, body{
+                padding:0;
+                margin:0;
+                width:100vw;
+                height:100vh;
+            }
+
+            /* database table css */
+            #databaseTable{
+                display: flex;
+                /* height: 300px; */
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                border-collapse: collapse;
+                width: 100%;
+            }
+            th, td {
+                text-align: left;
+                padding: 8px;
+                text-align: center;
+            }
+            tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+            
+        </style>
     </head>
     <body>
 
@@ -11,8 +41,28 @@
         <ul id="list"></ul>
 
         <table id= 'databaseTable'>
-            
+            <th>
+                <tr>
+                    <td>sl no.</td>
+                    <td>Item Description</td>
+                    <td>Unit of Measurement</td>
+                    <td>Quantity</td>
+                    <td>Unit Rate<br>(inclusive Tax only)</td>
+                    <td>VAT</td>
+                    <td>Unit Rate<br>(inclusive Tax & VAT)</td>
+                    <td>Total Amount<br>(inclusive Tax & VAT)</td>
+                    <td>Main Contract no.</td>
+                    <td>Vendor</td>
+                    <td>Novated contract No.</td>
+                    <td>Date <br>(of BOQ posted)</td>
+                    <td>Order no.</td>
+                    <td>PR no.</td>
+                    <td>Date<br> (of PR posted)</td>
+                </tr>
+            </th>
+            <tbody id="databaseTableBody">
 
+            </tbody>
         </table>
         <script src="Assets/app.js"></script>
     </body>

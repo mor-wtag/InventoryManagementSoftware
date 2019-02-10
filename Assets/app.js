@@ -108,14 +108,16 @@ const dbObject = $('#databaseTable');
     
     //Create database references
 
-    const dbRefObject = firebase.database().ref().child('Database');
-    const dbRefElement = dbRefObject.child('sl');
-    // const dbRefElement2 = dbRefElement.child('01');
+    const dbRefObject = firebase.database().ref().child('Database'); //children of database object (sl)
+    const dbRefElement = dbRefObject.child('sl'); //children of sl object (01)
+
 
     //Sync Object Changes
 
+    //if value changes of the '01' object
+
     dbRefElement.on('value', snap => {
-        dbObject.html(JSON.stringify(snap.val(), null, 3));
+        // dbObject.html(JSON.stringify(snap.val(), null, 3));
         // console.log(snap.val());
     });
 
@@ -123,7 +125,7 @@ const dbObject = $('#databaseTable');
 
     dbRefElement.on('child_added', snap => {
 
-        //referencing all the child elements
+        //referencing all the child elements into variables
 
         let sl = snap.child("sl").val();
         let itemDes = snap.child("itemDes").val();
@@ -133,13 +135,16 @@ const dbObject = $('#databaseTable');
         let vat = snap.child("vat").val();
         let rate_incVatTax = snap.child("rate_incVatTax").val();
         let totalAmount = snap.child("totalAmount").val();
-        let orderNo = snap.child("orderNo").val();
-        let date_BOQ = snap.child("date_BOQ").val();
         let contractNo_main = snap.child("contractNo_main").val();
         let vendor_main = snap.child("vendor_main").val();
         let contractNo_novated = snap.child("contractNo_novated").val();
+        let date_BOQ = snap.child("date_BOQ").val();
+        let orderNo = snap.child("orderNo").val();
         let prNo = snap.child("prNo").val();
         let date_PR = snap.child("date_PR").val();
+
+        //appending elements into the databaseTable
+
 
 
         
@@ -147,7 +152,7 @@ const dbObject = $('#databaseTable');
         console.log('orderNo: '+orderNo);
         console.log('contractNo_novated: '+contractNo_novated);
 
-        dbObject.html(JSON.stringify(snap.val(), null, 3));
+        // dbObject.html(JSON.stringify(snap.val(), null, 3));
 
         console.log(snap.val());
 
