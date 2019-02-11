@@ -157,14 +157,7 @@ const dbObject = $('#databaseTable');
         // dbObject.html(JSON.stringify(snap.val(), null, 3));
 
         console.log(snap.val());
-
-
-        // const li = $("html").add("li");
-        // li.html(snap.val());
-        // ulList.append(li);
-
-        // ulList.html(JSON.stringify(snap.val(), null, 3));
-        // console.log(snap.val());
     });
 
+    //binding the 'Create new Entry' button
 

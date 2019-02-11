@@ -1,6 +1,7 @@
 <html>
     <head>
         <title>Welcome to your page!</title>
+        <link rel="stylesheet" type="text/css" href="Assets/login_style.css">
         <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
   <!-- <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-auth.js"></script> -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -27,12 +28,34 @@
 
             #gpLogo{
                 height: 102%;
-                width: 28%;
+                width: 35%;
                 display: flex;
                 position: relative;
                 background: url(Assets/GrameephoneLogo.png);
                 background-position: center;
                 background-repeat: no-repeat;
+            }
+
+            body .login_fields__submit {
+                position: relative;
+                top: 39%;
+                height: 25%;
+                display: inline-block;
+                }
+
+            #loginbtn{
+                border-radius: 50px;
+                background: #4e546d;
+                padding: 10px 50px;
+                border: 2px solid #c9d6ff;
+                color: #c9d6ff;
+                font-weight: bold;
+                text-transform: uppercase;
+                font-size: 0.8em;
+                transition-property: background, color;
+                transition-duration: .2s;
+                float: right;
+                margin-right: 10%;
             }
 
             /* database table css */
@@ -50,8 +73,13 @@
                 text-align: left;
                 padding: 8px;
                 text-align: center;
+                /* border-top:1px solid black; */
+            }
+
+            th{
                 border-top:1px solid black;
             }
+
             tr:nth-child(odd) {
                 background-color: #f2f2f2;
             }
@@ -77,6 +105,9 @@
         <ul id="list"></ul> -->
         <div class='header'>
             <div id='gpLogo'></div>
+            <div class='login_fields__submit'>
+                <input type='submit' value='Create a New Entry' id='loginbtn'>
+            </div>
         </div>
 
         <table id= 'databaseTable'>
