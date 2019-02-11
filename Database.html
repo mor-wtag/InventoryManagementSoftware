@@ -10,9 +10,29 @@
             html, body{
                 padding:0;
                 margin:0;
-                background: linear-gradient(45deg, #35394a 0%, #1f222e 100%);
+                background: linear-gradient(45deg, #d0d9ff 0%, #6a84ef 100%);
                 /* width:98vw;
                 height:100vh; */
+            }
+
+            .header{
+                height: 21%;
+                position: relative;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                /* border: 1px solid black; */
+                z-index: 2;
+            }
+
+            #gpLogo{
+                height: 102%;
+                width: 28%;
+                display: flex;
+                position: relative;
+                background: url(Assets/GrameephoneLogo.png);
+                background-position: center;
+                background-repeat: no-repeat;
             }
 
             /* database table css */
@@ -24,7 +44,7 @@
                 border-collapse: collapse;
                 width: 100%;
                 position:relative;
-                margin-top: 10%;
+                /* margin-top: 10%; */
             }
             th, td {
                 text-align: left;
@@ -53,8 +73,11 @@
     <body>
 
         
-        <pre id="object"></pre>
-        <ul id="list"></ul>
+        <!-- <pre id="object"></pre>
+        <ul id="list"></ul> -->
+        <div class='header'>
+            <div id='gpLogo'></div>
+        </div>
 
         <table id= 'databaseTable'>
             <tr>
