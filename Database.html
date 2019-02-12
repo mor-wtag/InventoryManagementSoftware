@@ -58,6 +58,29 @@
                 margin-right: 10%;
             }
 
+            /* div that will appear on creating a New Entry */
+            body .newEntry {
+                opacity: 1;
+                top: 20px;
+                z-index: 1;
+                background: #FFFFFF;
+                max-width: 360px;
+                margin: 0 auto 100px;
+                padding: 45px;
+                box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+                position: relative;
+                width: 25%;
+                height: 45%;
+                position: absolute;
+                left: 0;
+                right: 0;
+                margin: auto;
+                top: 0;
+                bottom: 0;
+                padding:5% 3% 3% 3%;
+                background: linear-gradient(45deg, aliceblue 50%, #bdcaff 100%);
+		}
+
             /* database table css */
             #databaseTable{
                 display: flex;
@@ -109,17 +132,21 @@
                 <input type='submit' value='Create a New Entry' id='loginbtn'>
             </div>
         </div>
+        <div class='newEntry'>
+            <div class='newEntry_fields' id='uploadBOQ'>Upload a BOQ</div>
+            <div class='newEntry_fields' id='uploadPO'>Upload a PO</div>
+        </div>
 
         <table id= 'databaseTable'>
             <tr>
                     <th>sl no.</th>
                     <th>Item Description</th>
-                    <th>Unit of Measurement</th>
+                    <th>UoM</th>
                     <th>Quantity</th>
-                    <th>Unit Rate<br>(inclusive Tax only)</th>
+                    <th>Unit Rate<br>(incl.Tax)</th>
                     <th>VAT</th>
-                    <th>Unit Rate<br>(inclusive Tax & VAT)</th>
-                    <th>Total Amount<br>(inclusive Tax & VAT)</th>
+                    <th>Unit Rate<br>(incl.Tax&VAT)</th>
+                    <th>Total Amount<br>(incl.Tax&VAT)</th>
                     <th>Main Contract no.</th>
                     <th>Vendor</th>
                     <th>Novated contract No.</th>
