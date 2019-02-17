@@ -61,10 +61,9 @@
             /* div that will appear on creating a New Entry */
             body .newEntry {
                 opacity: 1;
-                top: 20px;
+                top: 30%;
                 z-index: 1;
                 background: #FFFFFF;
-                max-width: 360px;
                 margin: 0 auto 100px;
                 padding: 45px;
                 box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
@@ -77,9 +76,32 @@
                 margin: auto;
                 top: 0;
                 bottom: 0;
-                padding:5% 3% 3% 3%;
+                padding: 3%;
                 background: linear-gradient(45deg, aliceblue 50%, #bdcaff 100%);
+                display: flex;
+                flex-direction: column;
+                /* align-items: stretch; */
 		}
+
+        .newEntry_fields{
+            height:50%;
+            width:100%;
+            /* border:1px solid black; */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+        }
+
+        .fileButton{
+            margin-left: 20%;
+        }
+
+        .uploader{
+            -webkit-appearance: none;
+            appearance:none;
+            width:70%;
+        }
 
             /* database table css */
             #databaseTable{
@@ -116,7 +138,7 @@
                 /* height: 300px; */
                 justify-content: center;
                 align-items: center;
-                text-align: center;s
+                text-align: center;
             }
             
         </style>
@@ -133,8 +155,16 @@
             </div>
         </div>
         <div class='newEntry'>
-            <div class='newEntry_fields' id='uploadBOQ'>Upload a BOQ</div>
-            <div class='newEntry_fields' id='uploadPO'>Upload a PO</div>
+            <div class='newEntry_fields' id='uploadBOQ'>
+                <h4>Upload a BOQ</h4>
+                <progress value='0' max='100' class='uploader' id='uploader_BOQ'>0%</progress>
+                <input type="file" value="upload" class="fileButton" id="fileButton_BOQ">
+            </div>
+            <div class='newEntry_fields' id='uploadPO'>
+                <h4>Upload a PO</h4>
+                <progress value='0' max='100' class='uploader' id='uploader_PO'>0%</progress>
+                <input type="file" value="upload" class="fileButton" id="fileButton_PO">
+            </div>
         </div>
 
         <table id= 'databaseTable'>

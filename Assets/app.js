@@ -161,3 +161,26 @@ const dbObject = $('#databaseTable');
 
     //binding the 'Create new Entry' button
 
+        //Get elements
+        let uploader = $('#uploader_BOQ');
+        let fileButton = $('#fileButton_BOQ')
+
+        //Listen for file selection
+        fileButton.addEventListener('change', function(e){
+
+            // Get File
+            var file = e.target.files[0];
+
+            // Create Storage bar
+            let storageRef = firebase.storage().ref('BOQ/' + file.name)
+
+
+            // Upload file
+
+
+            // Update storage bar
+
+        }
+
+
+
