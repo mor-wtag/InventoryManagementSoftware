@@ -174,8 +174,8 @@ const dbObject = $('#databaseTable');
             // Create Storage bar
             let storageRef = firebase.storage().ref('BOQ/' + file.name)
 
-
             // Upload file
+            let task = storageRef.put('file');
 
 
             // Update storage bar
