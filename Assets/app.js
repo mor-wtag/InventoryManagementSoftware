@@ -166,8 +166,8 @@ const dbObject = $('#databaseTable');
         let fileButton = $('#fileButton_BOQ')
 
         //Listen for file selection
-        fileButton.addEventListener('change', function(e){
-
+        fileButton.change(function(e){
+            console.log("Attempting to upload a file...");
             // Get File
             var file = e.target.files[0];
 
@@ -175,12 +175,25 @@ const dbObject = $('#databaseTable');
             let storageRef = firebase.storage().ref('BOQ/' + file.name)
 
             // Upload file
-            let task = storageRef.put('file');
-
+            let task = storageRef.put(file);
 
             // Update storage bar
+            task.on('state_changed', 
+                function progress(snapshot){
+                    console.log('Inside Progress bar');
+                    var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    console.log('percentage = '+percentage);
+                    uploader.value = percentage;
+                },
+                function error(err){
 
-        }
+                },
+                function complete(){
+                    alert('File Successfully Uploaded!');
+                }
+            );
+
+        });
 
 
 
