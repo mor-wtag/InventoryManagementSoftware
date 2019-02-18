@@ -133,21 +133,35 @@ const dbObject = $('#databaseTable');
         let itemDes = snap.child("itemDes").val();
         let uom = snap.child("uom").val();
         let qty = snap.child("qty").val();
-        let rate_incTax = snap.child("rate_incTax").val();
-        let vat = snap.child("vat").val();
         let rate_incVatTax = snap.child("rate_incVatTax").val();
         let totalAmount = snap.child("totalAmount").val();
         let contractNo_main = snap.child("contractNo_main").val();
         let vendor_main = snap.child("vendor_main").val();
         let contractNo_novated = snap.child("contractNo_novated").val();
-        let date_BOQ = snap.child("date_BOQ").val();
-        let orderNo = snap.child("orderNo").val();
+        let vendor_novated = snap.child("vendor_novated").val();
         let prNo = snap.child("prNo").val();
-        let date_PR = snap.child("date_PR").val();
+        let poNo = snap.child("poNo").val();
+        let delChalNo = snap.child("delChalNo").val();
+        let date_BOQ = snap.child("date_BOQ").val();
+
 
         //appending elements into the databaseTable
 
-        $('#databaseTable').append("<tr><td>"+sl+"</td><td>"+itemDes+"</td><td>"+uom+"</td><td>"+qty+"</td><td>"+rate_incTax+"</td><td>"+vat+"</td><td>"+rate_incVatTax+"</td><td>"+totalAmount+"</td><td>"+contractNo_main+"</td><td>"+vendor_main+"</td><td>"+contractNo_novated+"</td><td>"+date_BOQ+"</td><td>"+orderNo+"</td><td>"+prNo+"</td><td>"+date_PR+"</td></tr>")
+        $('#databaseTable').append(
+            "<tr><td>"+sl+"</td><td>"+
+            itemDes+"</td><td>"
+            +uom+"</td><td>"
+            +qty+"</td><td>"
+            +rate_incVatTax+"</td><td>"
+            +totalAmount+"</td><td>"
+            +contractNo_main+"</td><td>"
+            +vendor_main+"</td><td>"
+            +contractNo_novated+"</td><td>"
+            +vendor_novated+"</td><td>"
+            +prNo+"</td><td>"
+            +poNo+"</td><td>"
+            +delChalNo+"</td><td>"
+            +date_BOQ+"</td></tr>");
 
         
         console.log('itemDes: '+itemDes);
