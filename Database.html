@@ -1,14 +1,15 @@
 <html>
-    <head>
-        <title>Welcome to your page!</title>
-        <link rel="stylesheet" type="text/css" href="Assets/login_style.css">
-        <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
-  <!-- <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-auth.js"></script> -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-        <style media='screen'>
+<head>
+    <title>Welcome to your page!</title>
+    <link rel="stylesheet" type="text/css" href="Assets/login_style.css">
+    <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
+    <!-- <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-auth.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-            html, body{
+    <style media='screen'>
+
+        html, body{
                 padding:0;
                 margin:0;
                 background: linear-gradient(45deg, #d0d9ff 0%, #6a84ef 100%);
@@ -140,55 +141,56 @@
                 align-items: center;
                 text-align: center;
             }
-            
         </style>
-    </head>
-    <body>
+</head>
 
-        
-        <!-- <pre id="object"></pre>
+<body>
+
+
+    <!-- <pre id="object"></pre>
         <ul id="list"></ul> -->
-        <div class='header'>
-            <div id='gpLogo'></div>
-            <div class='login_fields__submit'>
-                <input type='submit' value='Create a New Entry' id='loginbtn'>
-            </div>
+    <div class='header'>
+        <div id='gpLogo'></div>
+        <div class='login_fields__submit'>
+            <input type='submit' value='Create a New Entry' id='loginbtn'>
         </div>
-        <div class='newEntry'>
-            <div class='newEntry_fields' id='uploadBOQ'>
-                <h4>Upload a BOQ</h4>
-                <progress value="0" max="100" class='uploader' id="uploader_BOQ">0%</progress>
-                <input type="file" value="upload" class="fileButton" id="fileButton_BOQ"/>
-            </div>
-            <div class='newEntry_fields' id='uploadPO'>
-                <h4>Upload a PO</h4>
-                <progress value='0' max='100' class='uploader' id='uploader_PO'>0%</progress>
-                <input type="file" value="upload" class="fileButton" id="fileButton_PO"/>
-            </div>
+    </div>
+    <div class='newEntry'>
+        <div class='newEntry_fields' id='uploadBOQ'>
+            <h4>Upload a BOQ</h4>
+            <progress value="0" max="100" class='uploader' id="uploader_BOQ">0</progress>
+            <input type="file" value="upload" class="fileButton" id="fileButton_BOQ" />
         </div>
+        <div class='newEntry_fields' id='uploadPO'>
+            <h4>Upload a PO</h4>
+            <progress value='0' max='100' class='uploader' id='uploader_PO'>0</progress>
+            <input type="file" value="upload" class="fileButton" id="fileButton_PO" />
+        </div>
+    </div>
 
-        <table id= 'databaseTable'>
-            <tr>
-                    <th>sl no.</th>
-                    <th>Item Description</th>
-                    <th>UoM</th>
-                    <th>Quantity</th>
-                    <th>Unit Rate<br>(incl.Tax&VAT)</th>
-                    <th>Total Amount<br>(incl.Tax&VAT)</th>
-                    <th>Main Contract no.</th>
-                    <th>Main Vendor</th>
-                    <th>Novated Contract No.</th>
-                    <th>Novated Vendor</th>
-                    <th>PR no.</th>
-                    <th>PO no.</th>
-                    <th>Delivery <br> Challan No.</th>
-                    <th>Date <br>(of BOQ posted)</th>
-            </tr>
+    <table id='databaseTable'>
+        <tr>
+            <th>sl no.</th>
+            <th>Item Description</th>
+            <th>UoM</th>
+            <th>Quantity</th>
+            <th>Unit Rate<br>(incl.Tax&VAT)</th>
+            <th>Total Amount<br>(incl.Tax&VAT)</th>
+            <th>Main Contract no.</th>
+            <th>Main Vendor</th>
+            <th>Novated Contract No.</th>
+            <th>Novated Vendor</th>
+            <th>PR no.</th>
+            <th>PO no.</th>
+            <th>Delivery <br> Challan No.</th>
+            <th>Date <br>(of BOQ posted)</th>
+        </tr>
 
-            <tbody id="databaseTableBody">
+        <tbody id="databaseTableBody">
 
-            </tbody>
-        </table>
-        <script src="Assets/app.js"></script>
-    </body>
+        </tbody>
+    </table>
+    <script src="Assets/app.js"></script>
+</body>
+
 </html>

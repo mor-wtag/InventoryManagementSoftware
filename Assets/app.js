@@ -165,7 +165,6 @@ const dbObject = $('#databaseTable');
 
         
         console.log('itemDes: '+itemDes);
-        console.log('orderNo: '+orderNo);
         console.log('contractNo_novated: '+contractNo_novated);
 
         // dbObject.html(JSON.stringify(snap.val(), null, 3));
@@ -177,13 +176,13 @@ const dbObject = $('#databaseTable');
 
         //Get elements
         let uploader = $('#uploader_BOQ');
-        let fileButton = $('#fileButton_BOQ')
+        let fileButton = $('#fileButton_BOQ');
 
         //Listen for file selection
         fileButton.change(function(e){
             console.log("Attempting to upload a file...");
             // Get File
-            var file = e.target.files[0];
+            let file = e.target.files[0];
 
             // Create Storage bar
             let storageRef = firebase.storage().ref('BOQ/' + file.name)
@@ -195,9 +194,10 @@ const dbObject = $('#databaseTable');
             task.on('state_changed', 
                 function progress(snapshot){
                     console.log('Inside Progress bar');
-                    var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    console.log('percentage = '+percentage);
+                    let percentage = ((snapshot.bytesTransferred/snapshot.totalBytes) * 100);
                     uploader.value = percentage;
+                    console.log('percentage = '+percentage);
+                    console.log('Uploader value = '+uploader.value);
                 },
                 function error(err){
 
