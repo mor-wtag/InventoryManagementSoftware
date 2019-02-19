@@ -175,8 +175,8 @@ const dbObject = $('#databaseTable');
     //binding the 'Create new Entry' button
 
         //Get elements
-        let uploader = $('#uploader_BOQ');
-        let fileButton = $('#fileButton_BOQ');
+        var uploader = $('.uploader');
+        var fileButton = $('.fileButton');
 
         //Listen for file selection
         fileButton.change(function(e){
@@ -191,10 +191,10 @@ const dbObject = $('#databaseTable');
             let task = storageRef.put(file);
 
             // Update storage bar
-            task.on('state_changed', 
+            task.on("state_changed", 
                 function progress(snapshot){
                     console.log('Inside Progress bar');
-                    let percentage = ((snapshot.bytesTransferred/snapshot.totalBytes) * 100);
+                    var percentage = ((snapshot.bytesTransferred/snapshot.totalBytes) * 100);
                     uploader.value = percentage;
                     console.log('percentage = '+percentage);
                     console.log('Uploader value = '+uploader.value);
