@@ -11,7 +11,7 @@
 
     <link rel="icon" href="assets/images/favicon.ico">
 
-    <title>InventoryManagementSoftware|Ageing</title>
+    <title>InventoryManagementSoftware | Inventory</title>
 
     <link rel="stylesheet" href="assets/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css">
     <link rel="stylesheet" href="assets/css/font-icons/entypo/css/entypo.css">
@@ -105,13 +105,13 @@
                             <span class="title">Quality Assurance</span>
                         </a>
                     </li>
-                    <li class="active opened active has-sub">
+                    <li class="has-sub">
                         <a href="ageing.html">
                             <i class="entypo-window"></i>
                             <span class="title">Ageing</span>
                         </a>
                     </li>
-                    <li class="has-sub">
+                    <li class="active opened active has-sub">
                         <a href="delivery.html">
                             <i class="entypo-bag"></i>
                             <span class="title">Delivery</span>
@@ -205,16 +205,78 @@
                 });
             </script>
 
-            <h3>Ageing</h3>
+            <h3>Create a Delivery Issue</h3>
+
+            <table class="table table-bordered">
+
+                <tbody>
+                    <tr>
+                        <td>
+                            <label class="col-sm-3 control-label">Issuing Date</label>
+                            <input type="date" class="col-sm-4">
+                        </td>
+
+                        <td>
+                            <label class="col-sm-2 control-label">Item Issued</label>
+
+                            <div class="col-sm-8">
+                                <div class="input-group">
+                                    <input type="text" name="typeahead_prefetch" class="form-control typeahead"
+                                        data-prefetch="data/countries.json" placeholder="Type the name of the item you are sending" />
+                                    <span class="input-group-addon"><i class="entypo-globe"></i></span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label class="col-sm-3 control-label">Quantity</label>
+
+                            <div class="col-sm-4">
+
+                                <!-- Spinner Markup -->
+                                <div class="input-spinner">
+                                    <button type="button" class="btn btn-default">-</button>
+                                    <input type="text" class="form-control size-1" value="1" />
+                                    <button type="button" class="btn btn-default">+</button>
+                                </div>
+
+                            </div>
+                        </td>
+                        <td>
+                            <label class="col-sm-2 control-label">Destination</label>
+
+                            <div class="col-sm-8">
+                                <div class="input-group">
+                                    <input type="text" name="typeahead_prefetch" class="form-control typeahead"
+                                        data-prefetch="data/countries.json" placeholder="Type the name of the Destination you are sending the item" />
+                                    <span class="input-group-addon"><i class="entypo-globe"></i></span>
+                                </div>
+                            </div>
+                            
+                            <div class="col-sm-2">
+                                <input type="submit" value="Submit" class='fileButton' style='margin-right:65%'>
+                            </div>
+                        </td>
+
+                    </tr>
+
+
+
+                </tbody>
+            </table>
+
+
+            <h3>Delivered Item Details</h3>
             <table class="table table-bordered datatable" id="table-1">
                 <thead>
                     <tr>
-                        <th>Item Name</th>
-                        <th>PR no.</th>
-                        <th>Main Contract No.</th>
-                        <th>Warranty</th>
-                        <th>Ageing</th>
-
+                        <th>Delivery Id</th>
+                        <th>Issue Date</th>
+                        <th>Item Issued</th>
+                        <th>Quantity</th>
+                        <th>Destination</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -621,11 +683,11 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th>Item Name</th>
-                        <th>PR no.</th>
-                        <th>Main Contract No.</th>
-                        <th>Warranty</th>
-                        <th>Ageing</th>
+                        <th>Delivery Id</th>
+                        <th>Issue Date</th>
+                        <th>Item Issued</th>
+                        <th>Quantity</th>
+                        <th>Destination</th>
                     </tr>
                 </tfoot>
             </table>
@@ -634,6 +696,18 @@
     </div>
 
     <br />
+
+    <!-- Imported styles for ADVANCED FORM on this page -->
+
+    <link rel="stylesheet" href="assets/js/select2/select2-bootstrap.css">
+    <link rel="stylesheet" href="assets/js/select2/select2.css">
+    <link rel="stylesheet" href="assets/js/selectboxit/jquery.selectBoxIt.css">
+    <link rel="stylesheet" href="assets/js/daterangepicker/daterangepicker-bs3.css">
+    <link rel="stylesheet" href="assets/js/icheck/skins/minimal/_all.css">
+    <link rel="stylesheet" href="assets/js/icheck/skins/square/_all.css">
+    <link rel="stylesheet" href="assets/js/icheck/skins/flat/_all.css">
+    <link rel="stylesheet" href="assets/js/icheck/skins/futurico/futurico.css">
+    <link rel="stylesheet" href="assets/js/icheck/skins/polaris/polaris.css">
 
 
     <!-- Imported styles on this page -->
@@ -654,6 +728,7 @@
     <script src="assets/js/datatables/datatables.js"></script>
     <script src="assets/js/select2/select2.min.js"></script>
     <script src="assets/js/neon-chat.js"></script>
+    <script src="assets/js/bootstrap-datepicker.js"></script>
 
 
     <!-- JavaScripts initializations and stuff -->
