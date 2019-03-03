@@ -21,6 +21,8 @@
 	<link rel="stylesheet" href="assets/css/neon-forms.css">
 	<link rel="stylesheet" href="assets/css/custom.css">
 
+	<script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
+
 	<script src="assets/js/jquery-1.11.3.min.js"></script>
 
 	<!--[if lt IE 9]><script src="assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -208,168 +210,166 @@
 							</div>
 						</div>
 
-						<form class='formClass' id='form_newEntry'>
+						<form class='formClass' id='form_newEntry' action="#">
 							<div class="panel-body">
+
 								<div class="row">
 									<div class="col-md-4">
 										<div class="form-group ss-item-required">
-												<label for="field-1" class="col-sm-4 control-label">Item code</label>
+											<label for="field-1" class="col-sm-4 control-label">Item code</label>
 
-												<div class="col-sm-8">
-													<input type="text" class="form-control" id="itemCode" placeholder="Item code" required>
-												</div>
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="itemCode" placeholder="Item code" required>
 											</div>
 										</div>
+									</div>
 									<div class="col-md-4">
-
-										
 										<div class="form-group ss-item-required">
-												<label for="field-1" class="col-sm-4 control-label">Item name</label>
+											<label for="field-1" class="col-sm-4 control-label">Item name</label>
 
-												<div class="col-sm-8">
-													<input type="text" class="form-control" id="itemName" placeholder="Item name" required>
-												</div>
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="itemName" placeholder="Item name" required>
 											</div>
-										
 										</div>
+									</div>
 									<div class="col-md-4">
-										
 										<div class="form-group ss-item-required">
-												<label for="field-1" class="col-sm-4 control-label">UoM</label>
+											<label for="field-1" class="col-sm-4 control-label">UoM</label>
 
-												<div class="col-sm-8">
-													<input type="text" class="form-control" id="uom" placeholder="Unit of Measurement" required>
-												</div>
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="uom" placeholder="Unit of Measurement">
 											</div>
-										
 										</div>
+									</div>
 								</div>
 								<br>
+
 								<div class="row">
 									<div class="col-md-4">
-										
 										<div class="form-group ss-item-required">
-												<label for="field-1" class="col-sm-4 control-label">Quantity</label>
+											<label for="field-1" class="col-sm-4 control-label">Quantity</label>
 
-												<div class="col-sm-8">
-													<input type="text" class="form-control" id="quantity" placeholder="Unit Rate (inclusive of Tax & VAT)" required>
-												</div>
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="quantity" placeholder="Quantity">
 											</div>
-										
 										</div>
-									<div class="col-md-4">
-										
-										
-											<div class="form-group ss-item-required">
-												<label for="field-1" class="col-sm-4 control-label">Main Contract</label>
 
-												<div class="col-sm-8">
-													<input type="text" class="form-control" id="mainContract" placeholder="Main Contract No." required>
-												</div>
-											</div>
-										
-										</div>
+									</div>
 									<div class="col-md-4">
-										
 										<div class="form-group ss-item-required">
-												<label for="field-1" class="col-sm-4 control-label">Main Vendor</label>
+											<label for="field-1" class="col-sm-4 control-label">Unit Rate</label>
 
-												<div class="col-sm-8">
-													<input type="text" class="form-control" id="mainVendor" placeholder="Main Vendor" required>
-												</div>
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="unitRate" placeholder="Unit Rate (inclusive of Tax & VAT)">
 											</div>
-										
 										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group ss-item-required">
+											<label for="field-1" class="col-sm-4 control-label">Total Amount</label>
+
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="totalAmount" placeholder="Total Amount (inclusive of Tax & VAT)">
+											</div>
+										</div>
+									</div>
 								</div>
 								<br>
+
 								<div class="row">
 									<div class="col-md-4">
-
-										
 										<div class="form-group ss-item-required">
-												<label for="field-1" class="col-sm-4 control-label">Novated Contract</label>
+											<label for="field-1" class="col-sm-4 control-label">Main Contract</label>
 
-												<div class="col-sm-8">
-													<input type="text" class="form-control" id="novatedContract" placeholder="Novated Contract No." required>
-												</div>
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="mainContract" placeholder="Main Contract No.">
 											</div>
-										
 										</div>
+									</div>
 									<div class="col-md-4">
-
-										
 										<div class="form-group ss-item-required">
-												<label for="field-1" class="col-sm-4 control-label">Novated Vendor</label>
+											<label for="field-1" class="col-sm-4 control-label">Main Vendor</label>
 
-												<div class="col-sm-8">
-													<input type="text" class="form-control" id="novatedVendor" placeholder="Novated Vendor" required>
-												</div>
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="mainVendor" placeholder="Main Vendor">
 											</div>
-										
 										</div>
+									</div>
 									<div class="col-md-4">
-
-										
 										<div class="form-group ss-item-required">
-												<label for="field-1" class="col-sm-4 control-label">PR No.</label>
+											<label for="field-1" class="col-sm-4 control-label">Novated Contract</label>
 
-												<div class="col-sm-8">
-													<input type="text" class="form-control" id="PRnum" placeholder="Purchase Request No." required>
-												</div>
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="novatedContract" placeholder="Novated Contract No.">
 											</div>
-										
 										</div>
+									</div>
 								</div>
 								<br>
-								<div class=row>
-								<div class="col-md-4">
 
-									
-									<div class="form-group ss-item-required">
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group ss-item-required">
+											<label for="field-1" class="col-sm-4 control-label">Novated Vendor</label>
+
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="novatedVendor" placeholder="Novated Vendor">
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group ss-item-required">
+											<label for="field-1" class="col-sm-4 control-label">PR No.</label>
+
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="PRnum" placeholder="Purchase Request No.">
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group ss-item-required">
 											<label for="field-1" class="col-sm-4 control-label">PO No.</label>
 
 											<div class="col-sm-8">
-												<input type="text" class="form-control" id="POnum" placeholder="Purchase Order No." required>
+												<input type="text" class="form-control" id="POnum" placeholder="Purchase Order No.">
 											</div>
 										</div>
-									
 									</div>
-								<div class="col-md-4">
+								</div>
+								<br>
 
-									
-									<div class="form-group ss-item-required">
+								<div class=row>
+									<div class="col-md-4">
+										<div class="form-group ss-item-required">
 											<label for="field-1" class="col-sm-4 control-label">Delivery challan</label>
 
 											<div class="col-sm-8">
 												<input type="text" class="form-control" id="delChalNum" placeholder="Delivery challan No.">
 											</div>
 										</div>
-									
-									</div>
-								<div class="col-md-4">
 
-									
-									<div class="form-group ss-item-required">
+									</div>
+									<div class="col-md-4">
+										<div class="form-group ss-item-required">
 											<label for="field-1" class="col-sm-4 control-label">Issue Date</label>
 
 											<div class="col-sm-8">
-												<input type="date" class="form-control" id="issueDate" placeholder="Issue Date" required>
+												<input type="date" class="form-control" id="issueDate" placeholder="Issue Date">
 											</div>
 										</div>
-									
+
+									</div>
+									<div class="col-md-4">
+										<div class="col-md-3"></div>
+										<div class="col-md-8">
+											<input type="submit" value="Submit" class='fileButton' id='submit_newEntry'>
+										</div>
 									</div>
 								</div>
 								<br>
-								<div class="row">
-									<div class="col-md-4"></div>
-									<div class="col-md-5"></div>
-									<div class="col-md-3">
-										<input type="submit" value="Submit" class='fileButton' >
-									</div>
-								</div>
+
 							</div>
 						</form>
-
 					</div>
 				</div>
 			</div>
@@ -389,11 +389,12 @@
 						</div>
 						<div class="panel-body">
 							<input type="file" value="upload" class="fileButton" id="fileButton_BOQ" />
-							<td style="float:left;"><a href="../Part 2/../Documents/BOQ-format for database.xlsx" download><img src='assets/images/excel.png' width="5%" height="5%"><br>BOQ Format-Example</a></td>
+							<td style="float:left;"><a href="../Part 2/../Documents/BOQ-format for database.xlsx" download><img src='assets/images/excel.png'
+									 width="5%" height="5%"><br>BOQ Format-Example</a></td>
 						</div>
 					</div>
 				</div>
-				
+
 			</div>
 		</div>
 	</div>
@@ -468,7 +469,7 @@
 	<script src="assets/js/raphael-min.js"></script>
 	<script src="assets/js/morris.min.js"></script>
 	<script src="assets/js/toastr.js"></script>
-	<script src='assets/js/login.js'></script>
+	<script src="assets/js/login.js"></script>
 	<script>
 		toastr_();
 	</script>
