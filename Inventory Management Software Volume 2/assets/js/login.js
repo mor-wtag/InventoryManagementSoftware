@@ -138,29 +138,29 @@ $('input[type="submit"]').click(function () {
 //     let date_BOQ = ("issueDate").val();
 
 
-    //appending elements into the databaseTable
+//appending elements into the databaseTable
 
-    // $('#databaseTable').append(
-    //     "<tr><td>" + sl + "</td><td>" +
-    //     itemDes + "</td><td>"
-    //     + uom + "</td><td>"
-    //     + qty + "</td><td>"
-    //     + rate_incVatTax + "</td><td>"
-    //     + totalAmount + "</td><td>"
-    //     + contractNo_main + "</td><td>"
-    //     + vendor_main + "</td><td>"
-    //     + contractNo_novated + "</td><td>"
-    //     + vendor_novated + "</td><td>"
-    //     + prNo + "</td><td>"
-    //     + poNo + "</td><td>"
-    //     + delChalNo + "</td><td>"
-    //     + date_BOQ + "</td></tr>");
+// $('#databaseTable').append(
+//     "<tr><td>" + sl + "</td><td>" +
+//     itemDes + "</td><td>"
+//     + uom + "</td><td>"
+//     + qty + "</td><td>"
+//     + rate_incVatTax + "</td><td>"
+//     + totalAmount + "</td><td>"
+//     + contractNo_main + "</td><td>"
+//     + vendor_main + "</td><td>"
+//     + contractNo_novated + "</td><td>"
+//     + vendor_novated + "</td><td>"
+//     + prNo + "</td><td>"
+//     + poNo + "</td><td>"
+//     + delChalNo + "</td><td>"
+//     + date_BOQ + "</td></tr>");
 
 
-    // console.log('itemDes: ' + itemDes);
-    // console.log('contractNo_novated: ' + contractNo_novated);
+// console.log('itemDes: ' + itemDes);
+// console.log('contractNo_novated: ' + contractNo_novated);
 
-    // dbObject.html(JSON.stringify(snap.val(), null, 3));
+// dbObject.html(JSON.stringify(snap.val(), null, 3));
 
 //     console.log(snap.val());
 // });
@@ -226,9 +226,9 @@ const dbRefElement = dbRefObject.child('new_Entry'); //children of database obje
 
 $(document).ready(function () {
 
-    $("#submit_newEntry").click(function() {
+    $("#submit_newEntry").click(function () {
 
-    //saving the values of the form from the front end
+        //saving the values of the form from the front end
 
         let itemCode = $("#itemCode").val();
         let itemName = $("#itemName").val();
@@ -246,31 +246,38 @@ $(document).ready(function () {
         let issueDate = $("#issueDate").val();
 
         // Form Submission
-        $("#form_newEntry").submit(function(config) { $(this), console.log("Submit to Firebase");
+        $("#form_newEntry").submit(function (config) {
+        $(this), console.log("Submit to Firebase");
 
-        // Saving the user input into JSON format
+            //adding data instead of replacing with the new value
 
-        let update_data_newEntry= 
-        {
-            'itemCode': itemCode,
-            'itemName': itemName,
-            'uom': uom,
-            'quantity': quantity,
-            'unitRate': unitRate,
-            'totalAmount': totalAmount,
-            'mainContract': mainContract,
-            'mainVendor': mainVendor,
-            'novatedContract': novatedContract,
-            'novatedVendor': novatedVendor,
-            'PRnum': PRnum,
-            'POnum': POnum,
-            'delChalNum': delChalNum,
-            'issueDate': issueDate
-        };
+            // let newElement_newEntry = dbRefElement.push().setValue(itemCode);
 
-        //updating the database of New Enty in Firebase Console
+            // Saving the user input into JSON format
 
-        dbRefElement.update(update_data_newEntry);
+            let update_data_newEntry =
+            {
+                'itemCode': itemCode,
+                'itemName': itemName,
+                'uom': uom,
+                'quantity': quantity,
+                'unitRate': unitRate,
+                'totalAmount': totalAmount,
+                'mainContract': mainContract,
+                'mainVendor': mainVendor,
+                'novatedContract': novatedContract,
+                'novatedVendor': novatedVendor,
+                'PRnum': PRnum,
+                'POnum': POnum,
+                'delChalNum': delChalNum,
+                'issueDate': issueDate
+            };
+
+            //updating the database of New Enty in Firebase Console
+
+            dbRefElement.push(update_data_newEntry);
+
+            // newElement_newEntry.push(update_data_newEntry);
 
         });
     });
@@ -281,37 +288,37 @@ $(document).ready(function () {
 
     const dbObject_inventory = $('#table-1');
 
-        // Sync Object Changes
+    // Sync Object Changes
 
-        // if value changes of the '01' object
+    // if value changes of the '01' object
 
-        // dbRefElement.on('value', snap => {
-        //     // dbObject.html(JSON.stringify(snap.val(), null, 3));
-        //     // console.log(snap.val());
-        // });
+    // dbRefElement.on('value', snap => {
+    //     // dbObject.html(JSON.stringify(snap.val(), null, 3));
+    //     // console.log(snap.val());
+    // });
 
-        // Snyc database changes
+    // Snyc database changes
 
-        dbRefElement.on('value', snap => {
+    dbRefElement.on('value', snap => {
+        
+        //referencing all the child elements into variables
 
-            //referencing all the child elements into variables
+        let itemCode = snap.child("itemCode").val();
+        let itemName = snap.child("itemName").val();
+        let uom = snap.child("uom").val();
+        let quantity = snap.child("quantity").val();
 
-            let itemCode = snap.child("itemCode").val();
-            let itemName = snap.child("itemName").val();
-            let uom = snap.child("uom").val();
-            let quantity = snap.child("quantity").val();
+        // appending elements into the databaseTable
 
-            // appending elements into the databaseTable
+        $('#inventory_tableBody').append(
+            "<tr><td>" + itemCode + "</td><td>" +
+            itemName + "</td><td>"
+            + uom + "</td><td>"
+            + quantity + "</td><td>"
+            + 'nil so far' + "</td></tr>");
 
-            $('#inventory_tableBody').append(
-                "<tr><td>" + itemCode + "</td><td>" +
-                itemName + "</td><td>"
-                + uom + "</td><td>"
-                + quantity + "</td><td>"
-                + 'nil so far' + "</td></tr>");
+        // $('#inventory_tableBody').html(JSON.stringify(snap.val(), null, 3));
 
-            // $('#inventory_tableBody').html(JSON.stringify(snap.val(), null, 3));
-
-            console.log(snap.val());
-        });
+        console.log(snap.val());
+    });
 });
