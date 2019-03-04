@@ -104,68 +104,7 @@ $('input[type="submit"]').click(function () {
 
 //Working with Firebase database
 
-
-// const dbObject = $('#inventory_table');
-
-//Sync Object Changes
-
-//if value changes of the '01' object
-
-// dbRefElement.on('value', snap => {
-//     // dbObject.html(JSON.stringify(snap.val(), null, 3));
-//     // console.log(snap.val());
-// });
-
-//Snyc database changes
-
-// dbRefElement.on('child_added', snap => {
-
-//     //referencing all the child elements into variables
-
-//     let itemCode = ("itemCode").val();
-//     let itemName = ("itemName").val();
-//     let uom = ("uom").val();
-//     let quantity = ("quantity").val();
-//     let rate_incVatTax = ("rate_incVatTax").val();
-//     let totalAmount = ("totalAmount").val();
-//     let contractNo_main = ("mainContract").val();
-//     let vendor_main = ("mainVendor").val();
-//     let contractNo_novated = ("novatedContract").val();
-//     let vendor_novated = ("novatedVendor").val();
-//     let prNo = ("PRnum").val();
-//     let poNo = ("POnum").val();
-//     let delChalNo = ("delChalNum").val();
-//     let date_BOQ = ("issueDate").val();
-
-
-//appending elements into the databaseTable
-
-// $('#databaseTable').append(
-//     "<tr><td>" + sl + "</td><td>" +
-//     itemDes + "</td><td>"
-//     + uom + "</td><td>"
-//     + qty + "</td><td>"
-//     + rate_incVatTax + "</td><td>"
-//     + totalAmount + "</td><td>"
-//     + contractNo_main + "</td><td>"
-//     + vendor_main + "</td><td>"
-//     + contractNo_novated + "</td><td>"
-//     + vendor_novated + "</td><td>"
-//     + prNo + "</td><td>"
-//     + poNo + "</td><td>"
-//     + delChalNo + "</td><td>"
-//     + date_BOQ + "</td></tr>");
-
-
-// console.log('itemDes: ' + itemDes);
-// console.log('contractNo_novated: ' + contractNo_novated);
-
-// dbObject.html(JSON.stringify(snap.val(), null, 3));
-
-//     console.log(snap.val());
-// });
-
-//binding the 'Create new Entry' button
+//Uploading BOQ and storing it in the database
 
 //Get elements
 let uploader = $('.uploader');
@@ -177,8 +116,10 @@ fileButton.change(function (e) {
     // Get File
     let file = e.target.files[0];
 
+    let fileName = file.name
+
     // Create Storage bar
-    let storageRef = firebase.storage().ref('BOQ/' + file.name)
+    let storageRef = firebase.storage().ref('BOQ/' + fileName)
 
     // Upload file
     let task = storageRef.put(file);
@@ -199,7 +140,12 @@ fileButton.change(function (e) {
             alert('File Successfully Uploaded!');
         }
     );
+    //Get download URL of Excel Uploaded files
 
+        let boq_downloadLink = firebase.storage().ref('BOQ/'+fileName);
+        boq_downloadLink.getDownloadURL().then(function(url) {
+            console.log("url: "+url);
+    });
 });
 
 // New new Entry database file
@@ -322,3 +268,4 @@ $(document).ready(function () {
         console.log(snap.val());
     });
 });
+
