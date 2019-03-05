@@ -108,97 +108,62 @@ $('input[type="submit"]').click(function () {
 
 //Get elements
 let uploader = $('.uploader');
-let submitBOQ = $('#submit_boq');
-var file;
-
-// Add events
-$('#form_boq').submit(function(e){
-    
-    // Get File
-    file = e.target.files;
-
-    console.log(file);
-
-    var ExcelToJSON = function() {
-
-        this.parseExcel = function(file) {
-          var reader = new FileReader();
-      
-          reader.onload = function(e) {
-            var data = e.target.result();
-            var workbook = XLSX.read(data, {
-              type: 'binary'
-            });
-      
-            workbook.SheetNames.forEach(function(sheetName) {
-              // Here is your object
-              var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-              var json_object = JSON.stringify(XL_row_object);
-              console.log(json_object);
-            });
-          };
-      
-          reader.onerror = function(ex) {
-            console.log(ex);
-          };
-      
-          reader.readAsBinaryString(file);
-        };
-    };
-});
-
-
+let fileButton = $('.fileButton');
 
 //Listen for file selection
-// fileButton.change(function (e) {
-//     console.log("Attempting to upload a file...");
-//     // Get File
-//     let file = e.target.files[0];
+fileButton.change(function (e) {
+    console.log("Attempting to upload a file...");
+    // Get File
+    let file = e.target.files[0];
 
-//     console.log(file);
+    let fileName = file.name
 
-//     let fileName = file.name
+    // Create Storage bar
+    let storageRef = firebase.storage().ref('BOQ/' + fileName)
 
-//     // Create Storage bar
-//     let storageRef = firebase.storage().ref('BOQ/' + fileName);
+    // Upload file
+    let task = storageRef.put(file);
 
-//     // Upload file
-//     let task = storageRef.put(file);
+    // Update storage bar
+    task.on("state_changed",
+        function progress(snapshot) {
+            console.log('Inside Progress bar');
+            var percentage = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+            uploader.value = percentage;
+            console.log('percentage = ' + percentage);
+            console.log('Uploader value = ' + uploader.value);
+        },
+        function error(err) {
 
-//     // Update storage bar
-//     task.on("state_changed",
-//         function progress(snapshot) {
-//             console.log('Inside Progress bar');
-//             var percentage = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-//             uploader.value = percentage;
-//             console.log('percentage = ' + percentage);
-//             console.log('Uploader value = ' + uploader.value);
-//         },
-//         function error(err) {
+        },
+        function complete() {
+            alert('File Successfully Uploaded!');
+        }
+    );
+    //Get download URL of Excel Uploaded files
 
-//         },
-//         // function complete() {
-//         //     alert('File Successfully Uploaded!');
-//         // },
-//         function gettingDownloadURL() {
-//             // Upload completed successfully, now we can get the download URL
-//             task.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-//             console.log('File available at'+ downloadURL);
+        let boq_downloadLink = firebase.storage().ref('BOQ/'+fileName);
+        boq_downloadLink.getDownloadURL().then(function(url) {
+            console.log("url: "+url);
+    });
+});
 
-//               //convert the csv file to json
-//             });
-//     });
-//   });
+// New new Entry database file
 
+//checking whether the required fields are filled
 
-//     //Get download URL of Excel Uploaded files
+// function formcheck() {
+//     var fields = $(".ss-item-required")
+//           .find("select, textarea, input").serializeArray();
 
-//         let boq_downloadLink = firebase.storage().ref('BOQ/'+fileName);
-//         boq_downloadLink.getDownloadURL().then(function(url) {
-//             console.log("url: "+url);
-//     });
+//     $.each(fields, function(i, field) {
+//       if (!field.value)
+//         alert(field.name + ' is required');
+//      }); 
+//     console.log(fields);
+//   }
 
-//Database reference
+//submit form
 
 const dbRefObject = firebase.database().ref().child('databases'); //children of database object
 const dbRefElement = dbRefObject.child('new_Entry'); //children of database object
@@ -228,7 +193,7 @@ $(document).ready(function () {
 
         // Form Submission
         $("#form_newEntry").submit(function (config) {
-            $(this), console.log("Submit to Firebase");
+        $(this), console.log("Submit to Firebase");
 
             //adding data instead of replacing with the new value
 
@@ -281,7 +246,7 @@ $(document).ready(function () {
     // Snyc database changes
 
     dbRefElement.on('value', snap => {
-
+        
         //referencing all the child elements into variables
 
         let itemCode = snap.child("itemCode").val();
@@ -303,3 +268,4 @@ $(document).ready(function () {
         console.log(snap.val());
     });
 });
+
