@@ -108,62 +108,97 @@ $('input[type="submit"]').click(function () {
 
 //Get elements
 let uploader = $('.uploader');
-let fileButton = $('.fileButton');
+let submitBOQ = $('#submit_boq');
+var file;
 
-//Listen for file selection
-fileButton.change(function (e) {
-    console.log("Attempting to upload a file...");
+// Add events
+$('#form_boq').submit(function(e){
+    
     // Get File
-    let file = e.target.files[0];
+    file = e.target.files;
 
-    let fileName = file.name
+    console.log(file);
 
-    // Create Storage bar
-    let storageRef = firebase.storage().ref('BOQ/' + fileName)
+    var ExcelToJSON = function() {
 
-    // Upload file
-    let task = storageRef.put(file);
-
-    // Update storage bar
-    task.on("state_changed",
-        function progress(snapshot) {
-            console.log('Inside Progress bar');
-            var percentage = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-            uploader.value = percentage;
-            console.log('percentage = ' + percentage);
-            console.log('Uploader value = ' + uploader.value);
-        },
-        function error(err) {
-
-        },
-        function complete() {
-            alert('File Successfully Uploaded!');
-        }
-    );
-    //Get download URL of Excel Uploaded files
-
-        let boq_downloadLink = firebase.storage().ref('BOQ/'+fileName);
-        boq_downloadLink.getDownloadURL().then(function(url) {
-            console.log("url: "+url);
-    });
+        this.parseExcel = function(file) {
+          var reader = new FileReader();
+      
+          reader.onload = function(e) {
+            var data = e.target.result();
+            var workbook = XLSX.read(data, {
+              type: 'binary'
+            });
+      
+            workbook.SheetNames.forEach(function(sheetName) {
+              // Here is your object
+              var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+              var json_object = JSON.stringify(XL_row_object);
+              console.log(json_object);
+            });
+          };
+      
+          reader.onerror = function(ex) {
+            console.log(ex);
+          };
+      
+          reader.readAsBinaryString(file);
+        };
+    };
 });
 
-// New new Entry database file
 
-//checking whether the required fields are filled
 
-// function formcheck() {
-//     var fields = $(".ss-item-required")
-//           .find("select, textarea, input").serializeArray();
+//Listen for file selection
+// fileButton.change(function (e) {
+//     console.log("Attempting to upload a file...");
+//     // Get File
+//     let file = e.target.files[0];
 
-//     $.each(fields, function(i, field) {
-//       if (!field.value)
-//         alert(field.name + ' is required');
-//      }); 
-//     console.log(fields);
-//   }
+//     console.log(file);
 
-//submit form
+//     let fileName = file.name
+
+//     // Create Storage bar
+//     let storageRef = firebase.storage().ref('BOQ/' + fileName);
+
+//     // Upload file
+//     let task = storageRef.put(file);
+
+//     // Update storage bar
+//     task.on("state_changed",
+//         function progress(snapshot) {
+//             console.log('Inside Progress bar');
+//             var percentage = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+//             uploader.value = percentage;
+//             console.log('percentage = ' + percentage);
+//             console.log('Uploader value = ' + uploader.value);
+//         },
+//         function error(err) {
+
+//         },
+//         // function complete() {
+//         //     alert('File Successfully Uploaded!');
+//         // },
+//         function gettingDownloadURL() {
+//             // Upload completed successfully, now we can get the download URL
+//             task.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+//             console.log('File available at'+ downloadURL);
+
+//               //convert the csv file to json
+//             });
+//     });
+//   });
+
+
+//     //Get download URL of Excel Uploaded files
+
+//         let boq_downloadLink = firebase.storage().ref('BOQ/'+fileName);
+//         boq_downloadLink.getDownloadURL().then(function(url) {
+//             console.log("url: "+url);
+//     });
+
+//Database reference
 
 const dbRefObject = firebase.database().ref().child('databases'); //children of database object
 const dbRefElement = dbRefObject.child('new_Entry'); //children of database object
@@ -193,7 +228,7 @@ $(document).ready(function () {
 
         // Form Submission
         $("#form_newEntry").submit(function (config) {
-        $(this), console.log("Submit to Firebase");
+            $(this), console.log("Submit to Firebase");
 
             //adding data instead of replacing with the new value
 
@@ -246,7 +281,7 @@ $(document).ready(function () {
     // Snyc database changes
 
     dbRefElement.on('value', snap => {
-        
+
         //referencing all the child elements into variables
 
         let itemCode = snap.child("itemCode").val();
@@ -268,4 +303,3 @@ $(document).ready(function () {
         console.log(snap.val());
     });
 });
-
