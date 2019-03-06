@@ -159,55 +159,6 @@
             <hr />
 
 
-            <script type="text/javascript">
-                jQuery(document).ready(function ($) {
-                    // Sample Toastr Notification
-                    setTimeout(function () {
-                        var opts = {
-                            "closeButton": true,
-                            "debug": false,
-                            "positionClass": rtl() || public_vars.$pageContainer.hasClass('right-sidebar') ? "toast-top-left" : "toast-top-right",
-                            "toastClass": "black",
-                            "onclick": null,
-                            "showDuration": "300",
-                            "hideDuration": "1000",
-                            "timeOut": "50000",
-                            "extendedTimeOut": "50000",
-                            "showEasing": "swing",
-                            "hideEasing": "linear",
-                            "showMethod": "fadeIn",
-                            "hideMethod": "fadeOut"
-                        };
-
-                        toastr.success("You have been awarded with 1 year free subscription. Enjoy it!", "Account Subcription Updated", opts);
-                    }, 3000);
-
-
-                });
-
-
-                function getRandomInt(min, max) {
-                    return Math.floor(Math.random() * (max - min + 1)) + min;
-                }
-            </script>
-
-            <script type="text/javascript">
-                jQuery(document).ready(function ($) {
-                    var $table1 = jQuery('#table-1');
-
-                    // Initialize DataTable
-                    $table1.DataTable({
-                        "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-                        "bStateSave": true
-                    });
-
-                    // Initalize Select Dropdown after DataTables is created
-                    $table1.closest('.dataTables_wrapper').find('select').select2({
-                        minimumResultsForSearch: -1
-                    });
-                });
-            </script>
-
             <h3>Inventory</h3>
             <table class="table table-bordered datatable inventory_table" id="table-1">
                 <thead>
@@ -242,12 +193,6 @@
         
     </script>
 
-
-    <!-- Imported styles on this page -->
-    <link rel="stylesheet" href="assets/js/datatables/datatables.css">
-    <link rel="stylesheet" href="assets/js/select2/select2-bootstrap.css">
-    <link rel="stylesheet" href="assets/js/select2/select2.css">
-
     <!-- Bottom scripts (common) -->
     <script src="assets/js/gsap/TweenMax.min.js"></script>
     <script src="assets/js/jquery-ui/js/jquery-ui-1.10.3.minimal.min.js"></script>
@@ -256,16 +201,6 @@
     <script src="assets/js/resizeable.js"></script>
     <script src="assets/js/neon-api.js"></script>
 
-
-    <!-- Imported scripts on this page -->
-    <script src="assets/js/datatables/datatables.js"></script>
-    <script src="assets/js/select2/select2.min.js"></script>
-    <script src="assets/js/neon-chat.js"></script>
-    <script src="assets/js/toastr.js"></script>
-	<script src="assets/js/login.js"></script>
-	<script>
-		toastr_();
-    </script>
     
     <script src="assets/libraries/xlsx/xlsx.js" type="text/javascript"></script>
     <script src="assets/libraries/xlsx/xlsxworker.js" type="text/javascript"></script>
@@ -277,6 +212,7 @@
 
     <!-- Demo Settings -->
     <script src="assets/js/neon-demo.js"></script>
+    <script src="src/inventory.js"></script>
 
 </body>
 
