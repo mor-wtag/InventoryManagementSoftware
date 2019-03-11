@@ -90,9 +90,9 @@
 						</a>
 					</li>
 					<li class="has-sub">
-						<a href="documents.html">
+						<a href="entry_log.html">
 							<i class="entypo-newspaper"></i>
-							<span class="title">Documents</span>
+							<span class="title">Entry Log</span>
 						</a>
 					</li>
 					<li class="has-sub">
@@ -151,8 +151,7 @@
 			</div>
 			<hr />
 
-
-			<h3>Create a New Entry</h3>
+			<h3>Add a new item</h3>
 
 			<div class="col-md-12">
 
@@ -162,7 +161,7 @@
 
 						<div class="panel-heading">
 							<div class="panel-title">
-								Please fill in the form
+								Please fill out the form below to add a new item in the Inventory
 							</div>
 
 							<div class="panel-options">
@@ -182,7 +181,7 @@
 											<label for="field-1" class="col-sm-4 control-label">Item code</label>
 
 											<div class="col-sm-8">
-												<input type="text" class="form-control" id="itemCode" placeholder="Item code" required>
+												<input type="number" class="form-control" id="itemCode" placeholder="Item code" required>
 											</div>
 										</div>
 									</div>
@@ -200,7 +199,7 @@
 											<label for="field-1" class="col-sm-4 control-label">UoM</label>
 
 											<div class="col-sm-8">
-												<input type="text" class="form-control" id="uom" placeholder="Unit of Measurement">
+												<input type="text" class="form-control" id="uom" placeholder="Unit of Measurement" required>
 											</div>
 										</div>
 									</div>
@@ -213,7 +212,7 @@
 											<label for="field-1" class="col-sm-4 control-label">Quantity</label>
 
 											<div class="col-sm-8">
-												<input type="text" class="form-control" id="quantity" placeholder="Quantity">
+												<input type="number" class="form-control" id="quantity" placeholder="Quantity" required>
 											</div>
 										</div>
 
@@ -223,16 +222,16 @@
 											<label for="field-1" class="col-sm-4 control-label">Unit Rate</label>
 
 											<div class="col-sm-8">
-												<input type="text" class="form-control" id="unitRate" placeholder="Unit Rate (inclusive of Tax & VAT)">
+												<input type="number" class="form-control" id="unitRate" placeholder="Unit Rate (inclusive of Tax & VAT)" required>
 											</div>
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group ss-item-required">
-											<label for="field-1" class="col-sm-4 control-label">Total Amount</label>
+											<label for="field-1" class="col-sm-4 control-label">Main Contract</label>
 
 											<div class="col-sm-8">
-												<input type="text" class="form-control" id="totalAmount" placeholder="Total Amount (inclusive of Tax & VAT)">
+												<input type="text" class="form-control" id="mainContract" placeholder="Main Contract No." required>
 											</div>
 										</div>
 									</div>
@@ -240,21 +239,13 @@
 								<br>
 
 								<div class="row">
-									<div class="col-md-4">
-										<div class="form-group ss-item-required">
-											<label for="field-1" class="col-sm-4 control-label">Main Contract</label>
-
-											<div class="col-sm-8">
-												<input type="text" class="form-control" id="mainContract" placeholder="Main Contract No.">
-											</div>
-										</div>
-									</div>
+									
 									<div class="col-md-4">
 										<div class="form-group ss-item-required">
 											<label for="field-1" class="col-sm-4 control-label">Main Vendor</label>
 
 											<div class="col-sm-8">
-												<input type="text" class="form-control" id="mainVendor" placeholder="Main Vendor">
+												<input type="text" class="form-control" id="mainVendor" placeholder="Main Vendor" required>
 											</div>
 										</div>
 									</div>
@@ -263,7 +254,16 @@
 											<label for="field-1" class="col-sm-4 control-label">Novated Contract</label>
 
 											<div class="col-sm-8">
-												<input type="text" class="form-control" id="novatedContract" placeholder="Novated Contract No.">
+												<input type="text" class="form-control" id="novatedContract" placeholder="Novated Contract No." required>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group ss-item-required">
+											<label for="field-1" class="col-sm-4 control-label">Novated Vendor</label>
+
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="novatedVendor" placeholder="Novated Vendor" required>
 											</div>
 										</div>
 									</div>
@@ -271,21 +271,13 @@
 								<br>
 
 								<div class="row">
-									<div class="col-md-4">
-										<div class="form-group ss-item-required">
-											<label for="field-1" class="col-sm-4 control-label">Novated Vendor</label>
-
-											<div class="col-sm-8">
-												<input type="text" class="form-control" id="novatedVendor" placeholder="Novated Vendor">
-											</div>
-										</div>
-									</div>
+									
 									<div class="col-md-4">
 										<div class="form-group ss-item-required">
 											<label for="field-1" class="col-sm-4 control-label">PR No.</label>
 
 											<div class="col-sm-8">
-												<input type="text" class="form-control" id="PRnum" placeholder="Purchase Request No.">
+												<input type="number" class="form-control" id="PRnum" placeholder="Purchase Request No." required>
 											</div>
 										</div>
 									</div>
@@ -294,7 +286,16 @@
 											<label for="field-1" class="col-sm-4 control-label">PO No.</label>
 
 											<div class="col-sm-8">
-												<input type="text" class="form-control" id="POnum" placeholder="Purchase Order No.">
+												<input type="number" class="form-control" id="POnum" placeholder="Purchase Order No." required>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group ss-item-required">
+											<label for="field-1" class="col-sm-4 control-label">Delivery challan</label>
+
+											<div class="col-sm-8">
+												<input type="number" class="form-control" id="delChalNum" placeholder="Delivery challan No.">
 											</div>
 										</div>
 									</div>
@@ -304,23 +305,12 @@
 								<div class=row>
 									<div class="col-md-4">
 										<div class="form-group ss-item-required">
-											<label for="field-1" class="col-sm-4 control-label">Delivery challan</label>
-
-											<div class="col-sm-8">
-												<input type="text" class="form-control" id="delChalNum" placeholder="Delivery challan No.">
-											</div>
-										</div>
-
-									</div>
-									<div class="col-md-4">
-										<div class="form-group ss-item-required">
 											<label for="field-1" class="col-sm-4 control-label">Issue Date</label>
 
 											<div class="col-sm-8">
-												<input type="date" class="form-control" id="issueDate" placeholder="Issue Date">
+												<input type="date" class="form-control" id="issueDate" placeholder="Issue Date" required>
 											</div>
 										</div>
-
 									</div>
 									<div class="col-md-4">
 										<div class="col-md-3"></div>
@@ -355,7 +345,7 @@
 									<input type="file" value="upload" class="fileButton" id="fileButton_BOQ" />
 
 
-									<td style="float:left;"><a href="../Part 2/../Documents/BOQ-format for database.xlsx" download><img src='assets/images/excel.png' width="5%" height="5%"><br>BOQ Format-Example</a></td>
+									<td style="float:left;"><a href="../BOQ example.xls" download><img src='assets/images/excel.png' width="5%" height="5%"><br>BOQ Format-Example</a></td>
 								</div>
 							</div>
 						</div>
