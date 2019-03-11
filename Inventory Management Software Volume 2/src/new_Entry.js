@@ -16,12 +16,19 @@ let config = {
 let initialize = firebase.initializeApp(config);
 let database = firebase.database();
 
+let user_email;
+let today;
+let totalAmount;
+
 // RealTime listener
 //this checks to see if user is logged in 
 firebase.auth().onAuthStateChanged(user => {
     if (user) {
         //User is logged in, redirect to profile page
         console.log("Already Signed in...");
+        user_email = user.email;
+        console.log("user_email: "+user_email);
+        console.log("user: "+user.uid);
     }
     else {
         //user is not logged in, do nothing
@@ -39,6 +46,29 @@ const dbRefElement = dbRefObject.child('new_Entry'); //children of database obje
 
 $(document).ready(function () {
 
+    get_currentDate();
+
+    //get the date of current day
+
+    function get_currentDate(){
+        today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+    
+        if(dd<10) {
+            dd = '0'+dd
+        } 
+    
+        if(mm<10) {
+            mm = '0'+mm
+        } 
+    
+        today = yyyy + '-' + mm + '-' + dd;
+    }
+    
+    console.log("today: "+today);
+
     $("#submit_newEntry").click(function () {
 
         //saving the values of the form from the front end
@@ -48,7 +78,6 @@ $(document).ready(function () {
         let uom = $("#uom").val();
         let quantity = $("#quantity").val();
         let unitRate = $("#unitRate").val();
-        let totalAmount = $("#totalAmount").val();
         let mainContract = $("#mainContract").val();
         let mainVendor = $("#mainVendor").val();
         let novatedContract = $("#novatedContract").val();
@@ -58,9 +87,12 @@ $(document).ready(function () {
         let delChalNum = $("#delChalNum").val();
         let issueDate = $("#issueDate").val();
 
+        //calculate the total amount
+        totalAmount = (unitRate*quantity);
+
         // Form Submission
         $("#form_newEntry").submit(function (config) {
-        $(this), console.log("Submit to Firebase");
+            $(this), console.log("Submit to Firebase");
 
             //adding data instead of replacing with the new value
 
@@ -83,18 +115,27 @@ $(document).ready(function () {
                 'PRnum': PRnum,
                 'POnum': POnum,
                 'delChalNum': delChalNum,
-                'issueDate': issueDate
+                'issueDate': issueDate,
+                'user_email': user_email,
+                'current_date': today
             };
 
             //updating the database of New Enty in Firebase Console
 
-            dbRefElement.push(update_data_newEntry);
+            let pushing_newEntry = dbRefElement.push(update_data_newEntry).then(function (user) {
 
-            // newElement_newEntry.push(update_data_newEntry);
-
+                alert('Data uploaded Successfully!');
+                window.location.href = "./newEntry.html";
+                return false;
+    
+            }, function (err) {
+    
+                Error_String = err.code.substr(5);
+                alert('Data could not be uploaded' + ' | Error: ' +  Error_String);
+    
+            });
         });
     });
-
 
     //SECTION1
     //GET THE DATA FROM THE EXCEL FILE LIKE THE JS FIDDLE EXAMPLE
@@ -145,11 +186,20 @@ $(document).ready(function () {
     
                             dataToCommit[keyName] = valueC;
                         }
-
                     });
-
                     console.log(dataToCommit);
-                   database.ref('databases/new_Entry/').push(dataToCommit);
+                    let pushing_newEntry = dbRefElement.push(update_data_newEntry).then(function (user) {
+
+                        alert('Data uploaded Successfully!');
+                        window.location.href = "./newEntry.html";
+                        return false;
+            
+                    }, function (err) {
+            
+                        Error_String = err.code.substr(5);
+                        alert('Data could not be uploaded' + ' | Error: ' +  Error_String);
+            
+                    });
                 }); 
             });
         };
@@ -158,4 +208,3 @@ $(document).ready(function () {
         reader.readAsBinaryString(oFile);
     }
 });
-
