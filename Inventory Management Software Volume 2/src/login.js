@@ -60,7 +60,9 @@ $('input[type="submit"]').click(function () {
         const auth = firebase.auth();
 
         //   Sign In
-        const promise = auth.signInWithEmailAndPassword(email, password).then(function (user) {
+        const promise = auth.signInWithEmailAndPassword(email, password);
+        
+        promise.then(function (user) {
 
             alert('Logged in successfully! Redirecting to your profile..');
             window.location.href = "../index.html";
@@ -75,3 +77,16 @@ $('input[type="submit"]').click(function () {
     });
 });
 
+// promise.then(function(){
+
+// }, function(err){
+
+//    console.log(err.code)
+
+// });
+
+// promise.then(function(){
+
+// }, function(err){
+    
+// })

@@ -18,7 +18,10 @@ let database = firebase.database();
 
 let user_email;
 let today;
+let seconds;
 let totalAmount;
+let itemfound=false;
+console.log('itemfound: '+itemfound);
 
 // RealTime listener
 //this checks to see if user is logged in 
@@ -41,7 +44,7 @@ firebase.auth().onAuthStateChanged(user => {
 
 const dbRefObject = firebase.database().ref().child('databases'); //children of database object
 const dbRefElement = dbRefObject.child('new_Entry'); //children of database object
-
+const dbRefInventory =  dbRefObject.child('Inventorydatabase'); //children of database object
 //submit form
 
 $(document).ready(function () {
@@ -55,6 +58,7 @@ $(document).ready(function () {
         var dd = today.getDate();
         var mm = today.getMonth()+1; //January is 0!
         var yyyy = today.getFullYear();
+        seconds = today.getTime();
     
         if(dd<10) {
             dd = '0'+dd
@@ -68,10 +72,9 @@ $(document).ready(function () {
     }
     
     console.log("today: "+today);
+    console.log("seconds: "+seconds);
 
     $("#submit_newEntry").click(function () {
-
-        //saving the values of the form from the front end
 
         let itemCode = $("#itemCode").val();
         let itemName = $("#itemName").val();
@@ -99,7 +102,15 @@ $(document).ready(function () {
             // let newElement_newEntry = dbRefElement.push().setValue(itemCode);
 
             // Saving the user input into JSON format
-
+            //FOR INVENTORY DATABASE
+            let update_data_inventory = {
+                'itemCode': itemCode,
+                'itemName': itemName,
+                'uom': uom,
+                'quantity': quantity
+            };
+ 
+            //FOR NEW ENTRY LOG
             let update_data_newEntry =
             {
                 'itemCode': itemCode,
@@ -117,23 +128,66 @@ $(document).ready(function () {
                 'delChalNum': delChalNum,
                 'issueDate': issueDate,
                 'user_email': user_email,
-                'current_date': today
+                'current_date': today,
+                'seconds': seconds
             };
 
-            //updating the database of New Enty in Firebase Console
+            // //check to see if the data is present in the inventory
+            //READING FROM FIREBASE DATABASE
 
-            let pushing_newEntry = dbRefElement.push(update_data_newEntry).then(function (user) {
+            //SECTION1
 
-                alert('Data uploaded Successfully!');
-                window.location.href = "./newEntry.html";
-                return false;
-    
-            }, function (err) {
-    
-                Error_String = err.code.substr(5);
-                alert('Data could not be uploaded' + ' | Error: ' +  Error_String);
-    
+            let update_newEntry_log = database.ref('databases/entry_log').push(update_data_newEntry);
+
+            let response = database.ref('databases/InventoryDatabase').once('value');
+            
+            response.then(function(snapshot){
+
+                console.log('itemfound: '+itemfound);
+
+                let fetchedData = snapshot.val();
+
+                //loop through and parse the data then create TR in the table with this data
+                for (let uniqueKey in fetchedData){
+
+                    let itemCode_fetched = fetchedData[uniqueKey]['itemCode'];
+                    let existingQuantity = fetchedData[uniqueKey]['quantity'];
+                     
+                    if (itemCode_fetched == itemCode){
+
+                        //THIS MEANS ITEM EXISTS IN DATABASE SO JUST INCREMENT IT BY QUANTITY
+                        let newQuantity = parseInt(quantity) + parseInt(existingQuantity);
+
+                        let data = {
+                            'quantity': newQuantity
+                        }
+
+                        itemfound=true;
+
+                        database.ref('databases/InventoryDatabase/' + uniqueKey).update(data).then(function(){
+                            alert('Data updated Successfully!');
+                            window.location.href = "./newEntry.html";
+                            console.log('itemfound: '+itemfound);
+                            return false;
+                        });
+                    }
+                }
+
+                if (itemfound==false){
+                    // else{
+
+                    // THIS MEANS ITEM DOES NOT EXIST IN DATASBE SO JUST SET IT TO A NEW ITEM WITH QUANTITY
+
+                    // pushing the inventory data
+
+                    let pushing_inventory = database.ref('databases/InventoryDatabase/').push(update_data_inventory).then(function(){
+                        alert('Data uploaded Successfully!');
+                        window.location.href = "./newEntry.html";
+                        return false;
+                    });                   
+                }
             });
+            itemfound=false;
         });
     });
 
@@ -147,19 +201,22 @@ $(document).ready(function () {
         if(oFileIn.addEventListener) {
             oFileIn.addEventListener('change', filePicked, false);
         }
+        console.log('file has been submitted');
     });
 
 
     function filePicked(oEvent) {
+
         // Get The File From The Input
         var oFile = oEvent.target.files[0];
         var sFilename = oFile.name;
         let heading = ['itemCode','itemName','uom' ,'quantity','unitRate','totalAmount','mainContract','mainVendor','novatedContract','novatedVendor','PRnum','POnum','delChalNum','issueDate'];
+        
         // Create A File Reader HTML5
         var reader = new FileReader();
         
         // Ready The Event For When A File Gets Selected
-        reader.onload = function(e) {
+       let readingExcelFile =  reader.onload = function(e) {
             var data = e.target.result;
             var cfb = XLS.CFB.read(data, {type: 'binary'});
             var wb = XLS.parse_xlscfb(cfb);
@@ -187,24 +244,129 @@ $(document).ready(function () {
                             dataToCommit[keyName] = valueC;
                         }
                     });
-                    console.log(dataToCommit);
-                    let pushing_newEntry = dbRefElement.push(update_data_newEntry).then(function (user) {
 
-                        alert('Data uploaded Successfully!');
-                        window.location.href = "./newEntry.html";
-                        return false;
-            
-                    }, function (err) {
-            
-                        Error_String = err.code.substr(5);
-                        alert('Data could not be uploaded' + ' | Error: ' +  Error_String);
-            
+                    console.log(dataToCommit);
+
+                    // check to see if the item code is present in the json format formed from the excel data format
+
+                    let itemCodeToCommit = dataToCommit['itemCode'];
+                    let quantityToCommit = dataToCommit['quantity'];
+                    let nameToCommit = dataToCommit['itemName'];
+                    let uomToCommit = dataToCommit['uom'];
+
+                    let update_data_inventory = {
+                        'itemCode': itemCodeToCommit,
+                        'itemName': nameToCommit,
+                        'uom': uomToCommit,
+                        'quantity': quantityToCommit
+                    }
+
+                    console.log("update_data_inventory: "+update_data_inventory);
+
+                    let response = database.ref('databases/InventoryDatabase').once('value');
+
+                    response.then(function (snapshot) {
+
+                        let fetchedData = snapshot.val();
+
+                        //loop through and parse the data then create TR in the table with this data
+                        for (let uniqueKey in fetchedData) {
+
+                            let itemCode_fetched = fetchedData[uniqueKey]['itemCode'];
+                            let existingQuantity = fetchedData[uniqueKey]['quantity'];
+
+                            if (itemCode_fetched == itemCodeToCommit) {
+
+                                console.log("---Item matched!---");
+                                console.log("Item code: "+itemCode_fetched);
+
+                                //THIS MEANS ITEM EXISTS IN DATABASE SO JUST INCREMENT IT BY QUANTITY
+                                let newQuantity = parseInt(quantityToCommit) + parseInt(existingQuantity);
+
+                                let data = {
+                                    'quantity': newQuantity
+                                }
+
+                                itemfound=true;
+
+                                database.ref('databases/InventoryDatabase/' + uniqueKey).update(data).then(function () {
+                                    // alert('Data uploaded Successfully!');
+                                    // window.location.href = "./newEntry.html";
+                                    // return false;
+                                    console.log("...Data updated....");
+                                });
+                            }
+                        }
+
+                        if (itemfound==false){
+                            // else {
+
+                                //THIS MEANS ITEM DOES NOT EXIST IN DATASBE SO JUST SET IT TO A NEW ITEM WITH QUANTITY
+
+                                //pushing the inventory data
+
+                            let pushing_inventory = database.ref('databases/InventoryDatabase/').push(update_data_inventory).then(function () {
+                                // alert('Data uploaded Successfully!');
+                                // window.location.href = "./newEntry.html";
+                                // return false;
+                                console.log("...Data not found, updating table");
+                            });
+                        }
+                        itemfound=false;
                     });
+
                 }); 
             });
         };
+
+    //     alert('Data uploaded Successfully!');
+    // window.location.href = "./newEntry.html";
+    // return false;
         
-        // Tell JS To Start Reading The File.. You could delay this if desired
-        reader.readAsBinaryString(oFile);
+    // Tell JS To Start Reading The File.. You could delay this if desired
+    reader.readAsBinaryString(oFile);
     }
+
 });
+
+
+
+// >> first read data to find if item already exists -- Database.read
+
+// >> IF DATA EXISTS -- access the same item and increment its child by given number -- Database.write
+
+// >> IF DATA NOT EXISTS -- push the new item and create a new field for this item with given number -- Database.write
+
+
+// //SECTION1
+// let dataExists = undefined;
+
+// After reading Data, if exists set dataExists = true; if not exists set dataExists = false
+
+
+// //SECTION2
+
+// if (dataExists == true){
+
+//     >> IF DATA EXISTS-- access the same item and increment its child by given number-- Database.write
+// }
+
+// else {
+//     >> IF DATA NOT EXISTS-- push the new item and create a new field for this item with given number-- Database.write
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
