@@ -164,11 +164,12 @@ $(document).ready(function () {
 
                         itemfound=true;
 
-                        database.ref('databases/InventoryDatabase/' + uniqueKey).update(data).then(function(){
+                        let updating_inventory = database.ref('databases/InventoryDatabase/' + uniqueKey).update(data).then(function(){
                             alert('Data updated Successfully!');
-                            window.location.href = "./newEntry.html";
                             console.log('itemfound: '+itemfound);
+                            location.reload();
                             return false;
+                            
                         });
                     }
                 }
@@ -182,9 +183,9 @@ $(document).ready(function () {
 
                     let pushing_inventory = database.ref('databases/InventoryDatabase/').push(update_data_inventory).then(function(){
                         alert('Data uploaded Successfully!');
-                        window.location.href = "./newEntry.html";
+                        location.reload();
                         return false;
-                    });                   
+                    });              
                 }
             });
             itemfound=false;
