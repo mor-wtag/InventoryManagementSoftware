@@ -74,7 +74,49 @@ $(document).ready(function () {
     console.log("today: "+today);
     console.log("seconds: "+seconds);
 
-    $("#submit_newEntry").click(function () {
+    //This code here is for the event when filter icon is clicked.
+
+    //after the filter icon being clicked, a function will be triggered where the system will look for the item code in the database return the item name and unit of measurement and fill in the respected fields
+    
+    $("#filter_itemCode").click(function(){
+        console.log("Filter item code button has been clicked!");
+
+        let searched_itemcode = $("#itemCode").val();
+
+        //searching for item in database
+
+        let response = database.ref('databases/InventoryDatabase').once('value');
+            
+        response.then(function(snapshot){
+
+            let fetchedData = snapshot.val();
+
+            //loop through and parse the data to check if the item code is present in the database
+            for (let uniqueKey in fetchedData){
+
+                let itemCode_filtered = fetchedData[uniqueKey]['itemCode'];
+                let itemName_filtered = fetchedData[uniqueKey]['itemName'];
+                let uom_filtered = fetchedData[uniqueKey]['uom'];
+                let quantity_filtered = fetchedData[uniqueKey]['quantity'];
+                     
+                if (itemCode_filtered == searched_itemcode){
+                    console.log('Found the item code you were looking for: '+ itemCode_filtered+', '+itemName_filtered+', '+uom_filtered);
+                    
+                    //item code matched, now append the other information in the input text fields
+
+                    $('#itemName').val(itemName_filtered);
+                    $('#uom').val(uom_filtered);
+                    $('#quantity').val(quantity_filtered);
+
+                }
+            }
+        });
+    });
+    
+
+    //on clicking the submit new Entry button
+
+    $("#form_newEntry").submit(function (config) {
 
         let itemCode = $("#itemCode").val();
         let itemName = $("#itemName").val();
@@ -94,7 +136,7 @@ $(document).ready(function () {
         totalAmount = (unitRate*quantity);
 
         // Form Submission
-        $("#form_newEntry").submit(function (config) {
+        
             $(this), console.log("Submit to Firebase");
 
             //adding data instead of replacing with the new value
@@ -189,7 +231,7 @@ $(document).ready(function () {
                 }
             });
             itemfound=false;
-        });
+        // });
     });
 
     //SECTION1
@@ -329,32 +371,6 @@ $(document).ready(function () {
     }
 
 });
-
-
-
-// >> first read data to find if item already exists -- Database.read
-
-// >> IF DATA EXISTS -- access the same item and increment its child by given number -- Database.write
-
-// >> IF DATA NOT EXISTS -- push the new item and create a new field for this item with given number -- Database.write
-
-
-// //SECTION1
-// let dataExists = undefined;
-
-// After reading Data, if exists set dataExists = true; if not exists set dataExists = false
-
-
-// //SECTION2
-
-// if (dataExists == true){
-
-//     >> IF DATA EXISTS-- access the same item and increment its child by given number-- Database.write
-// }
-
-// else {
-//     >> IF DATA NOT EXISTS-- push the new item and create a new field for this item with given number-- Database.write
-// }
 
 
 
