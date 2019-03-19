@@ -13,6 +13,8 @@
 
 	<title>InventoryManagementSoftware|newEntry</title>
 
+
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 	<link rel="stylesheet" href="assets/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css">
 	<link rel="stylesheet" href="assets/css/font-icons/entypo/css/entypo.css">
 	<link rel="stylesheet" href="assets/css/bootstrap.css">
@@ -20,6 +22,7 @@
 	<link rel="stylesheet" href="assets/css/neon-theme.css">
 	<link rel="stylesheet" href="assets/css/neon-forms.css">
 	<link rel="stylesheet" href="assets/css/custom.css">
+
 
 	<script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
 
@@ -181,7 +184,12 @@
 											<label for="field-1" class="col-sm-4 control-label">Item code</label>
 
 											<div class="col-sm-8">
-												<input type="number" class="form-control" id="itemCode" placeholder="Item code" required>
+												<div class="col-sm-8">
+													<input type="number" class="form-control" id="itemCode" placeholder="Item code" required>
+												</div>
+												<div class="col-sm-2">
+													<i class="fas fa-filter" id='filter_itemCode'></i>
+												</div>
 											</div>
 										</div>
 									</div>
@@ -199,7 +207,23 @@
 											<label for="field-1" class="col-sm-4 control-label">UoM</label>
 
 											<div class="col-sm-8">
-												<input type="text" class="form-control" id="uom" placeholder="Unit of Measurement" required>
+												<!-- <input type="text" class="form-control" id="uom" placeholder="Unit of Measurement" required> -->
+												<select type="text" class="form-control" id="uom" placeholder="Unit of Measurement" required>
+													<option value="Pcs">Pcs</option>
+													<option value="Cu.M">Cu.M</option>
+													<option value="sq. M">sq. M</option>
+													<option value="Nos">Nos</option>
+													<option value="meter">meter</option>
+													<option value="SFT">SFT</option>
+													<option value="CFT">CFT</option>
+													<option value="Feet">Feet</option>
+													<option value="Sets">Sets</option>
+													<option value="Job">Job</option>
+													<option value="Coil">Coil</option>
+													<option value="LS">LS</option>
+													<option value="Litre">Litre</option>
+													<option value="No.">No.</option>
+												</select>
 											</div>
 										</div>
 									</div>
@@ -212,7 +236,13 @@
 											<label for="field-1" class="col-sm-4 control-label">Quantity</label>
 
 											<div class="col-sm-8">
-												<input type="number" class="form-control" id="quantity" placeholder="Quantity" required>
+												<!-- Spinner Markup -->
+												<div class="input-spinner">
+														<button type="button" class="btn btn-default">-</button>
+														<input type="text" class="form-control size-1" id="quantity" value="1" required>
+														<button type="button" class="btn btn-default">+</button>
+													</div>
+												
 											</div>
 										</div>
 
