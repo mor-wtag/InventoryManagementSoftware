@@ -234,6 +234,18 @@ $(document).ready(function () {
         // });
     });
 
+    //CODE FOR ADDING A NEW ITEM 
+
+    //when the add new item button is clicked, this function will append the same form below the existing form, filling up some of the common input fields with the information existing in the current item entry form
+    
+    for (let i=0; i<5;i++){
+
+        $('#add_newItem'+i).click(function(){
+
+            $('#form_newEntry'+i).css('display','inline-block');
+        });
+    }
+
     //SECTION1
     //GET THE DATA FROM THE EXCEL FILE LIKE THE JS FIDDLE EXAMPLE
 

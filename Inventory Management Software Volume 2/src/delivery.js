@@ -135,12 +135,12 @@ $(document).ready(function () {
 
         // Saving the user input into JSON format
         //FOR INVENTORY DATABASE
-        let update_data_inventory = {
-            'itemCode': itemCode,
-            'itemName': itemName,
-            'uom': uom,
-            'quantity': quantity
-        };
+        // let update_data_inventory = {
+        //     'itemCode': itemCode,
+        //     'itemName': itemName,
+        //     'uom': uom,
+        //     'quantity': quantity
+        // };
 
         //FOR DELIVERY LOG
         let update_data_delivery_log =
@@ -150,15 +150,6 @@ $(document).ready(function () {
             'uom': uom,
             'quantity': quantity,
             'destination': destination,
-            // 'unitRate': unitRate,
-            // 'totalAmount': totalAmount,
-            // 'mainContract': mainContract,
-            // 'mainVendor': mainVendor,
-            // 'novatedContract': novatedContract,
-            // 'novatedVendor': novatedVendor,
-            // 'PRnum': PRnum,
-            // 'POnum': POnum,
-            // 'delChalNum': delChalNum,
             'issueDate': issueDate,
             'user_email': user_email,
             'current_date': today
