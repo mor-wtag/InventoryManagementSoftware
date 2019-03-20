@@ -65,7 +65,7 @@ function initialLoad(){
     //FETCH DATA FROM THE DATABASE AND INITIALIZE EVERYTHING IN OUR PAGE
 
     //READING FROM FIREBASE DATABASE
-    database.ref('databases/entry_log').orderByChild("seconds").once('value').then(function(snapshot){
+    database.ref('databases/entry_log').once('value').then(function(snapshot){
 
         let fetchedData = snapshot.val();
         console.log(fetchedData);
