@@ -113,7 +113,7 @@
 						</a>
 					</li>
 					<li class="has-sub">
-						<a href="delivery.html">
+						<a href="delivery.html?#">
 							<i class="entypo-bag"></i>
 							<span class="title">Delivery</span>
 						</a>
@@ -156,24 +156,7 @@
 
 			<hr />
             
-            <h3>Documents</h3>
-
-            <script type="text/javascript">
-                jQuery(document).ready(function ($) {
-                    var $table1 = jQuery('#table-1');
-
-                    // Initialize DataTable
-                    $table1.DataTable({
-                        "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-                        "bStateSave": true
-                    });
-
-                    // Initalize Select Dropdown after DataTables is created
-                    $table1.closest('.dataTables_wrapper').find('select').select2({
-                        minimumResultsForSearch: -1
-                    });
-                });
-            </script>
+            <h3>Entry Log</h3>
 
             <table class="table table-bordered datatable" id="table-1">
                 <thead>

@@ -111,7 +111,7 @@
 						</a>
 					</li>
 					<li class="has-sub">
-						<a href="delivery.html">
+						<a href="delivery.html?#">
 							<i class="entypo-bag"></i>
 							<span class="title">Delivery</span>
 						</a>
@@ -156,7 +156,7 @@
 
 			<h3>Add a new item</h3>
 
-			<div class="col-md-12">
+			<div class="col-md-12" id='newEntryForm_wrapper'>
 
 				<div class="row">
 
@@ -351,12 +351,564 @@
 									<div class="col-md-4">
 										<div class="col-md-3"></div>
 										<div class="col-md-8">
-											<input type="button" value="Add a new Item" class='new_item' id='add_newItem'>
+											<input type="button" value="Add a new Item" class='new_item' id='add_newItem1'>
 										</div>
 									</div>
 								</div>
 								<br>
 							</div>
+						</form>
+
+						<form class='formClass' id='form_newEntry1' style="display:none;" action="#">
+								<div class="panel-body">
+	
+									<div class="row">
+										<div class="col-md-4">
+											<div class="form-group ss-item-required">
+												<label for="field-1" class="col-sm-4 control-label">Item code</label>
+	
+												<div class="col-sm-8">
+													<div class="col-sm-9 itemCode_col_length" >
+														<input type="number" class="form-control" id="itemCode" placeholder="Item code" required>
+													</div>
+													<div class="col-sm-2">
+														<i class="fas fa-filter" id='filter_itemCode'></i>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="form-group ss-item-required">
+												<label for="field-1" class="col-sm-4 control-label">Item name</label>
+	
+												<div class="col-sm-8">
+													<input type="text" class="form-control" id="itemName" placeholder="Item name" required>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="form-group ss-item-required">
+												<label for="field-1" class="col-sm-4 control-label">UoM</label>
+	
+												<div class="col-sm-8">
+													<!-- <input type="text" class="form-control" id="uom" placeholder="Unit of Measurement" required> -->
+													<select type="text" class="form-control" id="uom" placeholder="Unit of Measurement" required>
+														<option value="Pcs">Pcs</option>
+														<option value="Cu.M">Cu.M</option>
+														<option value="sq. M">sq. M</option>
+														<option value="Nos">Nos</option>
+														<option value="meter">meter</option>
+														<option value="SFT">SFT</option>
+														<option value="CFT">CFT</option>
+														<option value="Feet">Feet</option>
+														<option value="Sets">Sets</option>
+														<option value="Job">Job</option>
+														<option value="Coil">Coil</option>
+														<option value="LS">LS</option>
+														<option value="Litre">Litre</option>
+														<option value="No.">No.</option>
+													</select>
+												</div>
+											</div>
+										</div>
+									</div>
+									<br>
+	
+									<div class="row">
+										<div class="col-md-4">
+											<div class="form-group ss-item-required">
+												<label for="field-1" class="col-sm-4 control-label">Quantity</label>
+	
+												<div class="col-sm-8">
+													<!-- Spinner Markup -->
+													<div class="input-spinner">
+															<button type="button" class="btn btn-default">-</button>
+															<input type="text" class="form-control size-1" id="quantity" value="1" required>
+															<button type="button" class="btn btn-default">+</button>
+														</div>
+													
+												</div>
+											</div>
+	
+										</div>
+										<div class="col-md-4">
+											<div class="form-group ss-item-required">
+												<label for="field-1" class="col-sm-4 control-label">Unit Rate</label>
+	
+												<div class="col-sm-8">
+													<input type="number" class="form-control" id="unitRate" placeholder="Unit Rate (inclusive of Tax & VAT)" >
+												</div>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="form-group ss-item-required">
+												<label for="field-1" class="col-sm-4 control-label">Main Contract</label>
+	
+												<div class="col-sm-8">
+													<input type="text" class="form-control" id="mainContract" placeholder="Main Contract No." >
+												</div>
+											</div>
+										</div>
+									</div>
+									<br>
+	
+									<div class="row">
+										
+										<div class="col-md-4">
+											<div class="form-group ss-item-required">
+												<label for="field-1" class="col-sm-4 control-label">Main Vendor</label>
+	
+												<div class="col-sm-8">
+													<input type="text" class="form-control" id="mainVendor" placeholder="Main Vendor" >
+												</div>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="form-group ss-item-required">
+												<label for="field-1" class="col-sm-4 control-label">Novated Contract</label>
+	
+												<div class="col-sm-8">
+													<input type="text" class="form-control" id="novatedContract" placeholder="Novated Contract No." >
+												</div>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="form-group ss-item-required">
+												<label for="field-1" class="col-sm-4 control-label">Novated Vendor</label>
+	
+												<div class="col-sm-8">
+													<input type="text" class="form-control" id="novatedVendor" placeholder="Novated Vendor" >
+												</div>
+											</div>
+										</div>
+									</div>
+									<br>
+	
+									<div class="row">
+										
+										<div class="col-md-4">
+											<div class="form-group ss-item-required">
+												<label for="field-1" class="col-sm-4 control-label">PR No.</label>
+	
+												<div class="col-sm-8">
+													<input type="number" class="form-control" id="PRnum" placeholder="Purchase Request No." >
+												</div>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="form-group ss-item-required">
+												<label for="field-1" class="col-sm-4 control-label">PO No.</label>
+	
+												<div class="col-sm-8">
+													<input type="number" class="form-control" id="POnum" placeholder="Purchase Order No." >
+												</div>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="form-group ss-item-required">
+												<label for="field-1" class="col-sm-4 control-label">Delivery challan</label>
+	
+												<div class="col-sm-8">
+													<input type="number" class="form-control" id="delChalNum" placeholder="Delivery challan No.">
+												</div>
+											</div>
+										</div>
+									</div>
+									<br>
+	
+									<div class=row>
+										<div class="col-md-4">
+											<div class="form-group ss-item-required">
+												<label for="field-1" class="col-sm-4 control-label">Issue Date</label>
+	
+												<div class="col-sm-8">
+													<input type="date" class="form-control" id="issueDate" placeholder="Issue Date" >
+												</div>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="col-md-3"></div>
+											<div class="col-md-8">
+												<input type="submit" value="Submit" class='fileButton' id='submit_newEntry'>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="col-md-3"></div>
+											<div class="col-md-8">
+												<input type="button" value="Add a new Item" class='new_item' id='add_newItem2'>
+											</div>
+										</div>
+									</div>
+									<br>
+								</div>
+						</form>
+
+						<form class='formClass' id='form_newEntry2' style="display:none;" action="#">
+									<div class="panel-body">
+		
+										<div class="row">
+											<div class="col-md-4">
+												<div class="form-group ss-item-required">
+													<label for="field-1" class="col-sm-4 control-label">Item code</label>
+		
+													<div class="col-sm-8">
+														<div class="col-sm-9 itemCode_col_length" >
+															<input type="number" class="form-control" id="itemCode" placeholder="Item code" required>
+														</div>
+														<div class="col-sm-2">
+															<i class="fas fa-filter" id='filter_itemCode'></i>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group ss-item-required">
+													<label for="field-1" class="col-sm-4 control-label">Item name</label>
+		
+													<div class="col-sm-8">
+														<input type="text" class="form-control" id="itemName" placeholder="Item name" required>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group ss-item-required">
+													<label for="field-1" class="col-sm-4 control-label">UoM</label>
+		
+													<div class="col-sm-8">
+														<!-- <input type="text" class="form-control" id="uom" placeholder="Unit of Measurement" required> -->
+														<select type="text" class="form-control" id="uom" placeholder="Unit of Measurement" required>
+															<option value="Pcs">Pcs</option>
+															<option value="Cu.M">Cu.M</option>
+															<option value="sq. M">sq. M</option>
+															<option value="Nos">Nos</option>
+															<option value="meter">meter</option>
+															<option value="SFT">SFT</option>
+															<option value="CFT">CFT</option>
+															<option value="Feet">Feet</option>
+															<option value="Sets">Sets</option>
+															<option value="Job">Job</option>
+															<option value="Coil">Coil</option>
+															<option value="LS">LS</option>
+															<option value="Litre">Litre</option>
+															<option value="No.">No.</option>
+														</select>
+													</div>
+												</div>
+											</div>
+										</div>
+										<br>
+		
+										<div class="row">
+											<div class="col-md-4">
+												<div class="form-group ss-item-required">
+													<label for="field-1" class="col-sm-4 control-label">Quantity</label>
+		
+													<div class="col-sm-8">
+														<!-- Spinner Markup -->
+														<div class="input-spinner">
+																<button type="button" class="btn btn-default">-</button>
+																<input type="text" class="form-control size-1" id="quantity" value="1" required>
+																<button type="button" class="btn btn-default">+</button>
+															</div>
+														
+													</div>
+												</div>
+		
+											</div>
+											<div class="col-md-4">
+												<div class="form-group ss-item-required">
+													<label for="field-1" class="col-sm-4 control-label">Unit Rate</label>
+		
+													<div class="col-sm-8">
+														<input type="number" class="form-control" id="unitRate" placeholder="Unit Rate (inclusive of Tax & VAT)" >
+													</div>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group ss-item-required">
+													<label for="field-1" class="col-sm-4 control-label">Main Contract</label>
+		
+													<div class="col-sm-8">
+														<input type="text" class="form-control" id="mainContract" placeholder="Main Contract No." >
+													</div>
+												</div>
+											</div>
+										</div>
+										<br>
+		
+										<div class="row">
+											
+											<div class="col-md-4">
+												<div class="form-group ss-item-required">
+													<label for="field-1" class="col-sm-4 control-label">Main Vendor</label>
+		
+													<div class="col-sm-8">
+														<input type="text" class="form-control" id="mainVendor" placeholder="Main Vendor" >
+													</div>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group ss-item-required">
+													<label for="field-1" class="col-sm-4 control-label">Novated Contract</label>
+		
+													<div class="col-sm-8">
+														<input type="text" class="form-control" id="novatedContract" placeholder="Novated Contract No." >
+													</div>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group ss-item-required">
+													<label for="field-1" class="col-sm-4 control-label">Novated Vendor</label>
+		
+													<div class="col-sm-8">
+														<input type="text" class="form-control" id="novatedVendor" placeholder="Novated Vendor" >
+													</div>
+												</div>
+											</div>
+										</div>
+										<br>
+		
+										<div class="row">
+											
+											<div class="col-md-4">
+												<div class="form-group ss-item-required">
+													<label for="field-1" class="col-sm-4 control-label">PR No.</label>
+		
+													<div class="col-sm-8">
+														<input type="number" class="form-control" id="PRnum" placeholder="Purchase Request No." >
+													</div>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group ss-item-required">
+													<label for="field-1" class="col-sm-4 control-label">PO No.</label>
+		
+													<div class="col-sm-8">
+														<input type="number" class="form-control" id="POnum" placeholder="Purchase Order No." >
+													</div>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group ss-item-required">
+													<label for="field-1" class="col-sm-4 control-label">Delivery challan</label>
+		
+													<div class="col-sm-8">
+														<input type="number" class="form-control" id="delChalNum" placeholder="Delivery challan No.">
+													</div>
+												</div>
+											</div>
+										</div>
+										<br>
+		
+										<div class=row>
+											<div class="col-md-4">
+												<div class="form-group ss-item-required">
+													<label for="field-1" class="col-sm-4 control-label">Issue Date</label>
+		
+													<div class="col-sm-8">
+														<input type="date" class="form-control" id="issueDate" placeholder="Issue Date" >
+													</div>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="col-md-3"></div>
+												<div class="col-md-8">
+													<input type="submit" value="Submit" class='fileButton' id='submit_newEntry'>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="col-md-3"></div>
+												<div class="col-md-8">
+													<input type="button" value="Add a new Item" class='new_item' id='add_newItem3'>
+												</div>
+											</div>
+										</div>
+										<br>
+									</div>
+						</form>
+
+						<form class='formClass' id='form_newEntry3' style="display:none;" action="#">
+										<div class="panel-body">
+			
+											<div class="row">
+												<div class="col-md-4">
+													<div class="form-group ss-item-required">
+														<label for="field-1" class="col-sm-4 control-label">Item code</label>
+			
+														<div class="col-sm-8">
+															<div class="col-sm-9 itemCode_col_length" >
+																<input type="number" class="form-control" id="itemCode" placeholder="Item code" required>
+															</div>
+															<div class="col-sm-2">
+																<i class="fas fa-filter" id='filter_itemCode'></i>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group ss-item-required">
+														<label for="field-1" class="col-sm-4 control-label">Item name</label>
+			
+														<div class="col-sm-8">
+															<input type="text" class="form-control" id="itemName" placeholder="Item name" required>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group ss-item-required">
+														<label for="field-1" class="col-sm-4 control-label">UoM</label>
+			
+														<div class="col-sm-8">
+															<!-- <input type="text" class="form-control" id="uom" placeholder="Unit of Measurement" required> -->
+															<select type="text" class="form-control" id="uom" placeholder="Unit of Measurement" required>
+																<option value="Pcs">Pcs</option>
+																<option value="Cu.M">Cu.M</option>
+																<option value="sq. M">sq. M</option>
+																<option value="Nos">Nos</option>
+																<option value="meter">meter</option>
+																<option value="SFT">SFT</option>
+																<option value="CFT">CFT</option>
+																<option value="Feet">Feet</option>
+																<option value="Sets">Sets</option>
+																<option value="Job">Job</option>
+																<option value="Coil">Coil</option>
+																<option value="LS">LS</option>
+																<option value="Litre">Litre</option>
+																<option value="No.">No.</option>
+															</select>
+														</div>
+													</div>
+												</div>
+											</div>
+											<br>
+			
+											<div class="row">
+												<div class="col-md-4">
+													<div class="form-group ss-item-required">
+														<label for="field-1" class="col-sm-4 control-label">Quantity</label>
+			
+														<div class="col-sm-8">
+															<!-- Spinner Markup -->
+															<div class="input-spinner">
+																	<button type="button" class="btn btn-default">-</button>
+																	<input type="text" class="form-control size-1" id="quantity" value="1" required>
+																	<button type="button" class="btn btn-default">+</button>
+																</div>
+															
+														</div>
+													</div>
+			
+												</div>
+												<div class="col-md-4">
+													<div class="form-group ss-item-required">
+														<label for="field-1" class="col-sm-4 control-label">Unit Rate</label>
+			
+														<div class="col-sm-8">
+															<input type="number" class="form-control" id="unitRate" placeholder="Unit Rate (inclusive of Tax & VAT)" >
+														</div>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group ss-item-required">
+														<label for="field-1" class="col-sm-4 control-label">Main Contract</label>
+			
+														<div class="col-sm-8">
+															<input type="text" class="form-control" id="mainContract" placeholder="Main Contract No." >
+														</div>
+													</div>
+												</div>
+											</div>
+											<br>
+			
+											<div class="row">
+												
+												<div class="col-md-4">
+													<div class="form-group ss-item-required">
+														<label for="field-1" class="col-sm-4 control-label">Main Vendor</label>
+			
+														<div class="col-sm-8">
+															<input type="text" class="form-control" id="mainVendor" placeholder="Main Vendor" >
+														</div>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group ss-item-required">
+														<label for="field-1" class="col-sm-4 control-label">Novated Contract</label>
+			
+														<div class="col-sm-8">
+															<input type="text" class="form-control" id="novatedContract" placeholder="Novated Contract No." >
+														</div>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group ss-item-required">
+														<label for="field-1" class="col-sm-4 control-label">Novated Vendor</label>
+			
+														<div class="col-sm-8">
+															<input type="text" class="form-control" id="novatedVendor" placeholder="Novated Vendor" >
+														</div>
+													</div>
+												</div>
+											</div>
+											<br>
+			
+											<div class="row">
+												
+												<div class="col-md-4">
+													<div class="form-group ss-item-required">
+														<label for="field-1" class="col-sm-4 control-label">PR No.</label>
+			
+														<div class="col-sm-8">
+															<input type="number" class="form-control" id="PRnum" placeholder="Purchase Request No." >
+														</div>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group ss-item-required">
+														<label for="field-1" class="col-sm-4 control-label">PO No.</label>
+			
+														<div class="col-sm-8">
+															<input type="number" class="form-control" id="POnum" placeholder="Purchase Order No." >
+														</div>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group ss-item-required">
+														<label for="field-1" class="col-sm-4 control-label">Delivery challan</label>
+			
+														<div class="col-sm-8">
+															<input type="number" class="form-control" id="delChalNum" placeholder="Delivery challan No.">
+														</div>
+													</div>
+												</div>
+											</div>
+											<br>
+			
+											<div class=row>
+												<div class="col-md-4">
+													<div class="form-group ss-item-required">
+														<label for="field-1" class="col-sm-4 control-label">Issue Date</label>
+			
+														<div class="col-sm-8">
+															<input type="date" class="form-control" id="issueDate" placeholder="Issue Date" >
+														</div>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="col-md-3"></div>
+													<div class="col-md-8">
+														<input type="submit" value="Submit" class='fileButton' id='submit_newEntry'>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="col-md-3"></div>
+													<div class="col-md-8">
+														<input type="button" value="Add a new Item" class='new_item' id='add_newItem4'>
+													</div>
+												</div>
+											</div>
+											<br>
+										</div>
 						</form>
 					</div>
 				</div>
