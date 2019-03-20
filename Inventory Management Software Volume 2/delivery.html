@@ -13,6 +13,7 @@
 
     <title>InventoryManagementSoftware | Inventory</title>
 
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css">
     <link rel="stylesheet" href="assets/css/font-icons/entypo/css/entypo.css">
     <link rel="stylesheet" href="assets/css/bootstrap.css">
@@ -22,6 +23,8 @@
     <link rel="stylesheet" href="assets/css/custom.css">
 
     <script src="assets/js/jquery-1.11.3.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
+
 
     <!--[if lt IE 9]><script src="assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
 
@@ -34,7 +37,7 @@
 
 </head>
 
-<body class="page-body  page-fade" data-url="http://neon.dev">
+<body class="page-body  page-fade">
 
     <div class="page-container">
         <!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
@@ -155,117 +158,117 @@
 
             <hr />
 
-
-            <script type="text/javascript">
-                jQuery(document).ready(function ($) {
-                    // Sample Toastr Notification
-                    setTimeout(function () {
-                        var opts = {
-                            "closeButton": true,
-                            "debug": false,
-                            "positionClass": rtl() || public_vars.$pageContainer.hasClass('right-sidebar') ? "toast-top-left" : "toast-top-right",
-                            "toastClass": "black",
-                            "onclick": null,
-                            "showDuration": "300",
-                            "hideDuration": "1000",
-                            "timeOut": "50000",
-                            "extendedTimeOut": "50000",
-                            "showEasing": "swing",
-                            "hideEasing": "linear",
-                            "showMethod": "fadeIn",
-                            "hideMethod": "fadeOut"
-                        };
-
-                        toastr.success("You have been awarded with 1 year free subscription. Enjoy it!", "Account Subcription Updated", opts);
-                    }, 3000);
-
-
-                });
-
-
-                function getRandomInt(min, max) {
-                    return Math.floor(Math.random() * (max - min + 1)) + min;
-                }
-            </script>
-
-            <script type="text/javascript">
-                jQuery(document).ready(function ($) {
-                    var $table1 = jQuery('#table-1');
-
-                    // Initialize DataTable
-                    $table1.DataTable({
-                        "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-                        "bStateSave": true
-                    });
-
-                    // Initalize Select Dropdown after DataTables is created
-                    $table1.closest('.dataTables_wrapper').find('select').select2({
-                        minimumResultsForSearch: -1
-                    });
-                });
-            </script>
-
             <h3>Create a Delivery Issue</h3>
 
-            <table class="table table-bordered">
+            <form class='formClass' id='form_delivery'>
+                    <div class="panel-body">
 
-                <tbody>
-                    <tr>
-                        <td>
-                            <label class="col-sm-3 control-label">Issuing Date</label>
-                            <input type="date" class="col-sm-4">
-                        </td>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group ss-item-required">
+                                    <label for="field-1" class="col-sm-4 control-label">Item code</label>
 
-                        <td>
-                            <label class="col-sm-2 control-label">Item Code</label>
-
-                            <div class="col-sm-8">
-                                <div class="input-group">
-                                    <input type="text" name="typeahead_prefetch" class="form-control typeahead"
-                                        data-prefetch="data/countries.json" placeholder="Type the name of the item you are sending" />
-                                    <span class="input-group-addon"><i class="entypo-globe"></i></span>
+                                    <div class="col-sm-8">
+                                        <div class="col-sm-9 itemCode_col_length" >
+                                            <input type="number" class="form-control" id="itemCode" placeholder="Item code" required>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <i class="fas fa-filter" id='filter_itemCode'></i>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </td>
-                    </tr>
+                            <div class="col-md-4">
+                                <div class="form-group ss-item-required">
+                                    <label for="field-1" class="col-sm-4 control-label">Item name</label>
 
-                    <tr>
-                        <td>
-                            <label class="col-sm-3 control-label">Quantity</label>
-
-                            <div class="col-sm-8">
-
-                                <!-- Spinner Markup -->
-                                <div class="input-spinner">
-                                    <button type="button" class="btn btn-default">-</button>
-                                    <input type="text" class="form-control size-1" value="1" />
-                                    <button type="button" class="btn btn-default">+</button>
-                                </div>
-
-                            </div>
-                        </td>
-                        <td>
-                            <label class="col-sm-2 control-label">Destination</label>
-
-                            <div class="col-sm-8">
-                                <div class="input-group">
-                                    <input type="text" name="typeahead_prefetch" class="form-control typeahead"
-                                        data-prefetch="data/countries.json" placeholder="Type the name of the Destination you are sending the item" />
-                                    <span class="input-group-addon"><i class="entypo-globe"></i></span>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="itemName" placeholder="Item name" required>
+                                    </div>
                                 </div>
                             </div>
-                            
-                            <div class="col-sm-2">
-                                <input type="submit" value="Submit" class='fileButton' style='margin-right:65%'>
+                            <div class="col-md-4">
+                                <div class="form-group ss-item-required">
+                                    <label for="field-1" class="col-sm-4 control-label">UoM</label>
+
+                                    <div class="col-sm-8">
+                                        <!-- <input type="text" class="form-control" id="uom" placeholder="Unit of Measurement" required> -->
+                                        <select type="text" class="form-control" id="uom" placeholder="Unit of Measurement" required>
+                                            <option value="Pcs">Pcs</option>
+                                            <option value="Cu.M">Cu.M</option>
+                                            <option value="sq. M">sq. M</option>
+                                            <option value="Nos">Nos</option>
+                                            <option value="meter">meter</option>
+                                            <option value="SFT">SFT</option>
+                                            <option value="CFT">CFT</option>
+                                            <option value="Feet">Feet</option>
+                                            <option value="Sets">Sets</option>
+                                            <option value="Job">Job</option>
+                                            <option value="Coil">Coil</option>
+                                            <option value="LS">LS</option>
+                                            <option value="Litre">Litre</option>
+                                            <option value="No.">No.</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
-                        </td>
+                        </div>
+                        <br>
 
-                    </tr>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group ss-item-required">
+                                    <label for="field-1" class="col-sm-4 control-label">Quantity</label>
 
+                                    <div class="col-sm-8">
+                                        <!-- Spinner Markup -->
+                                        <div class="input-spinner">
+                                            <button type="button" class="btn btn-default">-</button>
+                                            <input type="text" class="form-control size-1" id="quantity" value="1" required>
+                                            <button type="button" class="btn btn-default">+</button>
+                                        </div>  
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group ss-item-required">
+                                    <label for="field-1" class="col-sm-4 control-label">Destination</label>
 
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="destination" placeholder="Enter where the item is being delivered" required >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group ss-item-required">
+                                    <label for="field-1" class="col-sm-4 control-label">Issue Date</label>
+    
+                                    <div class="col-sm-8">
+                                        <input type="date" class="form-control" id="issueDate" placeholder="Issue Date" required >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
 
-                </tbody>
-            </table>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-8">
+                                    <input type="submit" value="Submit" class='fileButton' id='submit_newEntry'>
+                                </div>
+                            </div>
+                        </div>
+                            <!-- <div class="col-md-4">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-8">
+                                    <input type="button" value="Add a new Item" class='new_item' id='add_newItem'>
+                                </div>
+                            </div> -->
+                        <!-- </div> -->
+                        <br>
+                    </div>
+                </form>
 
 
             <h3>Delivered Item Details</h3>
@@ -727,8 +730,8 @@
     <!-- Imported scripts on this page -->
     <script src="assets/js/datatables/datatables.js"></script>
     <script src="assets/js/select2/select2.min.js"></script>
-    <script src="assets/js/neon-chat.js"></script>
     <script src="assets/js/bootstrap-datepicker.js"></script>
+    <script src="src/delivery.js"></script>
 
 
     <!-- JavaScripts initializations and stuff -->
