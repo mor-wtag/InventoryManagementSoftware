@@ -21,6 +21,7 @@ let today;
 let seconds;
 let totalAmount;
 let itemfound=false;
+let item_uploaded=false;
 console.log('itemfound: '+itemfound);
 
 // RealTime listener
@@ -78,101 +79,119 @@ $(document).ready(function () {
 
     //after the filter icon being clicked, a function will be triggered where the system will look for the item code in the database return the item name and unit of measurement and fill in the respected fields
     
-    $("#filter_itemCode").click(function(){
-        console.log("Filter item code button has been clicked!");
+    //looping through and ensuring all the filter buttons work the same way
 
-        let searched_itemcode = $("#itemCode").val();
+    for (let itemAdded_index=0; itemAdded_index<5; itemAdded_index++){
 
-        //searching for item in database
+        $("#filter_itemCode"+itemAdded_index).click(function(){
+            console.log("Filter item code button has been clicked!");
 
-        let response = database.ref('databases/InventoryDatabase').once('value');
-            
-        response.then(function(snapshot){
+            let searched_itemcode = $("#itemCode"+itemAdded_index).val();
 
-            let fetchedData = snapshot.val();
+            //searching for item in database
 
-            //loop through and parse the data to check if the item code is present in the database
-            for (let uniqueKey in fetchedData){
+            let response = database.ref('databases/InventoryDatabase').once('value');
+                
+            response.then(function(snapshot){
 
-                let itemCode_filtered = fetchedData[uniqueKey]['itemCode'];
-                let itemName_filtered = fetchedData[uniqueKey]['itemName'];
-                let uom_filtered = fetchedData[uniqueKey]['uom'];
-                let quantity_filtered = fetchedData[uniqueKey]['quantity'];
-                     
-                if (itemCode_filtered == searched_itemcode){
-                    console.log('Found the item code you were looking for: '+ itemCode_filtered+', '+itemName_filtered+', '+uom_filtered);
-                    
-                    //item code matched, now append the other information in the input text fields
+                let fetchedData = snapshot.val();
 
-                    $('#itemName').val(itemName_filtered);
-                    $('#uom').val(uom_filtered);
-                    $('#quantity').val(quantity_filtered);
+                //loop through and parse the data to check if the item code is present in the database
+                for (let uniqueKey in fetchedData){
 
+                    let itemCode_filtered = fetchedData[uniqueKey]['itemCode'];
+                    let itemName_filtered = fetchedData[uniqueKey]['itemName'];
+                    let uom_filtered = fetchedData[uniqueKey]['uom'];
+                    let quantity_filtered = fetchedData[uniqueKey]['quantity'];
+                        
+                    if (itemCode_filtered == searched_itemcode){
+                        console.log('Found the item code you were looking for: '+ itemCode_filtered+', '+itemName_filtered+', '+uom_filtered);
+                        
+                        //item code matched, now append the other information in the input text fields
+
+                        $('#itemName'+itemAdded_index).val(itemName_filtered);
+                        $('#uom'+itemAdded_index).val(uom_filtered);
+                        $('#quantity'+itemAdded_index).val(quantity_filtered);
+
+                    }
                 }
-            }
+            });
         });
-    });
-    
+    }
 
     //on clicking the submit new Entry button
+    //Looping through to see which button has been clicked and how many entries have to be submitted
+    
+    for (let add_item_index=0; add_item_index<5; add_item_index++){
 
-    $("#form_newEntry").submit(function (config) {
+        $("#form_newEntry"+add_item_index).submit(function (config) {
 
-        let itemCode = $("#itemCode").val();
-        let itemName = $("#itemName").val();
-        let uom = $("#uom").val();
-        let quantity = $("#quantity").val();
-        let unitRate = $("#unitRate").val();
-        let mainContract = $("#mainContract").val();
-        let mainVendor = $("#mainVendor").val();
-        let novatedContract = $("#novatedContract").val();
-        let novatedVendor = $("#novatedVendor").val();
-        let PRnum = $("#PRnum").val();
-        let POnum = $("#POnum").val();
-        let delChalNum = $("#delChalNum").val();
-        let issueDate = $("#issueDate").val();
+            let submitButtonClicked = "#form_newEntry"+add_item_index;
 
-        //calculate the total amount
-        totalAmount = (unitRate*quantity);
+            console.log('The submit button that has een clicked has the id: '+submitButtonClicked);
 
-        // Form Submission
+            //after knowing which submit button has been clicked, loop through and convert each form entry into a JSON to be pushed into the database later 
+
+            for (let form_fields_index=0; form_fields_index<=add_item_index; form_fields_index++){
+
+                let itemCode = $("#itemCode"+form_fields_index).val();
+                let itemName = $("#itemName"+form_fields_index).val();
+                let uom = $("#uom"+form_fields_index).val();
+                let quantity = $("#quantity"+form_fields_index).val();
+                let unitRate = $("#unitRate"+form_fields_index).val();
+                let mainContract = $("#mainContract"+form_fields_index).val();
+                let mainVendor = $("#mainVendor"+form_fields_index).val();
+                let novatedContract = $("#novatedContract"+form_fields_index).val();
+                let novatedVendor = $("#novatedVendor"+form_fields_index).val();
+                let PRnum = $("#PRnum"+form_fields_index).val();
+                let POnum = $("#POnum"+form_fields_index).val();
+                let delChalNum = $("#delChalNum"+form_fields_index).val();
+                let issueDate = $("#issueDate"+form_fields_index).val();
+
+                //calculate the total amount
+                totalAmount = (unitRate*quantity);
+
+                // Form Submission
+                
+                $(this), console.log("Submit to Firebase");
+
+                //adding data instead of replacing with the new value
+
+                // let newElement_newEntry = dbRefElement.push().setValue(itemCode);
+
+                // Saving the user input into JSON format
+                //FOR INVENTORY DATABASE
+                let update_data_inventory = {
+                    'itemCode': itemCode,
+                    'itemName': itemName,
+                    'uom': uom,
+                    'quantity': quantity
+                };
         
-            $(this), console.log("Submit to Firebase");
+                //FOR NEW ENTRY LOG
+                let update_data_newEntry =
+                {
+                    'itemCode': itemCode,
+                    'itemName': itemName,
+                    'uom': uom,
+                    'quantity': quantity,
+                    'unitRate': unitRate,
+                    'totalAmount': totalAmount,
+                    'mainContract': mainContract,
+                    'mainVendor': mainVendor,
+                    'novatedContract': novatedContract,
+                    'novatedVendor': novatedVendor,
+                    'PRnum': PRnum,
+                    'POnum': POnum,
+                    'delChalNum': delChalNum,
+                    'issueDate': issueDate,
+                    'user_email': user_email,
+                    'current_date': today,
+                };
 
-            //adding data instead of replacing with the new value
-
-            // let newElement_newEntry = dbRefElement.push().setValue(itemCode);
-
-            // Saving the user input into JSON format
-            //FOR INVENTORY DATABASE
-            let update_data_inventory = {
-                'itemCode': itemCode,
-                'itemName': itemName,
-                'uom': uom,
-                'quantity': quantity
-            };
- 
-            //FOR NEW ENTRY LOG
-            let update_data_newEntry =
-            {
-                'itemCode': itemCode,
-                'itemName': itemName,
-                'uom': uom,
-                'quantity': quantity,
-                'unitRate': unitRate,
-                'totalAmount': totalAmount,
-                'mainContract': mainContract,
-                'mainVendor': mainVendor,
-                'novatedContract': novatedContract,
-                'novatedVendor': novatedVendor,
-                'PRnum': PRnum,
-                'POnum': POnum,
-                'delChalNum': delChalNum,
-                'issueDate': issueDate,
-                'user_email': user_email,
-                'current_date': today,
-                'seconds': seconds
-            };
+            
+            console.log(update_data_inventory);
+            console.log(update_data_newEntry);
 
             // //check to see if the data is present in the inventory
             //READING FROM FIREBASE DATABASE
@@ -207,10 +226,10 @@ $(document).ready(function () {
                         itemfound=true;
 
                         let updating_inventory = database.ref('databases/InventoryDatabase/' + uniqueKey).update(data).then(function(){
-                            alert('Data updated Successfully!');
-                            console.log('itemfound: '+itemfound);
-                            location.reload();
-                            return false;
+                            // alert('Data updated Successfully!');
+                            // console.log('itemfound: '+itemfound);
+                            // location.reload();
+                            // return false;
                             
                         });
                     }
@@ -224,27 +243,70 @@ $(document).ready(function () {
                     // pushing the inventory data
 
                     let pushing_inventory = database.ref('databases/InventoryDatabase/').push(update_data_inventory).then(function(){
-                        alert('Data uploaded Successfully!');
-                        location.reload();
-                        return false;
+                        // alert('Data uploaded Successfully!');
+                        // location.reload();
+                        // return false;
                     });              
                 }
             });
+
+            if (form_fields_index==add_item_index){
+                alert('Data uploaded Successfully!');
+                location.reload();
+                return false;
+            }
             itemfound=false;
         // });
-    });
+            }
+        });
+
 
     //CODE FOR ADDING A NEW ITEM 
 
     //when the add new item button is clicked, this function will append the same form below the existing form, filling up some of the common input fields with the information existing in the current item entry form
-    
-    for (let i=0; i<5;i++){
 
-        $('#add_newItem'+i).click(function(){
+        $('#add_newItem'+add_item_index).click(function(){
 
-            $('#form_newEntry'+i).css('display','inline-block');
+            $('#form_newEntry'+add_item_index).css('display','block');
+            $('#submit_newEntry'+add_item_index).css('display','none');
+            $('#add_newItem'+add_item_index).css('display','none');
+
+            //this code here is to fill up all the common spaces if a new item is to be added
+            //system will take the previously entered data and complete the data fields
+
+            let previous_index= add_item_index-1;
+
+            console.log("current index:"+ add_item_index);
+            console.log("previous index:"+ previous_index);
+
+            //getting the values of the fields from the previous index
+
+            let mainContract_prev = $("#mainContract"+previous_index).val();
+            let mainVendor_prev = $("#mainVendor"+previous_index).val();
+            let novatedContract_prev = $("#novatedContract"+previous_index).val();
+            let novatedVendor_prev = $("#novatedVendor"+previous_index).val();
+            let PRnum_prev = $("#PRnum"+previous_index).val();
+            let POnum_prev = $("#POnum"+previous_index).val();
+            let delChalNum_prev = $("#delChalNum"+previous_index).val();
+            let issueDate_prev = $("#issueDate"+previous_index).val();
+
+            //after getting the values of the previous fields, set the pre fetched values into the new item to be added fields
+
+            $("#mainContract"+add_item_index).val(mainContract_prev);
+            $("#mainVendor"+add_item_index).val(mainVendor_prev);
+            $("#novatedContract"+add_item_index).val(novatedContract_prev);
+            $("#novatedVendor"+add_item_index).val(novatedVendor_prev);
+            $("#PRnum"+add_item_index).val(PRnum_prev);
+            $("#POnum"+add_item_index).val(POnum_prev);
+            $("#delChalNum"+add_item_index).val(delChalNum_prev);
+            $("#issueDate"+add_item_index).val(issueDate_prev);
+
         });
+
+
     }
+
+
 
     //SECTION1
     //GET THE DATA FROM THE EXCEL FILE LIKE THE JS FIDDLE EXAMPLE
