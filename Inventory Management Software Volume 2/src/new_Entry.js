@@ -22,6 +22,7 @@ let seconds;
 let totalAmount;
 let itemfound=false;
 let item_uploaded=false;
+let getting_selected_item_boolean=false;
 
 console.log('itemfound: '+itemfound);
 
@@ -94,82 +95,112 @@ $(document).ready(function () {
 
             let fetchedData = snapshot.val();
 
-        
+            //FILTER BUTTON FOR THE ITEM CODE
 
-        //FILTER BUTTON FOR THE ITEM CODE
+            $("#filter_itemCode"+itemAdded_index).click(function(){
+                console.log("Filter item code button has been clicked!");
 
-        $("#filter_itemCode"+itemAdded_index).click(function(){
-            console.log("Filter item code button has been clicked!");
+                //loop through and parse the data to check if the item code is present in the database
+                for (let uniqueKey in fetchedData){
 
-            //loop through and parse the data to check if the item code is present in the database
-            for (let uniqueKey in fetchedData){
+                    let itemCode_filtered = fetchedData[uniqueKey]['itemCode'];
+                    let itemName_filtered = fetchedData[uniqueKey]['itemName'];
+                    let uom_filtered = fetchedData[uniqueKey]['uom'];
+                    let quantity_filtered = fetchedData[uniqueKey]['quantity'];
+                            
+                    if (itemCode_filtered == searched_itemcode){
+                        console.log('Found the item code you were looking for: '+ itemCode_filtered+', '+itemName_filtered+', '+uom_filtered);
+                            
+                        //item code matched, now append the other information in the input text fields
 
-                let itemCode_filtered = fetchedData[uniqueKey]['itemCode'];
-                let itemName_filtered = fetchedData[uniqueKey]['itemName'];
-                let uom_filtered = fetchedData[uniqueKey]['uom'];
-                let quantity_filtered = fetchedData[uniqueKey]['quantity'];
-                        
-                if (itemCode_filtered == searched_itemcode){
-                    console.log('Found the item code you were looking for: '+ itemCode_filtered+', '+itemName_filtered+', '+uom_filtered);
-                        
-                    //item code matched, now append the other information in the input text fields
+                        $('#itemName'+itemAdded_index).val(itemName_filtered);
+                        $('#uom'+itemAdded_index).val(uom_filtered);
+                        $('#quantity'+itemAdded_index).val(quantity_filtered);
 
-                    $('#itemName'+itemAdded_index).val(itemName_filtered);
-                    $('#uom'+itemAdded_index).val(uom_filtered);
-                    $('#quantity'+itemAdded_index).val(quantity_filtered);
-
-                }
-            }
-        });
-        
-        //FILTER BUTTON FOR ITEM NAME
-
-        //this code here is to filter item names and populate a dropdown table consisting of all the item names in the inventory the entered data is similar to
-        //onclicking the filter button beside the item name
-
-        $("#filter_itemName"+itemAdded_index).click(function(){
-
-            //get item name from the input field
-            let searched_itemName = $("#itemName"+itemAdded_index).val();
-
-            //loop through and parse the data to check if the item name is present in the database
-            for (let uniqueKey in fetchedData){
-
-                let itemCode_filtered = fetchedData[uniqueKey]['itemCode'];
-                let itemName_filtered = fetchedData[uniqueKey]['itemName'];
-                let uom_filtered = fetchedData[uniqueKey]['uom'];
-                let quantity_filtered = fetchedData[uniqueKey]['quantity'];
-
-                //converting both to string format 
-
-                let string_itemName_filtered = itemName_filtered.toString();
-                let string_searched_itemName = searched_itemName.toString();
-
-                //look for partial/complete match of the item Name searched string and the item name found in database string
-
-                if (string_itemName_filtered.includes(string_searched_itemName)){
-
-                    console.log('Found the item code you were looking for: '+ string_itemName_filtered);
-
-                    //checking to see whether we have found the first item that matched or its the subsequent items
-
-                    if (first_item_matched==false){
-
-                        //append html code to insert dynamic dropdown select function
-                        $("#itemName"+itemAdded_index).append(`<datalist id='itemName_dropdown'></datalist>`);
-                        first_item_matched=true;
-
-                        console.log("First item appended!");
                     }
-
-                    //checked if its the first item, now add the option values
-
-                    $("#itemName_dropdown").append(`<option id='${string_itemName_filtered}'>${string_itemName_filtered}</option>`);
                 }
-            }
-        });
-    });
+            });
+            
+            //FILTER BUTTON FOR ITEM NAME
 
+            //this code here is to filter item names and populate a dropdown table consisting of all the item names in the inventory the entered data is similar to
+            //onclicking the filter button beside the item name
+
+            $("#filter_itemName"+itemAdded_index).click(function(){
+
+                //get item name from the input field
+                let searched_itemName = $("#itemName"+itemAdded_index).val();
+
+                //loop through and parse the data to check if the item name is present in the database
+                for (let uniqueKey in fetchedData){
+
+                    getting_selected_item_boolean=true;
+
+                    let itemCode_filtered = fetchedData[uniqueKey]['itemCode'];
+                    let itemName_filtered = fetchedData[uniqueKey]['itemName'];
+                    let uom_filtered = fetchedData[uniqueKey]['uom'];
+                    let quantity_filtered = fetchedData[uniqueKey]['quantity'];
+
+                    //converting both to string format 
+
+                    let string_itemName_filtered = itemName_filtered.toString();
+                    let string_searched_itemName = searched_itemName.toString();
+
+                    //look for partial/complete match of the item Name searched string and the item name found in database string
+
+                    if (string_itemName_filtered.includes(string_searched_itemName)){
+
+                        console.log('Found the item code you were looking for: '+ string_itemName_filtered);
+
+                        //checking to see whether we have found the first item that matched or its the subsequent items
+
+                        if (first_item_matched==false){
+
+                            //append html code to insert dynamic dropdown select function
+                            $("#itemName"+itemAdded_index).append(`<datalist id='itemName_dropdown'></datalist>`);
+                            first_item_matched=true;
+
+                            console.log("First item appended! Dropdown injected");
+                        }
+
+                        //checked if its the first item, now add the option values
+
+                        $("#itemName_dropdown").append(`<option id='${string_itemName_filtered}'>${string_itemName_filtered}</option>`);
+
+                        console.log('Items appended: '+string_itemName_filtered);
+                    }
+                }
+
+                if (getting_selected_item_boolean==true){
+
+                item_filter_button_clicked();
+                }
+
+                //this is the code to get the selected item from the dropdown list and then get the itemcode, quantity, uom from the database
+                // var selected_itemName = $('#itemName_dropdown :selected').text();
+            });
+
+            function item_filter_button_clicked(){
+                let item_filter_button_clicked = $( "#itemName_dropdown" ).val();
+                console.log("item_filter_button_clicked: "+item_filter_button_clicked);
+            }
+
+            // if (item_filter_button_clicked=true)
+
+            //     $( "#itemName_dropdown" )
+            //     .change(function() {
+            //         var str = "";
+            //         $( "#itemName_dropdown option:selected" ).each(function() {
+            //         str += $( this ).text() + " ";
+            //         });
+            //         // $( "div" ).text( str );
+            //         console.log("The item selected is: "+str);
+            //     })
+            //     .trigger( "change" );
+            // });
+
+
+        });
     }
 
     //on clicking the submit new Entry button
@@ -302,9 +333,9 @@ $(document).ready(function () {
         });
 
 
-    //CODE FOR ADDING A NEW ITEM 
+        //CODE FOR ADDING A NEW ITEM 
 
-    //when the add new item button is clicked, this function will append the same form below the existing form, filling up some of the common input fields with the information existing in the current item entry form
+        //when the add new item button is clicked, this function will append the same form below the existing form, filling up some of the common input fields with the information existing in the current item entry form
 
         $('#add_newItem'+add_item_index).click(function(){
 
@@ -352,8 +383,6 @@ $(document).ready(function () {
 
 
         });
-
-
     }
 
     //SECTION1
@@ -494,19 +523,3 @@ $(document).ready(function () {
     }
 
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
