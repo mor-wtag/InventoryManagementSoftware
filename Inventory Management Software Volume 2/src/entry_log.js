@@ -57,11 +57,6 @@ function initialLoad(){
     
     console.log("today: "+today);
 
-    //searching realtime database
-    //checking to see if the item code is present in the database already
-
-    // var searchForItemCode = database.ref('databases/new_Entry').once('value').
-
     //FETCH DATA FROM THE DATABASE AND INITIALIZE EVERYTHING IN OUR PAGE
 
     //READING FROM FIREBASE DATABASE

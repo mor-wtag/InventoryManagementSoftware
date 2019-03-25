@@ -301,6 +301,15 @@ $(document).ready(function () {
             $("#delChalNum"+add_item_index).val(delChalNum_prev);
             $("#issueDate"+add_item_index).val(issueDate_prev);
 
+            //this code here is to hide a form when the close button is clicked
+
+            $("#hide_form"+add_item_index).click(function(){
+                $('#form_newEntry'+add_item_index).css('display','none');
+                $('#submit_newEntry'+add_item_index).css('display','inline-block');
+                $('#add_newItem'+add_item_index).css('display','inline-block');
+            })
+
+
         });
 
 
@@ -432,9 +441,20 @@ $(document).ready(function () {
                         itemfound=false;
                     });
 
-                }); 
+                });
+
+                // data.then(function(){
+                alert("Successfully added items from the file");
+                location.reload();
+                return false;
+                // })
             });
+            // return data;
         };
+
+        // readingExcelFile.then(function(data){
+        //     alert("Successfully uploaded data from file!");
+        // })
 
     //     alert('Data uploaded Successfully!');
     // window.location.href = "./newEntry.html";
