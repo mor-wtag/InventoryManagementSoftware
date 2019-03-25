@@ -22,6 +22,7 @@ let seconds;
 let totalAmount;
 let itemfound=false;
 let item_uploaded=false;
+
 console.log('itemfound: '+itemfound);
 
 // RealTime listener
@@ -83,40 +84,92 @@ $(document).ready(function () {
 
     for (let itemAdded_index=0; itemAdded_index<5; itemAdded_index++){
 
+        let first_item_matched=false;
+
+        //searching for item in database
+
+        let response = database.ref('databases/InventoryDatabase').once('value');
+                
+        response.then(function(snapshot){
+
+            let fetchedData = snapshot.val();
+
+        
+
+        //FILTER BUTTON FOR THE ITEM CODE
+
         $("#filter_itemCode"+itemAdded_index).click(function(){
             console.log("Filter item code button has been clicked!");
 
-            let searched_itemcode = $("#itemCode"+itemAdded_index).val();
+            //loop through and parse the data to check if the item code is present in the database
+            for (let uniqueKey in fetchedData){
 
-            //searching for item in database
-
-            let response = database.ref('databases/InventoryDatabase').once('value');
-                
-            response.then(function(snapshot){
-
-                let fetchedData = snapshot.val();
-
-                //loop through and parse the data to check if the item code is present in the database
-                for (let uniqueKey in fetchedData){
-
-                    let itemCode_filtered = fetchedData[uniqueKey]['itemCode'];
-                    let itemName_filtered = fetchedData[uniqueKey]['itemName'];
-                    let uom_filtered = fetchedData[uniqueKey]['uom'];
-                    let quantity_filtered = fetchedData[uniqueKey]['quantity'];
+                let itemCode_filtered = fetchedData[uniqueKey]['itemCode'];
+                let itemName_filtered = fetchedData[uniqueKey]['itemName'];
+                let uom_filtered = fetchedData[uniqueKey]['uom'];
+                let quantity_filtered = fetchedData[uniqueKey]['quantity'];
                         
-                    if (itemCode_filtered == searched_itemcode){
-                        console.log('Found the item code you were looking for: '+ itemCode_filtered+', '+itemName_filtered+', '+uom_filtered);
+                if (itemCode_filtered == searched_itemcode){
+                    console.log('Found the item code you were looking for: '+ itemCode_filtered+', '+itemName_filtered+', '+uom_filtered);
                         
-                        //item code matched, now append the other information in the input text fields
+                    //item code matched, now append the other information in the input text fields
 
-                        $('#itemName'+itemAdded_index).val(itemName_filtered);
-                        $('#uom'+itemAdded_index).val(uom_filtered);
-                        $('#quantity'+itemAdded_index).val(quantity_filtered);
+                    $('#itemName'+itemAdded_index).val(itemName_filtered);
+                    $('#uom'+itemAdded_index).val(uom_filtered);
+                    $('#quantity'+itemAdded_index).val(quantity_filtered);
 
-                    }
                 }
-            });
+            }
         });
+        
+        //FILTER BUTTON FOR ITEM NAME
+
+        //this code here is to filter item names and populate a dropdown table consisting of all the item names in the inventory the entered data is similar to
+        //onclicking the filter button beside the item name
+
+        $("#filter_itemName"+itemAdded_index).click(function(){
+
+            //get item name from the input field
+            let searched_itemName = $("#itemName"+itemAdded_index).val();
+
+            //loop through and parse the data to check if the item name is present in the database
+            for (let uniqueKey in fetchedData){
+
+                let itemCode_filtered = fetchedData[uniqueKey]['itemCode'];
+                let itemName_filtered = fetchedData[uniqueKey]['itemName'];
+                let uom_filtered = fetchedData[uniqueKey]['uom'];
+                let quantity_filtered = fetchedData[uniqueKey]['quantity'];
+
+                //converting both to string format 
+
+                let string_itemName_filtered = itemName_filtered.toString();
+                let string_searched_itemName = searched_itemName.toString();
+
+                //look for partial/complete match of the item Name searched string and the item name found in database string
+
+                if (string_itemName_filtered.includes(string_searched_itemName)){
+
+                    console.log('Found the item code you were looking for: '+ string_itemName_filtered);
+
+                    //checking to see whether we have found the first item that matched or its the subsequent items
+
+                    if (first_item_matched==false){
+
+                        //append html code to insert dynamic dropdown select function
+                        $("#itemName"+itemAdded_index).append(`<datalist id='itemName_dropdown'></datalist>`);
+                        first_item_matched=true;
+
+                        console.log("First item appended!");
+                    }
+
+                    //checked if its the first item, now add the option values
+
+                    $("#itemName_dropdown").append(`<option id='${string_itemName_filtered}'>${string_itemName_filtered}</option>`);
+                }
+            }
+        });
+    });
+
     }
 
     //on clicking the submit new Entry button
@@ -156,10 +209,8 @@ $(document).ready(function () {
                 $(this), console.log("Submit to Firebase");
 
                 //adding data instead of replacing with the new value
-
-                // let newElement_newEntry = dbRefElement.push().setValue(itemCode);
-
                 // Saving the user input into JSON format
+
                 //FOR INVENTORY DATABASE
                 let update_data_inventory = {
                     'itemCode': itemCode,
@@ -226,26 +277,16 @@ $(document).ready(function () {
                         itemfound=true;
 
                         let updating_inventory = database.ref('databases/InventoryDatabase/' + uniqueKey).update(data).then(function(){
-                            // alert('Data updated Successfully!');
-                            // console.log('itemfound: '+itemfound);
-                            // location.reload();
-                            // return false;
-                            
                         });
                     }
                 }
 
                 if (itemfound==false){
-                    // else{
 
                     // THIS MEANS ITEM DOES NOT EXIST IN DATASBE SO JUST SET IT TO A NEW ITEM WITH QUANTITY
-
                     // pushing the inventory data
 
                     let pushing_inventory = database.ref('databases/InventoryDatabase/').push(update_data_inventory).then(function(){
-                        // alert('Data uploaded Successfully!');
-                        // location.reload();
-                        // return false;
                     });              
                 }
             });
@@ -314,8 +355,6 @@ $(document).ready(function () {
 
 
     }
-
-
 
     //SECTION1
     //GET THE DATA FROM THE EXCEL FILE LIKE THE JS FIDDLE EXAMPLE
@@ -447,18 +486,8 @@ $(document).ready(function () {
                 alert("Successfully added items from the file");
                 location.reload();
                 return false;
-                // })
             });
-            // return data;
         };
-
-        // readingExcelFile.then(function(data){
-        //     alert("Successfully uploaded data from file!");
-        // })
-
-    //     alert('Data uploaded Successfully!');
-    // window.location.href = "./newEntry.html";
-    // return false;
         
     // Tell JS To Start Reading The File.. You could delay this if desired
     reader.readAsBinaryString(oFile);
