@@ -100,6 +100,8 @@ $(document).ready(function () {
             $("#filter_itemCode"+itemAdded_index).click(function(){
                 console.log("Filter item code button has been clicked!");
 
+                let searched_itemcode=$("#itemCode"+itemAdded_index).val();
+
                 //loop through and parse the data to check if the item code is present in the database
                 for (let uniqueKey in fetchedData){
 
@@ -116,26 +118,31 @@ $(document).ready(function () {
                         $('#itemName'+itemAdded_index).val(itemName_filtered);
                         $('#uom'+itemAdded_index).val(uom_filtered);
                         $('#quantity'+itemAdded_index).val(quantity_filtered);
+                    }
 
+                    else{
+                        console.log("Cannot find the item you were looking for yet: "+searched_itemcode);
                     }
                 }
             });
             
             //FILTER BUTTON FOR ITEM NAME
+           
+            //this code here is to filter item names and populate a dropdown table consisting of all the item names in the inventory the entered data is similar to the item searched
+            //onpressing any key the filter button beside the item name
 
-            //this code here is to filter item names and populate a dropdown table consisting of all the item names in the inventory the entered data is similar to
-            //onclicking the filter button beside the item name
+            $("#itemName"+itemAdded_index).on("keypress",function(){
 
-            $("#filter_itemName"+itemAdded_index).click(function(){
+                //delete the existing dropdown at the start of a keypress to avoid multiple entries on every keypress and so that the dropdown is freshly populated on every keypress
+
+                $("#itemName_dropdown").empty();
 
                 //get item name from the input field
                 let searched_itemName = $("#itemName"+itemAdded_index).val();
 
                 //loop through and parse the data to check if the item name is present in the database
                 for (let uniqueKey in fetchedData){
-
-                    getting_selected_item_boolean=true;
-
+                    
                     let itemCode_filtered = fetchedData[uniqueKey]['itemCode'];
                     let itemName_filtered = fetchedData[uniqueKey]['itemName'];
                     let uom_filtered = fetchedData[uniqueKey]['uom'];
@@ -144,13 +151,15 @@ $(document).ready(function () {
                     //converting both to string format 
 
                     let string_itemName_filtered = itemName_filtered.toString();
-                    let string_searched_itemName = searched_itemName.toString();
+                    let string_searched_itemName = searched_itemName.toString().toLowerCase();
 
+                    let string_itemName_filtered_lowercase = itemName_filtered.toLowerCase();// lowercase version of the filtered string item so that it can be compared
+                    
                     //look for partial/complete match of the item Name searched string and the item name found in database string
 
-                    if (string_itemName_filtered.includes(string_searched_itemName)){
+                    if (string_itemName_filtered_lowercase.includes(string_searched_itemName)){
 
-                        console.log('Found the item code you were looking for: '+ string_itemName_filtered);
+                        console.log('Found the item code you were looking for: '+ string_itemName_filtered); //adding the item that's not converted to lowercase so that it can be used to get the correct information from the database
 
                         //checking to see whether we have found the first item that matched or its the subsequent items
 
@@ -168,37 +177,39 @@ $(document).ready(function () {
                         $("#itemName_dropdown").append(`<option id='${string_itemName_filtered}'>${string_itemName_filtered}</option>`);
 
                         console.log('Items appended: '+string_itemName_filtered);
+
                     }
                 }
-
-                if (getting_selected_item_boolean==true){
-
-                item_filter_button_clicked();
-                }
-
-                //this is the code to get the selected item from the dropdown list and then get the itemcode, quantity, uom from the database
-                // var selected_itemName = $('#itemName_dropdown :selected').text();
             });
+            
+            //this is the code to get the selected item from the dropdown list and then get the itemcode, quantity, uom from the database
+            $('#filter_itemName'+itemAdded_index).click(function(){
 
-            function item_filter_button_clicked(){
-                let item_filter_button_clicked = $( "#itemName_dropdown" ).val();
-                console.log("item_filter_button_clicked: "+item_filter_button_clicked);
-            }
+                //triggering the onChange function after all the items have been appended into the dropdown list
 
-            // if (item_filter_button_clicked=true)
+                let selected_itemName = $( "#itemName"+itemAdded_index ).val();
+                console.log("The selected item is: "+selected_itemName);
 
-            //     $( "#itemName_dropdown" )
-            //     .change(function() {
-            //         var str = "";
-            //         $( "#itemName_dropdown option:selected" ).each(function() {
-            //         str += $( this ).text() + " ";
-            //         });
-            //         // $( "div" ).text( str );
-            //         console.log("The item selected is: "+str);
-            //     })
-            //     .trigger( "change" );
-            // });
+                //looping through the database in order to find the item information of the item selected
+                
+                for (let uniqueKey in fetchedData){
+                    
+                    let itemCode_filtered = fetchedData[uniqueKey]['itemCode'];
+                    let itemName_filtered = fetchedData[uniqueKey]['itemName'];
+                    let uom_filtered = fetchedData[uniqueKey]['uom'];
+                    let quantity_filtered = fetchedData[uniqueKey]['quantity'];
 
+                    if (itemName_filtered == selected_itemName){
+
+                    //item code matched, now append the other information in the input text fields
+
+                        $('#itemCode'+itemAdded_index).val(itemCode_filtered);
+                        $('#uom'+itemAdded_index).val(uom_filtered);
+                        $('#quantity'+itemAdded_index).val(quantity_filtered);
+                    }
+
+                }
+            });
 
         });
     }
@@ -207,6 +218,9 @@ $(document).ready(function () {
     //Looping through to see which button has been clicked and how many entries have to be submitted
     
     for (let add_item_index=0; add_item_index<5; add_item_index++){
+
+        //on submit of each form
+        //new entry will be created in the entry log and items will be checked against the inventory to see if its already there or needed to add to the inventory 
 
         $("#form_newEntry"+add_item_index).submit(function (config) {
 
@@ -272,8 +286,8 @@ $(document).ready(function () {
                 };
 
             
-            console.log(update_data_inventory);
-            console.log(update_data_newEntry);
+                console.log(update_data_inventory);
+                console.log(update_data_newEntry);
 
             // //check to see if the data is present in the inventory
             //READING FROM FIREBASE DATABASE
@@ -332,7 +346,6 @@ $(document).ready(function () {
             }
         });
 
-
         //CODE FOR ADDING A NEW ITEM 
 
         //when the add new item button is clicked, this function will append the same form below the existing form, filling up some of the common input fields with the information existing in the current item entry form
@@ -379,9 +392,7 @@ $(document).ready(function () {
                 $('#form_newEntry'+add_item_index).css('display','none');
                 $('#submit_newEntry'+add_item_index).css('display','inline-block');
                 $('#add_newItem'+add_item_index).css('display','inline-block');
-            })
-
-
+            });
         });
     }
 
