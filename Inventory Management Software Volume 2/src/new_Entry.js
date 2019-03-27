@@ -135,7 +135,7 @@ $(document).ready(function () {
 
                 //delete the existing dropdown at the start of a keypress to avoid multiple entries on every keypress and so that the dropdown is freshly populated on every keypress
 
-                $("#itemName_dropdown").empty();
+                $("#itemName_dropdown"+itemAdded_index).empty();
 
                 //get item name from the input field
                 let searched_itemName = $("#itemName"+itemAdded_index).val();
@@ -166,7 +166,7 @@ $(document).ready(function () {
                         if (first_item_matched==false){
 
                             //append html code to insert dynamic dropdown select function
-                            $("#itemName"+itemAdded_index).append(`<datalist id='itemName_dropdown'></datalist>`);
+                            $("#itemName"+itemAdded_index).append(`<datalist id='itemName_dropdown${itemAdded_index}'></datalist>`);
                             first_item_matched=true;
 
                             console.log("First item appended! Dropdown injected");
@@ -174,7 +174,7 @@ $(document).ready(function () {
 
                         //checked if its the first item, now add the option values
 
-                        $("#itemName_dropdown").append(`<option id='${string_itemName_filtered}'>${string_itemName_filtered}</option>`);
+                        $("#itemName_dropdown"+itemAdded_index).append(`<option id='${string_itemName_filtered}'>${string_itemName_filtered}</option>`);
 
                         console.log('Items appended: '+string_itemName_filtered);
 
