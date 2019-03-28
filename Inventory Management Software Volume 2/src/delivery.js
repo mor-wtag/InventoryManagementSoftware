@@ -249,21 +249,12 @@ $(document).ready(function () {
             let uom = fetchedData[reversed_uniqueKey]['uom'];
             let quantity = fetchedData[reversed_uniqueKey]['quantity'];
             let destination = fetchedData[reversed_uniqueKey]['destination'];
-            // let unitRate = fetchedData[reversed_uniqueKey]['unitRate'];
-            // let totalAmount = fetchedData[reversed_uniqueKey]['totalAmount'];
-            // let mainContract = fetchedData[reversed_uniqueKey]['mainContract'];
-            // let mainVendor = fetchedData[reversed_uniqueKey]['mainVendor'];
-            // let novatedContract = fetchedData[reversed_uniqueKey]['novatedContract'];
-            // let novatedVendor = fetchedData[reversed_uniqueKey]['novatedVendor'];
-            // let PRnum = fetchedData[reversed_uniqueKey]['PRnum'];
-            // let POnum = fetchedData[reversed_uniqueKey]['POnum'];
-            // let delChalNum = fetchedData[reversed_uniqueKey]['delChalNum'];
             let issueDate = fetchedData[reversed_uniqueKey]['issueDate'];
             let user_email = fetchedData[reversed_uniqueKey]['user_email'];
             let current_date = fetchedData[reversed_uniqueKey]['current_date'];
 
             // appending elements into the databaseTable
-            $('.delivery_log_table').append(/*html*/`
+            $('#delivery_log_tableBody').append(/*html*/`
                 <tr data-key="${reversed_uniqueKey}">
                     <td>
                         ${itemCode}
@@ -292,6 +283,96 @@ $(document).ready(function () {
                 </tr>
             `);
         }
+    
+
+
+     //----EVENT LISTENER FOR SEARCH FIELD IN INVENTORY----
+
+        //this code here is for dynamically searching (on key press) for the item in the inventory
+        //as the user will be searching, the table will keep populating and appending similar items like the dropdown created previously 
+
+        $("#search_delivery").on("keydown" && "keyup", function(){
+
+            //on erasing the search field, the table needs to repopulate again with all the inventory items
+
+            console.log("Got inside the search function");
+
+            $('#delivery_log_tableBody').empty();  //emptying the table so that sorted values can be appended
+
+             //get item name from the input field
+             let search_delivery = $("#search_delivery").val();
+
+             //loop through unique keys and create an array in order to view get all the unique keys
+        let uniqueKeyArray_index=0;
+        for (let uniqueKey in fetchedData){
+            uniqueKey_Array[uniqueKeyArray_index] =  uniqueKey;
+            uniqueKeyArray_index++;
+        }
+
+        console.log('uniqueKey_Array: '+uniqueKey_Array);
+
+        //from the unique key array, reverse it and set each variable so that the fetched data from that unique key can be found
+
+        for (let reversed_uniqueKey_index=uniqueKey_Array.length-1; reversed_uniqueKey_index>=0; reversed_uniqueKey_index--){
+            let reversed_uniqueKey = uniqueKey_Array[reversed_uniqueKey_index];
+
+        //loop through and parse the data then create TR in the table with this data
+        // for (let uniqueKey in fetchedData){
+
+            //reversing the key value in the database so that the last entry shows up first
+            let itemCode = fetchedData[reversed_uniqueKey]['itemCode'];
+            let itemName = fetchedData[reversed_uniqueKey]['itemName'];
+            let uom = fetchedData[reversed_uniqueKey]['uom'];
+            let quantity = fetchedData[reversed_uniqueKey]['quantity'];
+            let destination = fetchedData[reversed_uniqueKey]['destination'];
+            let issueDate = fetchedData[reversed_uniqueKey]['issueDate'];
+            let user_email = fetchedData[reversed_uniqueKey]['user_email'];
+            let current_date = fetchedData[reversed_uniqueKey]['current_date'];
+
+                let string_itemName_filtered = itemName.toString();
+
+                let string_searched_itemName = search_delivery.toString().toLowerCase();
+
+                let string_itemName_filtered_lowercase = string_itemName_filtered.toLowerCase();// lowercase version of the filtered string item so that it can be compared
+
+                //look for partial/complete match of the item Name searched string and the item name found in database string
+
+                if (string_itemName_filtered_lowercase.includes(string_searched_itemName)){
+
+                    console.log('Found the item code you were looking for: '+ string_itemName_filtered); //adding the item that's not converted to lowercase so that it can be used to get the correct information from the database
+                    // appending elements into the databaseTable
+                     // appending elements into the databaseTable
+                    $('#delivery_log_tableBody').append(/*html*/`
+                    <tr data-key="${reversed_uniqueKey}">
+                        <td>
+                            ${itemCode}
+                        </td>
+                        <td>
+                            ${itemName}
+                        </td>
+                        <td>
+                            ${uom}
+                        </td>
+                        <td>
+                            ${quantity}
+                        </td>
+                        <td>
+                            ${destination}
+                        </td>
+                        <td>
+                            ${issueDate}
+                        </td>
+                        <td>
+                            ${user_email}
+                        </td>
+                        <td>
+                            ${current_date}
+                        </td>
+                    </tr>
+                `);
+                }
+             }
+        });
     });
 
 });

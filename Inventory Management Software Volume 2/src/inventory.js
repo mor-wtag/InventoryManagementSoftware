@@ -110,7 +110,7 @@ function initialLoad(){
 
         }
 
-        //---- EVENT LISTENER FOR SORTING SORTING---- 
+        //---- EVENT LISTENER FOR SORTING---- 
         //this code here is for sorting the quantity of items both in ascending and decending order by clicking on the icons beside the quantity
 
         //code for matching and appending the ASCENDING SORTED QUANTITY elements into the table 
@@ -221,48 +221,53 @@ function initialLoad(){
              //get item name from the input field
              let search_inventory = $("#search_inventory").val();
 
-             //loop through and parse the data to check if the item name is present in the database
-             for (let uniqueKey in fetchedData){
-                 
-                 let itemCode_filtered = fetchedData[uniqueKey]['itemCode'];
-                 let itemName_filtered = fetchedData[uniqueKey]['itemName'];
-                 let uom_filtered = fetchedData[uniqueKey]['uom'];
-                 let quantity_filtered = fetchedData[uniqueKey]['quantity'];
+             //from the unique key array, reverse it and set each variable so that the fetched data from that unique key can be found
 
-                let string_itemName_filtered = itemName_filtered.toString();
+        for (let reversed_uniqueKey_index=uniqueKey_Array.length-1; reversed_uniqueKey_index>=0; reversed_uniqueKey_index--){
+            
+            let reversed_uniqueKey = uniqueKey_Array[reversed_uniqueKey_index];
+        
 
-                let string_searched_itemName = search_inventory.toString().toLowerCase();
+            //loop through and parse the data then create TR in the table with this data
+            let itemCode = fetchedData[reversed_uniqueKey]['itemCode'];
+            let itemName = fetchedData[reversed_uniqueKey]['itemName'];
+            let uom = fetchedData[reversed_uniqueKey]['uom'];
+            let quantity = fetchedData[reversed_uniqueKey]['quantity'];
 
-                let string_itemName_filtered_lowercase = itemName_filtered.toLowerCase();// lowercase version of the filtered string item so that it can be compared
+            let string_itemName_filtered = itemName.toString();
 
-                //look for partial/complete match of the item Name searched string and the item name found in database string
+            let string_searched_itemName = search_inventory.toString().toLowerCase();
 
-                if (string_itemName_filtered_lowercase.includes(string_searched_itemName)){
+            let string_itemName_filtered_lowercase = string_itemName_filtered.toLowerCase();// lowercase version of the filtered string item so that it can be compared
 
-                    console.log('Found the item code you were looking for: '+ string_itemName_filtered); //adding the item that's not converted to lowercase so that it can be used to get the correct information from the database
-                    // appending elements into the databaseTable
-                    $('#inventory_tableBody').append(/*html*/`
-                    <tr data-key="${uniqueKey}">
-                        <td>
-                            ${itemCode_filtered}
-                        </td>
-                        <td>
-                            ${itemName_filtered}
-                        </td>
-                        <td>
-                            ${uom_filtered}
-                        </td>
-                        <td>
-                            ${quantity_filtered}
-                        </td>
-                        <td>
-                            nil so far
-                        </td
-                    </tr>
+            //look for partial/complete match of the item Name searched string and the item name found in database string
+
+            if (string_itemName_filtered_lowercase.includes(string_searched_itemName)){
+
+                 console.log('Found the item code you were looking for: '+ string_itemName_filtered); //adding the item that's not converted to lowercase so that it can be used to get the correct information from the database
+                // appending elements into the databaseTable
+                // appending elements into the databaseTable
+                $('#inventory_tableBody').append(/*html*/`
+                <tr data-key="${reversed_uniqueKey}">
+                    <td>
+                        ${itemCode}
+                    </td>
+                    <td>
+                        ${itemName}
+                    </td>
+                    <td>
+                        ${uom}
+                    </td>
+                    <td>
+                        ${quantity}
+                    </td>
+                    <td>
+                        nil so far
+                    </td
+                </tr>
                 `);
-                }
-             }
-        });
-
+            }
+        }
+    });
     });
 }
