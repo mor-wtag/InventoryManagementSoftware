@@ -154,9 +154,7 @@
                     </ul>
 
                 </div>
-
             </div>
-
             <hr />
 
             <h3>Create a Delivery Issue</h3>
@@ -280,8 +278,14 @@
             </div>
             </form>
 
-
-            <h3>Delivered Item Log</h3>
+            <div class="col-md-10">
+                <h3>Delivered Item Log</h3>
+            </div>
+            <div class="col-md-2">
+                <div class="active-cyan-3 active-cyan-4 mb-4">
+                    <input class="form-control" id="search_delivery" type="text" placeholder="Search for Item" aria-label="Search">
+                </div>
+            </div>
             <table class="table table-bordered datatable delivery_log_table" id="table-1">
                 <thead>
                     <tr>
@@ -295,7 +299,7 @@
                         <th>Logged date</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="delivery_log_tableBody">
                 </tbody>
                 <tfoot>
                     <tr>

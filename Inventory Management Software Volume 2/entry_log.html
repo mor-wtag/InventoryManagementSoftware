@@ -155,8 +155,14 @@
 			</div>
 
 			<hr />
-            
-            <h3>Entry Log</h3>
+            <div class="col-md-10">
+				<h3>Entry Log</h3>
+			</div>
+			<div class="col-md-2">
+				<div class="active-cyan-3 active-cyan-4 mb-4">
+					<input class="form-control" id="search_entryLog" type="text" placeholder="Search for Item" aria-label="Search">
+				</div>
+			</div>
 
             <table class="table table-bordered datatable" id="table-1">
                 <thead>
@@ -179,16 +185,7 @@
 						<th>Entry logged date</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <!-- <tr class="odd gradeX">
-                        <th>Main Contract No.</th>
-                        
-                    <tr class="even gradeC">
-                        <th>Main Contract No.</th>
-                        <td><a href="../Part 2/../Documents/BOQ-Diesel Generator Synchronization.xlsx" download><img src='assets/images/excel.png' width="15%" height="15%"><br>BOQ-Diesel Generator Synchronization.xlsx</a></td>
-                        <td><a href="../Part 2/../Documents/VX-300030424-Generator synchronization.pdf" download><img src='assets/images/pdf.jpg' width="15%" height="15%"><br>VX-300030424-Generator synchronization.pdf</a></td>
-                        <td><a href="../Part 2/../Documents/VX-300030424-Generator synchronization.pdf" download><img src='assets/images/pdf.jpg' width="15%" height="15%"><br>VX-300030424-Generator synchronization.pdf</a></td>
-                    </tr> -->
+                <tbody id="entry_log_tableBody">
                 </tbody>
                 <tfoot>
                     <tr>
@@ -211,7 +208,7 @@
                     </tr>
                 </tfoot>
             </table>
-            <br />
+        	<br />
         </div>
     </div>
     <br />
