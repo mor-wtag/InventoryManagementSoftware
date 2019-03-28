@@ -15,6 +15,7 @@ let initialize = firebase.initializeApp(config);
 let database = firebase.database();
 
 let uniqueKey_Array=[];
+let quantity_Array=[];
 
 // RealTime listener
 //this checks to see if user is logged in 
@@ -48,18 +49,36 @@ function initialLoad(){
 
         //Code in order to show the last entry first (LAST IN FIRST OUT)
 
-        //loop through unique keys and create an array in order to view get all the unique keys
+        //loop through unique keys and create an array in order to view get all the unique keys and their corresponding quantities
         let uniqueKeyArray_index=0;
         for (let uniqueKey in fetchedData){
+
             uniqueKey_Array[uniqueKeyArray_index] =  uniqueKey;
+
+            quantity_Array[uniqueKeyArray_index] = fetchedData[uniqueKey]['quantity']; //saving the quantities in a different array
+
             uniqueKeyArray_index++;
         }
 
+        //SORTING THE ARRAYS USING JS BUILT IN FUNCTION
+
+        // Sort the numbers in the Quantity array in ascending order
+        let decending_sorted_array = quantity_Array.slice();  
+        decending_sorted_array.sort((a, b) => b - a)     
+
+        // Reversing the array to get the descending order quantities
+        let ascending_sorted_array = decending_sorted_array.slice(); 
+        ascending_sorted_array.reverse();               
+
         console.log('uniqueKey_Array: '+uniqueKey_Array);
+        console.log('quantity_Array: '+quantity_Array);
+        console.log('decending_sorted_array: '+decending_sorted_array);
+        console.log('ascending_sorted_array: '+ascending_sorted_array);
 
         //from the unique key array, reverse it and set each variable so that the fetched data from that unique key can be found
 
         for (let reversed_uniqueKey_index=uniqueKey_Array.length-1; reversed_uniqueKey_index>=0; reversed_uniqueKey_index--){
+            
             let reversed_uniqueKey = uniqueKey_Array[reversed_uniqueKey_index];
         
 
@@ -92,5 +111,101 @@ function initialLoad(){
             `);
 
         }
+
+        //---- EVENT LISTENER FOR SORTING SORTING---- 
+        //this code here is for sorting the quantity of items both in ascending and decending order by clicking on the icons beside the quantity
+
+        //code for matching and appending the ASCENDING SORTED QUANTITY elements into the table 
+
+        $("#quantity_sort_asc").click(function(){
+
+            $('#inventory_tableBody').empty();  //emptying the table so that sorted values can be appended
+
+            console.log('ascending_sorted_array: '+ascending_sorted_array);
+
+            //loop through the Ascending Order Array in order to match it with elements in the database
+
+            for (let asc_sorted_index=0; asc_sorted_index< ascending_sorted_array.length; asc_sorted_index++){
+
+                //loop through and parse the data then create TR in the table with this data
+                for (let uniqueKey in fetchedData){
+                    let itemCode = fetchedData[uniqueKey]['itemCode'];
+                    let itemName = fetchedData[uniqueKey]['itemName'];
+                    let uom = fetchedData[uniqueKey]['uom'];
+                    let quantity = fetchedData[uniqueKey]['quantity'];
+
+                    if(quantity == ascending_sorted_array[asc_sorted_index]){
+                        $('#inventory_tableBody').append(/*html*/`
+                        <tr data-key="${uniqueKey}">
+                            <td>
+                                ${itemCode}
+                            </td>
+                            <td>
+                                ${itemName}
+                            </td>
+                            <td>
+                                ${uom}
+                            </td>
+                            <td>
+                                ${quantity}
+                            </td>
+                            <td>
+                                nil so far
+                            </td
+                        </tr>
+                    `);
+                    }
+                }
+            }
+
+        });
+
+        //code for matching and appending the DECENDING SORTED QUANTITY elements into the table 
+
+        $("#quantity_sort_des").click(function(){
+
+            console.log("Fot inside the decending order sorting function");
+
+            $('#inventory_tableBody').empty();  //emptying the table so that sorted values can be appended
+
+            console.log('decending_sorted_array: '+decending_sorted_array);
+
+            //loop through the Ascending Order Array in order to match it with elements in the database
+
+            for (let dec_sorted_index=0; dec_sorted_index< decending_sorted_array.length; dec_sorted_index++){
+
+                //loop through and parse the data then create TR in the table with this data
+                for (let uniqueKey in fetchedData){
+                    let itemCode = fetchedData[uniqueKey]['itemCode'];
+                    let itemName = fetchedData[uniqueKey]['itemName'];
+                    let uom = fetchedData[uniqueKey]['uom'];
+                    let quantity = fetchedData[uniqueKey]['quantity'];
+
+                    if(quantity == decending_sorted_array[dec_sorted_index]){
+                        $('#inventory_tableBody').append(/*html*/`
+                        <tr data-key="${uniqueKey}">
+                            <td>
+                                ${itemCode}
+                            </td>
+                            <td>
+                                ${itemName}
+                            </td>
+                            <td>
+                                ${uom}
+                            </td>
+                            <td>
+                                ${quantity}
+                            </td>
+                            <td>
+                                nil so far
+                            </td
+                        </tr>
+                    `);
+                    }
+                }
+            }
+
+        });
+
     });
 }
