@@ -98,6 +98,7 @@ $(document).ready(function () {
             //FILTER BUTTON FOR THE ITEM CODE
 
             $("#filter_itemCode"+itemAdded_index).click(function(){
+                
                 console.log("Filter item code button has been clicked!");
 
                 let searched_itemcode=$("#itemCode"+itemAdded_index).val();
@@ -392,6 +393,12 @@ $(document).ready(function () {
                 $('#form_newEntry'+add_item_index).css('display','none');
                 $('#submit_newEntry'+add_item_index).css('display','inline-block');
                 $('#add_newItem'+add_item_index).css('display','inline-block');
+
+                // After closing a form, the previous submit button has to be functional
+                // set the current active submit button as the previous buttons and the data as the previous data
+
+                // add_item_index-=1;
+
             });
         });
     }

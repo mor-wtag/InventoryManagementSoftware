@@ -123,7 +123,7 @@ function initialLoad(){
 
             //loop through the Ascending Order Array in order to match it with elements in the database
 
-            for (let asc_sorted_index=0; asc_sorted_index< ascending_sorted_array.length; asc_sorted_index++){
+            for (let asc_sorted_index=0; asc_sorted_index < ascending_sorted_array.length; asc_sorted_index++){
 
                 //loop through and parse the data then create TR in the table with this data
                 for (let uniqueKey in fetchedData){
@@ -133,6 +133,10 @@ function initialLoad(){
                     let quantity = fetchedData[uniqueKey]['quantity'];
 
                     if(quantity == ascending_sorted_array[asc_sorted_index]){
+
+                        console.log(`Appending item: itemCode=${itemCode}, itemName= ${itemName}, uom= ${uom}, quantity=${quantity}`);
+                        console.log(`Quantity: ${quantity}`);
+
                         $('#inventory_tableBody').append(/*html*/`
                         <tr data-key="${uniqueKey}">
                             <td>
@@ -152,10 +156,10 @@ function initialLoad(){
                             </td
                         </tr>
                     `);
+                    break;
                     }
                 }
             }
-
         });
 
         //code for matching and appending the DECENDING SORTED QUANTITY elements into the table 
@@ -199,6 +203,7 @@ function initialLoad(){
                             </td
                         </tr>
                     `);
+                    break;
                     }
                 }
             }
