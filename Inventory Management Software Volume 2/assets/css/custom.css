@@ -4,10 +4,6 @@
  *
 */
 
-body {
-	
-}
-
 /* div that will appear on creating a New Entry */
 body .newEntry {
     opacity: 1;
@@ -44,7 +40,7 @@ justify-content: flex-start;
 justify-content: space-around;
 }
 
-.fileButton{
+/* .fileButton{ */
 /* float:right;
 margin-right:10%; */
 /* border-radius: 50px;
@@ -71,7 +67,7 @@ background: #ffffff;
 cursor: pointer;
 transition-property: background,color;
 transition-duration: .2s; */
-}
+/* } */
 
 .uploader{
 -webkit-appearance: none;
@@ -128,9 +124,37 @@ tr:nth-child(even) {
 }
 
 .fa, .fab, .fal, .far, .fas {
-    margin-top: 67%;
+    margin-top: 0%;
 }
 
 .fa, .fab, .fal, .far, .fas:hover{
     cursor:pointer;
 }
+
+/* This code is for the search bar in the inventory page */
+.active-cyan-4 input[type=text]:focus:not([readonly]) {
+    border: 1px solid #4dd0e1;
+    box-shadow: 0 0 0 1px #4dd0e1;
+}
+
+.search_field{
+    margin-top:5%;
+}
+
+/* changing color for buttons */
+.formButton{
+    width: 30%;
+    background-color:#343a40;
+    color:white;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.btn-dark:hover{
+    cursor:pointer;
+    color: lightgray;
+}
+
+.btn-dark:active{
+    color: lightgray;
+}
+
