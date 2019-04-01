@@ -146,15 +146,17 @@ tr:nth-child(even) {
     width: 30%;
     background-color:#343a40;
     color:white;
-    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
-.btn-dark:hover{
+.formButton:hover{
     cursor:pointer;
     color: lightgray;
 }
 
-.btn-dark:active{
-    color: lightgray;
+.formButton:visited{
+    color:white;
 }
 
+.formButton:active{
+    color:white;
+}
