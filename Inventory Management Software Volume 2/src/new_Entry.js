@@ -43,12 +43,9 @@ firebase.auth().onAuthStateChanged(user => {
     }
 });
 
-//submit form
-
 const dbRefObject = firebase.database().ref().child('databases'); //children of database object
 const dbRefElement = dbRefObject.child('new_Entry'); //children of database object
 const dbRefInventory =  dbRefObject.child('Inventorydatabase'); //children of database object
-//submit form
 
 $(document).ready(function () {
 
@@ -343,7 +340,6 @@ $(document).ready(function () {
                 return false;
             }
             itemfound=false;
-        // });
             }
         });
 

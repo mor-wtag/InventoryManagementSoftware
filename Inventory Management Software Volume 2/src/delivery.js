@@ -94,8 +94,6 @@ $(document).ready(function () {
 
             let first_item_matched = false;
 
-            let searched_itemcode = $("#itemCode" + itemAdded_index).val();
-
             ////FILTER BUTTON FOR THE ITEM CODE
             //after the filter icon being clicked, a function will be triggered where the system will look for the item code in the database return the item name and unit of measurement and fill in the respected fields
 
@@ -126,23 +124,24 @@ $(document).ready(function () {
                 }
             });
 
-            //FILTER BUTTON FOR ITEM NAME
-           
+            //FILTERING FOR ITEM NAME
+            //DYNAMIC DROPDOWN
+
             //this code here is to filter item names and populate a dropdown table consisting of all the item names in the inventory the entered data is similar to the item searched
             //onpressing any key the filter button beside the item name
 
-            $("#itemName"+itemAdded_index).on("keypress",function(){
+            $("#itemName" + itemAdded_index).on("keypress", function () {
 
                 //delete the existing dropdown at the start of a keypress to avoid multiple entries on every keypress and so that the dropdown is freshly populated on every keypress
 
-                $("#itemName_dropdown"+itemAdded_index).empty();
+                $("#itemName_dropdown" + itemAdded_index).empty();
 
                 //get item name from the input field
-                let searched_itemName = $("#itemName"+itemAdded_index).val();
+                let searched_itemName = $("#itemName" + itemAdded_index).val();
 
                 //loop through and parse the data to check if the item name is present in the database
-                for (let uniqueKey in fetchedData){
-                    
+                for (let uniqueKey in fetchedData) {
+
                     let itemCode_filtered = fetchedData[uniqueKey]['itemCode'];
                     let itemName_filtered = fetchedData[uniqueKey]['itemName'];
                     let uom_filtered = fetchedData[uniqueKey]['uom'];
@@ -154,76 +153,169 @@ $(document).ready(function () {
                     let string_searched_itemName = searched_itemName.toString().toLowerCase();
 
                     let string_itemName_filtered_lowercase = itemName_filtered.toLowerCase();// lowercase version of the filtered string item so that it can be compared
-                    
+
                     //look for partial/complete match of the item Name searched string and the item name found in database string
 
-                    if (string_itemName_filtered_lowercase.includes(string_searched_itemName)){
+                    if (string_itemName_filtered_lowercase.includes(string_searched_itemName)) {
 
-                        console.log('Found the item code you were looking for: '+ string_itemName_filtered); //adding the item that's not converted to lowercase so that it can be used to get the correct information from the database
+                        console.log('Found the item code you were looking for: ' + string_itemName_filtered); //adding the item that's not converted to lowercase so that it can be used to get the correct information from the database
 
                         //checking to see whether we have found the first item that matched or its the subsequent items
 
-                        if (first_item_matched==false){
+                        if (first_item_matched == false) {
 
                             //append html code to insert dynamic dropdown select function
-                            $("#itemName"+itemAdded_index).append(`<datalist id='itemName_dropdown${itemAdded_index}'></datalist>`);
-                            first_item_matched=true;
+                            $("#itemName" + itemAdded_index).append(`<datalist id='itemName_dropdown${itemAdded_index}'></datalist>`);
+                            first_item_matched = true;
 
                             console.log("First item appended! Dropdown injected");
                         }
 
                         //checked if its the first item, now add the option values
 
-                        $("#itemName_dropdown"+itemAdded_index).append(`<option id='${string_itemName_filtered}'>${string_itemName_filtered}</option>`);
+                        $("#itemName_dropdown" + itemAdded_index).append(`<option id='${string_itemName_filtered}'>${string_itemName_filtered}</option>`);
 
-                        console.log('Items appended: '+string_itemName_filtered);
+                        console.log('Items appended: ' + string_itemName_filtered);
                     }
                 }
             });
-        
+
+            ////FILTERING FOR DESTINATION
+            //DYNAMIC DROPDOWN
+
+            //first, fetch the data from destination database
+
+            let response1 = database.ref('databases/delivery_log').once('value');
+
+            response1.then(function (snapshot) {
+
+                let fetchedData1 = snapshot.val();
+
+                $("#destination" + itemAdded_index).on("keypress", function () {
+
+                    //delete the existing dropdown at the start of a keypress to avoid multiple entries on every keypress and so that the dropdown is freshly populated on every keypress
+
+                    $("#destination_dropdown" + itemAdded_index).empty();
+
+                    //get item name from the input field
+                    let searched_destination = $("#destination" + itemAdded_index).val();
+
+                    //loop through and parse the data to check if the item name is present in the database
+                    for (let uniqueKey in fetchedData1) {
+
+                        let filtered_destination = fetchedData1[uniqueKey]['destination'];
+
+                        //converting both to string format 
+
+                        let string_destination_filtered = filtered_destination.toString();
+                        let string_searched_destination = searched_destination.toString().toLowerCase();
+
+                        let string_destination_filtered_lowercase = filtered_destination.toLowerCase();// lowercase version of the filtered string item so that it can be compared
+
+                        //look for partial/complete match of the item Name searched string and the item name found in database string
+
+                        if (string_destination_filtered_lowercase.includes(string_searched_destination)) {
+
+                            console.log('Found the item code you were looking for: ' + string_destination_filtered); //adding the item that's not converted to lowercase so that it can be used to get the correct information from the database
+
+                            //checking to see whether we have found the first item that matched or its the subsequent items
+
+                            if (first_item_matched == false) {
+
+                                //append html code to insert dynamic dropdown select function
+                                $("#destination" + itemAdded_index).append(`<datalist id='destination_dropdown${itemAdded_index}'></datalist>`);
+                                first_item_matched = true;
+
+                                console.log("First item appended! Dropdown injected");
+                            }
+
+                            //checked if its the first item, now add the option values
+
+                            $("#destination_dropdown" + itemAdded_index).append(`<option id='${string_destination_filtered}'>${string_destination_filtered}</option>`);
+
+                            console.log('Items appended: ' + string_destination_filtered);
+                        }
+                    }
+                });
+            });
+
+            //this is the code to get the selected item from the dropdown list and then get the itemcode, quantity, uom from the database
+            $('#filter_itemName' + itemAdded_index).click(function () {
+
+                //triggering the onChange function after all the items have been appended into the dropdown list
+
+                let selected_itemName = $("#itemName" + itemAdded_index).val();
+                console.log("The selected item is: " + selected_itemName);
+
+                //looping through the database in order to find the item information of the item selected
+
+                for (let uniqueKey in fetchedData) {
+
+                    let itemCode_filtered = fetchedData[uniqueKey]['itemCode'];
+                    let itemName_filtered = fetchedData[uniqueKey]['itemName'];
+                    let uom_filtered = fetchedData[uniqueKey]['uom'];
+                    let quantity_filtered = fetchedData[uniqueKey]['quantity'];
+
+                    if (itemName_filtered == selected_itemName) {
+
+                        //item code matched, now append the other information in the input text fields
+
+                        $('#itemCode' + itemAdded_index).val(itemCode_filtered);
+                        $('#uom' + itemAdded_index).val(uom_filtered);
+                        $('#quantity' + itemAdded_index).val(quantity_filtered);
+                    }
+
+                }
+            });
+
             //on clicking the submit delivery item button
             // Form Submission
 
-            $("#form_delivery"+itemAdded_index).submit(function (config) {
+            $("#form_delivery" + itemAdded_index).submit(function (config) {
 
-                let itemCode = $("#itemCode").val();
-                let itemName = $("#itemName").val();
-                let uom = $("#uom").val();
-                let quantity = $("#quantity").val();
-                let destination = $('#destination').val();
-                let issueDate = $("#issueDate").val();
+                let submitButtonClicked = "#form_delivery" + itemAdded_index; //to know which form is the current form
 
-                $(this), console.log("Submit to Firebase");
+                //take value of the item code and item name to compare later
 
-                //adding data instead of replacing with the new value
-                //FOR DELIVERY LOG
+                let searched_itemcode = $("#itemCode" + itemAdded_index).val();
+                let searched_itemName = $("#itemName" + itemAdded_index).val();
 
-                let update_data_delivery_log =
-                {
-                    'itemCode': itemCode,
-                    'itemName': itemName,
-                    'uom': uom,
-                    'quantity': quantity,
-                    'destination': destination,
-                    'issueDate': issueDate,
-                    'user_email': user_email,
-                    'current_date': today
-                };
+                console.log('The submit button that has een clicked has the id: ' + submitButtonClicked);
 
-                // //check to see if the data is present in the inventory
-                //READING FROM FIREBASE DATABASE
+                //after knowing which submit button has been clicked, loop through and convert each form entry into a JSON to be pushed into the database later 
 
-                //SECTION1
+                for (let form_fields_index = 0; form_fields_index <= itemAdded_index; form_fields_index++) {
 
-                let update_newEntry_log = database.ref('databases/delivery_log').push(update_data_delivery_log);
+                    let itemCode = $("#itemCode" + form_fields_index).val();
+                    let itemName = $("#itemName" + form_fields_index).val();
+                    let uom = $("#uom" + form_fields_index).val();
+                    let quantity = $("#quantity" + form_fields_index).val();
+                    let destination = $('#destination' + form_fields_index).val();
+                    let issueDate = $("#issueDate" + form_fields_index).val();
 
-                let response = database.ref('databases/InventoryDatabase').once('value');
+                    $(this), console.log("Submit to Firebase");
 
-                response.then(function (snapshot) {
+                    //adding data instead of replacing with the new value
+                    // Saving the user input into JSON format
 
-                    console.log('itemfound: ' + itemfound);
+                    //FOR DELIVERY LOG
 
-                    let fetchedData = snapshot.val();
+                    let update_data_delivery_log =
+                    {
+                        'itemCode': itemCode,
+                        'itemName': itemName,
+                        'uom': uom,
+                        'quantity': quantity,
+                        'destination': destination,
+                        'issueDate': issueDate,
+                        'user_email': user_email,
+                        'current_date': today
+                    };
+
+                    console.log(update_data_delivery_log);
+
+                    // //check to see if the data is present in the inventory
+                    //READING FROM FIREBASE DATABASE
 
                     //loop through and parse the data then create TR in the table with this data
                     for (let uniqueKey in fetchedData) {
@@ -245,42 +337,135 @@ $(document).ready(function () {
                             itemfound = true;
 
                             let updating_inventory = database.ref('databases/InventoryDatabase/' + uniqueKey).update(data).then(function () {
-                                alert('Data updated Successfully!');
-                                console.log('itemfound: ' + itemfound);
-                                location.reload();
-                                return false;
 
+                                //push item in the delivery log database
+                                let update_delivery_log = database.ref('databases/delivery_log').push(update_data_delivery_log);
                             });
                         }
                     }
 
                     if (itemfound == false) {
-                        // else{
-
                         // THIS MEANS ITEM DOES NOT EXIST IN DATASBE SO JUST SET IT TO A NEW ITEM WITH QUANTITY
-
                         // pushing the inventory data
 
-                        // let pushing_inventory = database.ref('databases/InventoryDatabase/').push(update_data_inventory).then(function(){
-                        alert('Could not find the item in the inventory! Please check if the item code is correct.');
-                        // location.reload();
+                        alert("Could not find the item " + itemName + " in the inventory! Please check if the item code is correct.");
                         return false;
-                        // });              
                     }
+
+                    if (form_fields_index == itemAdded_index) {
+                        alert('Data uploaded Successfully!');
+                        location.reload();
+                        return false;
+                    }
+
+                    itemfound = false;
+                }
+            });
+
+            //CODE FOR ADDING A NEW ITEM 
+
+            //when the add new item button is clicked, this function will append the same form below the existing form, filling up some of the common input fields with the information existing in the current item entry form
+
+            $('#add_delivery' + itemAdded_index).click(function () {
+
+                $('#form_delivery' + itemAdded_index).css('display', 'block');
+                $('#submit_delivery' + itemAdded_index).css('display', 'none');
+                $('#add_delivery' + itemAdded_index).css('display', 'none');
+
+                //this code here is to hide a form when the close button is clicked
+
+                $("#hide_form" + itemAdded_index).click(function () {
+                    $('#form_delivery' + itemAdded_index).css('display', 'none');
+                    $('#submit_delivery' + itemAdded_index).css('display', 'inline-block');
+                    $('#add_delivery' + itemAdded_index).css('display', 'inline-block');
                 });
-                itemfound = false;
             });
         }
+    });
 
-        //FETCH DATA FROM THE DATABASE AND INITIALIZE EVERYTHING IN OUR PAGE
+    //FETCH DATA FROM THE DATABASE AND INITIALIZE EVERYTHING IN OUR PAGE
 
-        //READING FROM FIREBASE DATABASE
-        database.ref('databases/delivery_log').once('value').then(function (snapshot) {
+    //READING FROM FIREBASE DATABASE
+    database.ref('databases/delivery_log').once('value').then(function (snapshot) {
 
-            let fetchedData = snapshot.val();
-            console.log(fetchedData);
+        let fetchedData = snapshot.val();
+        console.log(fetchedData);
 
-            //Code in order to show the last entry first (LAST IN FIRST OUT)
+        //Code in order to show the last entry first (LAST IN FIRST OUT)
+
+        //loop through unique keys and create an array in order to view get all the unique keys
+        let uniqueKeyArray_index = 0;
+        for (let uniqueKey in fetchedData) {
+            uniqueKey_Array[uniqueKeyArray_index] = uniqueKey;
+            uniqueKeyArray_index++;
+        }
+
+        console.log('uniqueKey_Array: ' + uniqueKey_Array);
+
+        //from the unique key array, reverse it and set each variable so that the fetched data from that unique key can be found
+
+        for (let reversed_uniqueKey_index = uniqueKey_Array.length - 1; reversed_uniqueKey_index >= 0; reversed_uniqueKey_index--) {
+            let reversed_uniqueKey = uniqueKey_Array[reversed_uniqueKey_index];
+
+            //loop through and parse the data then create TR in the table with this data
+            // for (let uniqueKey in fetchedData){
+
+            //reversing the key value in the database so that the last entry shows up first
+            let itemCode = fetchedData[reversed_uniqueKey]['itemCode'];
+            let itemName = fetchedData[reversed_uniqueKey]['itemName'];
+            let uom = fetchedData[reversed_uniqueKey]['uom'];
+            let quantity = fetchedData[reversed_uniqueKey]['quantity'];
+            let destination = fetchedData[reversed_uniqueKey]['destination'];
+            let issueDate = fetchedData[reversed_uniqueKey]['issueDate'];
+            let user_email = fetchedData[reversed_uniqueKey]['user_email'];
+            let current_date = fetchedData[reversed_uniqueKey]['current_date'];
+
+            // appending elements into the databaseTable
+            $('#delivery_log_tableBody').append(/*html*/`
+                            <tr data-key="${reversed_uniqueKey}">
+                                <td>
+                                    ${itemCode}
+                                </td>
+                                <td>
+                                    ${itemName}
+                                </td>
+                                <td>
+                                    ${uom}
+                                </td>
+                                <td>
+                                    ${quantity}
+                                </td>
+                                <td>
+                                    ${destination}
+                                </td>
+                                <td>
+                                    ${issueDate}
+                                </td>
+                                <td>
+                                    ${user_email}
+                                </td>
+                                <td>
+                                    ${current_date}
+                                </td>
+                            </tr>
+                        `);
+        }
+
+        //----EVENT LISTENER FOR SEARCH FIELD IN INVENTORY----
+
+        //this code here is for dynamically searching (on key press) for the item in the inventory
+        //as the user will be searching, the table will keep populating and appending similar items like the dropdown created previously 
+
+        $("#search_delivery").on("keydown" && "keyup", function () {
+
+            //on erasing the search field, the table needs to repopulate again with all the inventory items
+
+            console.log("Got inside the search function");
+
+            $('#delivery_log_tableBody').empty();  //emptying the table so that sorted values can be appended
+
+            //get item name from the input field
+            let search_delivery = $("#search_delivery").val();
 
             //loop through unique keys and create an array in order to view get all the unique keys
             let uniqueKeyArray_index = 0;
@@ -309,95 +494,21 @@ $(document).ready(function () {
                 let user_email = fetchedData[reversed_uniqueKey]['user_email'];
                 let current_date = fetchedData[reversed_uniqueKey]['current_date'];
 
-                // appending elements into the databaseTable
-                $('#delivery_log_tableBody').append(/*html*/`
+                let string_itemName_filtered = itemName.toString();
+
+                let string_searched_itemName = search_delivery.toString().toLowerCase();
+
+                let string_itemName_filtered_lowercase = string_itemName_filtered.toLowerCase();// lowercase version of the filtered string item so that it can be compared
+
+                //look for partial/complete match of the item Name searched string and the item name found in database string
+
+                if (string_itemName_filtered_lowercase.includes(string_searched_itemName)) {
+
+                    console.log('Found the item code you were looking for: ' + string_itemName_filtered); //adding the item that's not converted to lowercase so that it can be used to get the correct information from the database
+                    // appending elements into the databaseTable
+                    // appending elements into the databaseTable
+                    $('#delivery_log_tableBody').append(/*html*/`
                             <tr data-key="${reversed_uniqueKey}">
-                                <td>
-                                    ${itemCode}
-                                </td>
-                                <td>
-                                    ${itemName}
-                                </td>
-                                <td>
-                                    ${uom}
-                                </td>
-                                <td>
-                                    ${quantity}
-                                </td>
-                                <td>
-                                    ${destination}
-                                </td>
-                                <td>
-                                    ${issueDate}
-                                </td>
-                                <td>
-                                    ${user_email}
-                                </td>
-                                <td>
-                                    ${current_date}
-                                </td>
-                            </tr>
-                        `);
-            }
-
-            //----EVENT LISTENER FOR SEARCH FIELD IN INVENTORY----
-
-            //this code here is for dynamically searching (on key press) for the item in the inventory
-            //as the user will be searching, the table will keep populating and appending similar items like the dropdown created previously 
-
-            $("#search_delivery").on("keydown" && "keyup", function () {
-
-                //on erasing the search field, the table needs to repopulate again with all the inventory items
-
-                console.log("Got inside the search function");
-
-                $('#delivery_log_tableBody').empty();  //emptying the table so that sorted values can be appended
-
-                //get item name from the input field
-                let search_delivery = $("#search_delivery").val();
-
-                //loop through unique keys and create an array in order to view get all the unique keys
-                let uniqueKeyArray_index = 0;
-                for (let uniqueKey in fetchedData) {
-                    uniqueKey_Array[uniqueKeyArray_index] = uniqueKey;
-                    uniqueKeyArray_index++;
-                }
-
-                console.log('uniqueKey_Array: ' + uniqueKey_Array);
-
-                //from the unique key array, reverse it and set each variable so that the fetched data from that unique key can be found
-
-                for (let reversed_uniqueKey_index = uniqueKey_Array.length - 1; reversed_uniqueKey_index >= 0; reversed_uniqueKey_index--) {
-                    let reversed_uniqueKey = uniqueKey_Array[reversed_uniqueKey_index];
-
-                    //loop through and parse the data then create TR in the table with this data
-                    // for (let uniqueKey in fetchedData){
-
-                    //reversing the key value in the database so that the last entry shows up first
-                    let itemCode = fetchedData[reversed_uniqueKey]['itemCode'];
-                    let itemName = fetchedData[reversed_uniqueKey]['itemName'];
-                    let uom = fetchedData[reversed_uniqueKey]['uom'];
-                    let quantity = fetchedData[reversed_uniqueKey]['quantity'];
-                    let destination = fetchedData[reversed_uniqueKey]['destination'];
-                    let issueDate = fetchedData[reversed_uniqueKey]['issueDate'];
-                    let user_email = fetchedData[reversed_uniqueKey]['user_email'];
-                    let current_date = fetchedData[reversed_uniqueKey]['current_date'];
-
-                    let string_itemName_filtered = itemName.toString();
-
-                    let string_searched_itemName = search_delivery.toString().toLowerCase();
-
-                    let string_itemName_filtered_lowercase = string_itemName_filtered.toLowerCase();// lowercase version of the filtered string item so that it can be compared
-
-                    //look for partial/complete match of the item Name searched string and the item name found in database string
-
-                    if (string_itemName_filtered_lowercase.includes(string_searched_itemName)) {
-
-                        console.log('Found the item code you were looking for: ' + string_itemName_filtered); //adding the item that's not converted to lowercase so that it can be used to get the correct information from the database
-                        // appending elements into the databaseTable
-                        // appending elements into the databaseTable
-                        $('#delivery_log_tableBody').append(/*html*/`
-                                <tr data-key="${reversed_uniqueKey}">
                                     <td>
                                         ${itemCode}
                                     </td>
@@ -424,10 +535,8 @@ $(document).ready(function () {
                                     </td>
                                 </tr>
                             `);
-                    }
                 }
-            });
+            }
         });
-
-            });
-        });
+    });
+});
