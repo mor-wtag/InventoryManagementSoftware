@@ -26,16 +26,6 @@
     <script src="assets/js/jquery-1.11.3.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
 
-
-    <!--[if lt IE 9]><script src="assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-
 </head>
 
 <body class="page-body  page-fade">
@@ -187,22 +177,26 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-                                        <div class="form-group ss-item-required">
-                                            <label for="field-1" class="col-sm-4 control-label">Item name</label>
+										<div class="form-group ss-item-required">
+											<label for="field-1" class="col-sm-4 control-label">Item name</label>
 
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" id="itemName0" placeholder="Item name"
-                                                    required>
-                                            </div>
-                                        </div>
-                                    </div>
+											<div class="col-sm-8">
+												<div class="col-sm-9 itemCode_col_length">
+													<input type="text" list="itemName_dropdown0" class="form-control" id="itemName0" placeholder="Item name" required>
+												</div>
+												<div class="col-sm-2">
+													<i class="fas fa-filter" id='filter_itemName0'></i>
+												</div>
+											</div>
+										</div>
+									</div>
                                     <div class="col-md-4">
                                         <div class="form-group ss-item-required">
                                             <label for="field-1" class="col-sm-4 control-label">UoM</label>
 
                                             <div class="col-sm-8">
                                                 <!-- <input type="text" class="form-control" id="uom" placeholder="Unit of Measurement" required> -->
-                                                <select type="text" class="form-control" id="uom0" placeholder="Unit of Measurement"
+                                                <select type="text" class="form-control" list="uom_dropdown0" id="uom0" placeholder="Unit of Measurement"
                                                     required>
                                                     <option value="Pcs">Pcs</option>
                                                     <option value="Cu.M">Cu.M</option>
@@ -246,7 +240,7 @@
                                             <label for="field-1" class="col-sm-4 control-label">Destination</label>
 
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" id="destination0" placeholder="Enter where the item is being delivered"
+                                                <input type="text" class="form-control" list="destination_dropdown0" id="destination0" placeholder="Enter where the item is being delivered"
                                                     required>
                                             </div>
                                         </div>
@@ -268,7 +262,7 @@
                                     <div class="col-md-4"></div>
                                     <div class="col-md-4"></div>
                                     <div class="col-md-4">
-                                        <button type="button" class="btn btn-dark fileButton formButton" id='submit_delivery1'
+                                        <button type="submit" class="btn btn-dark fileButton formButton" id='submit_delivery1'
                                             style="margin-left: 30%;">Submit</button>
                                         <button type="button" class="btn btn-dark new_item formButton" id='add_delivery1'
                                             style="margin-left: 5%;">Add a new Item</button>
@@ -297,41 +291,47 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-                                        <div class="form-group ss-item-required">
-                                            <label for="field-1" class="col-sm-4 control-label">Item name</label>
+										<div class="form-group ss-item-required">
+											<label for="field-1" class="col-sm-4 control-label">Item name</label>
 
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" id="itemName1" placeholder="Item name"
-                                                    required>
-                                            </div>
-                                        </div>
-                                    </div>
+											<div class="col-sm-6" style="margin-right:0; padding-right:0;">
+												<input type="text" class="form-control" list="itemName_dropdown1" id="itemName1" placeholder="Item name" required>
+											</div>
+											<div class="col-sm-1" style="margin-right:0; padding-right:0;">
+												<i class="fas fa-filter" id='filter_itemName1'></i>
+											</div>
+										</div>
+									</div>
                                     <div class="col-md-4">
-                                        <div class="form-group ss-item-required">
-                                            <label for="field-1" class="col-sm-4 control-label">UoM</label>
+										<div class="col-md-10">
+											<div class="form-group ss-item-required">
+												<label for="field-1" class="col-sm-4 control-label">UoM</label>
 
-                                            <div class="col-sm-8">
-                                                <!-- <input type="text" class="form-control" id="uom" placeholder="Unit of Measurement" required> -->
-                                                <select type="text" class="form-control" id="uom1" placeholder="Unit of Measurement"
-                                                    required>
-                                                    <option value="Pcs">Pcs</option>
-                                                    <option value="Cu.M">Cu.M</option>
-                                                    <option value="sq. M">sq. M</option>
-                                                    <option value="Nos">Nos</option>
-                                                    <option value="meter">meter</option>
-                                                    <option value="SFT">SFT</option>
-                                                    <option value="CFT">CFT</option>
-                                                    <option value="Feet">Feet</option>
-                                                    <option value="Sets">Sets</option>
-                                                    <option value="Job">Job</option>
-                                                    <option value="Coil">Coil</option>
-                                                    <option value="LS">LS</option>
-                                                    <option value="Litre">Litre</option>
-                                                    <option value="No.">No.</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
+												<div class="col-sm-8" style="padding-left:10%;">
+													<!-- <input type="text" class="form-control" id="uom" placeholder="Unit of Measurement" required> -->
+													<select type="text" class="form-control" list="uom_dropdown1" id="uom1" placeholder="Unit of Measurement" required>
+														<option value="Pcs">Pcs</option>
+														<option value="Cu.M">Cu.M</option>
+														<option value="sq. M">sq. M</option>
+														<option value="Nos">Nos</option>
+														<option value="meter">meter</option>
+														<option value="SFT">SFT</option>
+														<option value="CFT">CFT</option>
+														<option value="Feet">Feet</option>
+														<option value="Sets">Sets</option>
+														<option value="Job">Job</option>
+														<option value="Coil">Coil</option>
+														<option value="LS">LS</option>
+														<option value="Litre">Litre</option>
+														<option value="No.">No.</option>
+													</select>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-1">
+											<i class="fas fa-times" id="hide_form1"></i>
+										</div>
+									</div>
                                 </div>
                                 <br>
                                 <div class="row">
@@ -355,7 +355,7 @@
                                             <label for="field-1" class="col-sm-4 control-label">Destination</label>
 
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" id="destination1" placeholder="Enter where the item is being delivered"
+                                                <input type="text" class="form-control" list="destination_dropdown1" id="destination1" placeholder="Enter where the item is being delivered"
                                                     required>
                                             </div>
                                         </div>
@@ -376,7 +376,7 @@
                                     <div class="col-md-4"></div>
                                     <div class="col-md-4"></div>
                                     <div class="col-md-4">
-                                        <button type="button" class="btn btn-dark fileButton formButton" id='submit_delivery2'
+                                        <button type="submit" class="btn btn-dark fileButton formButton" id='submit_delivery2'
                                             style="margin-left: 30%;">Submit</button>
                                         <button type="button" class="btn btn-dark new_item formButton" id='add_delivery2'
                                             style="margin-left: 5%;">Add
@@ -406,41 +406,47 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-                                        <div class="form-group ss-item-required">
-                                            <label for="field-1" class="col-sm-4 control-label">Item name</label>
+										<div class="form-group ss-item-required">
+											<label for="field-1" class="col-sm-4 control-label">Item name</label>
 
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" id="itemName2" placeholder="Item name"
-                                                    required>
-                                            </div>
-                                        </div>
-                                    </div>
+											<div class="col-sm-6" style="margin-right:0; padding-right:0;">
+												<input type="text" class="form-control" list="itemName_dropdown2" id="itemName2" placeholder="Item name" required>
+											</div>
+											<div class="col-sm-1" style="margin-right:0; padding-right:0;">
+												<i class="fas fa-filter" id='filter_itemName2'></i>
+											</div>
+										</div>
+									</div>
                                     <div class="col-md-4">
-                                        <div class="form-group ss-item-required">
-                                            <label for="field-1" class="col-sm-4 control-label">UoM</label>
+										<div class="col-md-10">
+											<div class="form-group ss-item-required">
+												<label for="field-1" class="col-sm-4 control-label">UoM</label>
 
-                                            <div class="col-sm-8">
-                                                <!-- <input type="text" class="form-control" id="uom" placeholder="Unit of Measurement" required> -->
-                                                <select type="text" class="form-control" id="uom2" placeholder="Unit of Measurement"
-                                                    required>
-                                                    <option value="Pcs">Pcs</option>
-                                                    <option value="Cu.M">Cu.M</option>
-                                                    <option value="sq. M">sq. M</option>
-                                                    <option value="Nos">Nos</option>
-                                                    <option value="meter">meter</option>
-                                                    <option value="SFT">SFT</option>
-                                                    <option value="CFT">CFT</option>
-                                                    <option value="Feet">Feet</option>
-                                                    <option value="Sets">Sets</option>
-                                                    <option value="Job">Job</option>
-                                                    <option value="Coil">Coil</option>
-                                                    <option value="LS">LS</option>
-                                                    <option value="Litre">Litre</option>
-                                                    <option value="No.">No.</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
+												<div class="col-sm-8" style="padding-left:10%;">
+													<!-- <input type="text" class="form-control" id="uom" placeholder="Unit of Measurement" required> -->
+													<select type="text" class="form-control" list="uom_dropdown2" id="uom2" placeholder="Unit of Measurement" required>
+														<option value="Pcs">Pcs</option>
+														<option value="Cu.M">Cu.M</option>
+														<option value="sq. M">sq. M</option>
+														<option value="Nos">Nos</option>
+														<option value="meter">meter</option>
+														<option value="SFT">SFT</option>
+														<option value="CFT">CFT</option>
+														<option value="Feet">Feet</option>
+														<option value="Sets">Sets</option>
+														<option value="Job">Job</option>
+														<option value="Coil">Coil</option>
+														<option value="LS">LS</option>
+														<option value="Litre">Litre</option>
+														<option value="No.">No.</option>
+													</select>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-1">
+											<i class="fas fa-times" id="hide_form2"></i>
+										</div>
+									</div>
                                 </div>
                                 <br>
 
@@ -465,7 +471,7 @@
                                             <label for="field-1" class="col-sm-4 control-label">Destination</label>
 
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" id="destination2" placeholder="Enter where the item is being delivered"
+                                                <input type="text" class="form-control" list="destination_dropdown2" id="destination2" placeholder="Enter where the item is being delivered"
                                                     required>
                                             </div>
                                         </div>
@@ -487,7 +493,7 @@
                                     <div class="col-md-4"></div>
                                     <div class="col-md-4"></div>
                                     <div class="col-md-4">
-                                        <button type="button" class="btn btn-dark fileButton formButton" id='submit_delivery3'
+                                        <button type="submit" class="btn btn-dark fileButton formButton" id='submit_delivery3'
                                             style="margin-left: 30%;">Submit</button>
                                         <button type="button" class="btn btn-dark new_item formButton" id='add_delivery3'
                                             style="margin-left: 5%;">Add a new Item</button>
@@ -518,41 +524,47 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-                                        <div class="form-group ss-item-required">
-                                            <label for="field-1" class="col-sm-4 control-label">Item name</label>
+										<div class="form-group ss-item-required">
+											<label for="field-1" class="col-sm-4 control-label">Item name</label>
 
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" id="itemName3" placeholder="Item name"
-                                                    required>
-                                            </div>
-                                        </div>
-                                    </div>
+											<div class="col-sm-6" style="margin-right:0; padding-right:0;">
+												<input type="text" class="form-control" list="itemName_dropdown3" id="itemName3" placeholder="Item name" required>
+											</div>
+											<div class="col-sm-1" style="margin-right:0; padding-right:0;">
+												<i class="fas fa-filter" id='filter_itemName3'></i>
+											</div>
+										</div>
+									</div>
                                     <div class="col-md-4">
-                                        <div class="form-group ss-item-required">
-                                            <label for="field-1" class="col-sm-4 control-label">UoM</label>
+										<div class="col-md-10">
+											<div class="form-group ss-item-required">
+												<label for="field-1" class="col-sm-4 control-label">UoM</label>
 
-                                            <div class="col-sm-8">
-                                                <!-- <input type="text" class="form-control" id="uom" placeholder="Unit of Measurement" required> -->
-                                                <select type="text" class="form-control" id="uom3" placeholder="Unit of Measurement"
-                                                    required>
-                                                    <option value="Pcs">Pcs</option>
-                                                    <option value="Cu.M">Cu.M</option>
-                                                    <option value="sq. M">sq. M</option>
-                                                    <option value="Nos">Nos</option>
-                                                    <option value="meter">meter</option>
-                                                    <option value="SFT">SFT</option>
-                                                    <option value="CFT">CFT</option>
-                                                    <option value="Feet">Feet</option>
-                                                    <option value="Sets">Sets</option>
-                                                    <option value="Job">Job</option>
-                                                    <option value="Coil">Coil</option>
-                                                    <option value="LS">LS</option>
-                                                    <option value="Litre">Litre</option>
-                                                    <option value="No.">No.</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
+												<div class="col-sm-8" style="padding-left:10%;">
+													<!-- <input type="text" class="form-control" id="uom" placeholder="Unit of Measurement" required> -->
+													<select type="text" class="form-control" list="uom_dropdown3" id="uom3" placeholder="Unit of Measurement" required>
+														<option value="Pcs">Pcs</option>
+														<option value="Cu.M">Cu.M</option>
+														<option value="sq. M">sq. M</option>
+														<option value="Nos">Nos</option>
+														<option value="meter">meter</option>
+														<option value="SFT">SFT</option>
+														<option value="CFT">CFT</option>
+														<option value="Feet">Feet</option>
+														<option value="Sets">Sets</option>
+														<option value="Job">Job</option>
+														<option value="Coil">Coil</option>
+														<option value="LS">LS</option>
+														<option value="Litre">Litre</option>
+														<option value="No.">No.</option>
+													</select>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-1">
+											<i class="fas fa-times" id="hide_form3"></i>
+										</div>
+									</div>
                                 </div>
                                 <br>
 
@@ -577,7 +589,7 @@
                                             <label for="field-1" class="col-sm-4 control-label">Destination</label>
 
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" id="destination3" placeholder="Enter where the item is being delivered"
+                                                <input type="text" class="form-control" list="destination_dropdown3" id="destination3" placeholder="Enter where the item is being delivered"
                                                     required>
                                             </div>
                                         </div>
@@ -599,7 +611,7 @@
                                     <div class="col-md-4"></div>
                                     <div class="col-md-4"></div>
                                     <div class="col-md-4">
-                                        <button type="button" class="btn btn-dark fileButton formButton" id='submit_delivery4'
+                                        <button type="submit" class="btn btn-dark fileButton formButton" id='submit_delivery4'
                                             style="margin-left: 30%;">Submit</button>
                                         <button type="button" class="btn btn-dark new_item formButton" id='add_delivery4'
                                             style="margin-left: 5%;">Add a new Item</button>
@@ -630,41 +642,47 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-                                        <div class="form-group ss-item-required">
-                                            <label for="field-1" class="col-sm-4 control-label">Item name</label>
+										<div class="form-group ss-item-required">
+											<label for="field-1" class="col-sm-4 control-label">Item name</label>
 
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" id="itemName4" placeholder="Item name"
-                                                    required>
-                                            </div>
-                                        </div>
-                                    </div>
+											<div class="col-sm-6" style="margin-right:0; padding-right:0;">
+												<input type="text" class="form-control" list="itemName_dropdown4" id="itemName4" placeholder="Item name" required>
+											</div>
+											<div class="col-sm-1" style="margin-right:0; padding-right:0;">
+												<i class="fas fa-filter" id='filter_itemName4'></i>
+											</div>
+										</div>
+									</div>
                                     <div class="col-md-4">
-                                        <div class="form-group ss-item-required">
-                                            <label for="field-1" class="col-sm-4 control-label">UoM</label>
+										<div class="col-md-10">
+											<div class="form-group ss-item-required">
+												<label for="field-1" class="col-sm-4 control-label">UoM</label>
 
-                                            <div class="col-sm-8">
-                                                <!-- <input type="text" class="form-control" id="uom" placeholder="Unit of Measurement" required> -->
-                                                <select type="text" class="form-control" id="uom4" placeholder="Unit of Measurement"
-                                                    required>
-                                                    <option value="Pcs">Pcs</option>
-                                                    <option value="Cu.M">Cu.M</option>
-                                                    <option value="sq. M">sq. M</option>
-                                                    <option value="Nos">Nos</option>
-                                                    <option value="meter">meter</option>
-                                                    <option value="SFT">SFT</option>
-                                                    <option value="CFT">CFT</option>
-                                                    <option value="Feet">Feet</option>
-                                                    <option value="Sets">Sets</option>
-                                                    <option value="Job">Job</option>
-                                                    <option value="Coil">Coil</option>
-                                                    <option value="LS">LS</option>
-                                                    <option value="Litre">Litre</option>
-                                                    <option value="No.">No.</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
+												<div class="col-sm-8" style="padding-left:10%;">
+													<!-- <input type="text" class="form-control" id="uom" placeholder="Unit of Measurement" required> -->
+													<select type="text" class="form-control" list="uom_dropdown4" id="uom4" placeholder="Unit of Measurement" required>
+														<option value="Pcs">Pcs</option>
+														<option value="Cu.M">Cu.M</option>
+														<option value="sq. M">sq. M</option>
+														<option value="Nos">Nos</option>
+														<option value="meter">meter</option>
+														<option value="SFT">SFT</option>
+														<option value="CFT">CFT</option>
+														<option value="Feet">Feet</option>
+														<option value="Sets">Sets</option>
+														<option value="Job">Job</option>
+														<option value="Coil">Coil</option>
+														<option value="LS">LS</option>
+														<option value="Litre">Litre</option>
+														<option value="No.">No.</option>
+													</select>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-1">
+											<i class="fas fa-times" id="hide_form4"></i>
+										</div>
+									</div>
                                 </div>
                                 <br>
 
@@ -689,7 +707,7 @@
                                             <label for="field-1" class="col-sm-4 control-label">Destination</label>
 
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" id="destination4" placeholder="Enter where the item is being delivered"
+                                                <input type="text" class="form-control" list="destination_dropdown4" id="destination4" placeholder="Enter where the item is being delivered"
                                                     required>
                                             </div>
                                         </div>
@@ -711,10 +729,8 @@
                                     <div class="col-md-4"></div>
                                     <div class="col-md-4"></div>
                                     <div class="col-md-4">
-                                        <button type="button" class="btn btn-dark fileButton formButton" id='submit_delivery5'
+                                        <button type="submit" class="btn btn-dark fileButton formButton" id='submit_delivery5'
                                             style="margin-left: 30%;">Submit</button>
-                                        <button type="button" class="btn btn-dark new_item formButton" id='add_delivery5'
-                                            style="margin-left: 5%;">Add a new Item</button>
                                     </div>
                                 </div>
                                 <br>
