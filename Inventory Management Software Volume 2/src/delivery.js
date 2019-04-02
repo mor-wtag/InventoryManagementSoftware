@@ -92,6 +92,8 @@ $(document).ready(function () {
 
         for (let itemAdded_index = 0; itemAdded_index < 5; itemAdded_index++) {
 
+            let destination_found = false; //setting the boolean false here so that it reinitializes for every new item added
+
             let first_item_matched = false;
 
             ////FILTER BUTTON FOR THE ITEM CODE
@@ -280,6 +282,7 @@ $(document).ready(function () {
 
                 let searched_itemcode = $("#itemCode" + itemAdded_index).val();
                 let searched_itemName = $("#itemName" + itemAdded_index).val();
+                let searched_destination = $("#destination" + itemAdded_index).val();
 
                 console.log('The submit button that has een clicked has the id: ' + submitButtonClicked);
 
@@ -342,7 +345,7 @@ $(document).ready(function () {
                                 //push item in the delivery log database
                                 let update_delivery_log = database.ref('databases/delivery_log').push(update_data_delivery_log);
                             });
-                        }
+                        }      
                     }
 
                     if (itemfound == false) {
@@ -353,13 +356,67 @@ $(document).ready(function () {
                         return false;
                     }
 
-                    if (form_fields_index == itemAdded_index) {
-                        alert('Data uploaded Successfully!');
-                        location.reload();
-                        return false;
-                    }
+                    //CODE TO CHECK IF DESTINATION IS PRESENT IN THE DATABASE
+                    //If destination not prresent in database, add it to the database
 
-                    itemfound = false;
+                    //retrieve data from destination database
+                    let response3 = database.ref('databases/Destination_database').once('value');
+
+                    response3.then(function (snapshot) {
+
+                        let fetchedData3 = snapshot.val();
+
+                        console.log("Got into the function to add to the DESTINATION DATABASE if it's not already there");
+
+                        //loop through and parse the data then create TR in the table with this data
+                        for (let uniqueKey in fetchedData3) {
+
+                            let filtered_destination = fetchedData3[uniqueKey]['destination'];
+
+                            //look for partial/complete match of the item Name searched string and the item name found in database string
+
+                            if (filtered_destination==destination) {
+
+                                console.log("destination found! "+destination);
+                                destination_found=true;
+                                break;
+                            }
+                        }
+
+                        if (destination_found==false){
+
+                            //since destination cannot be found in the database, as the user whether they want to add the destination into the database
+                            //alert with two options OKAY and CANCEL
+
+                            let add_destination_into_database = confirm("Cannot find the destination "+destination+". Would you like to add the destination into the database?");
+
+                            if (add_destination_into_database==true){
+                                //will be triggered if the user clicks OK
+                                //hence add the destinmation into the database
+                                console.log("destination Not found! "+destination+". Appening destination into the destination database");
+
+                                let destination_to_be_pushed =
+                                {
+                                    'destination': destination
+                                }
+
+                                let update_Destination_database =  database.ref('databases/Destination_database').push(destination_to_be_pushed); //push new destination into database
+                            }      
+                            else{
+                                return false;
+                            }                     
+                        }
+
+                        //this code here is to check data is being taken from the last form. If that's the case, then the forms can be taken and success alert will be given
+
+                        if (form_fields_index == itemAdded_index) {
+                            alert('Data uploaded Successfully!');
+                            location.reload();
+                            return false;
+                        }
+    
+                        itemfound = false;
+                    });
                 }
             });
 
