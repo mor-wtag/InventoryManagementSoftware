@@ -181,62 +181,63 @@ $(document).ready(function () {
             });
 
             ////FILTERING FOR DESTINATION
-            //DYNAMIC DROPDOWN
+            //STATIC DROPDOWN added by fetching data from the Destination database when the page reloads 
 
-            //first, fetch the data from destination database
+            //fetch the data from destination database
 
-            let response1 = database.ref('databases/delivery_log').once('value');
+            let response1 = database.ref('databases/Destination_database').once('value');
 
             response1.then(function (snapshot) {
 
                 let fetchedData1 = snapshot.val();
 
-                $("#destination" + itemAdded_index).on("keypress", function () {
+                //delete the existing dropdown at the start of a keypress to avoid multiple entries on every keypress and so that the dropdown is freshly populated on every keypress
+                $("#destination_dropdown" + itemAdded_index).empty();
 
-                    //delete the existing dropdown at the start of a keypress to avoid multiple entries on every keypress and so that the dropdown is freshly populated on every keypress
+                //append html code to insert dynamic dropdown select function
+                $("#destination" + itemAdded_index).append(`<datalist id='destination_dropdown${itemAdded_index}'></datalist>`);
 
-                    $("#destination_dropdown" + itemAdded_index).empty();
+                //loop through and parse the data to check if the item name is present in the database
+                for (let uniqueKey in fetchedData1) {
 
-                    //get item name from the input field
-                    let searched_destination = $("#destination" + itemAdded_index).val();
+                    let filtered_destination = fetchedData1[uniqueKey]['destination'];
 
-                    //loop through and parse the data to check if the item name is present in the database
-                    for (let uniqueKey in fetchedData1) {
+                    //converting to string format 
+                    let string_destination_filtered = filtered_destination.toString();
 
-                        let filtered_destination = fetchedData1[uniqueKey]['destination'];
+                    //checked if its the first item, now add the option values
+                    $("#destination_dropdown" + itemAdded_index).append(`<option id='${string_destination_filtered}'>${string_destination_filtered}</option>`);
+                }
+            });
 
-                        //converting both to string format 
+            //////FILTERING FOR UOM
+            //STATIC DROPDOWN added by fetching data from the uom_database when the page reloads 
 
-                        let string_destination_filtered = filtered_destination.toString();
-                        let string_searched_destination = searched_destination.toString().toLowerCase();
+            //fetch the data from UOM database
 
-                        let string_destination_filtered_lowercase = filtered_destination.toLowerCase();// lowercase version of the filtered string item so that it can be compared
+            let response2 = database.ref('databases/uom_database').once('value');
 
-                        //look for partial/complete match of the item Name searched string and the item name found in database string
+            response2.then(function (snapshot) {
 
-                        if (string_destination_filtered_lowercase.includes(string_searched_destination)) {
+                let fetchedData2 = snapshot.val();
 
-                            console.log('Found the item code you were looking for: ' + string_destination_filtered); //adding the item that's not converted to lowercase so that it can be used to get the correct information from the database
+                //delete the existing dropdown at the start of a keypress to avoid multiple entries on every keypress and so that the dropdown is freshly populated on every keypress
+                $("#uom_dropdown" + itemAdded_index).empty();
 
-                            //checking to see whether we have found the first item that matched or its the subsequent items
+                //append html code to insert dynamic dropdown select function
+                $("#uom" + itemAdded_index).append(`<datalist id='uom_dropdown${itemAdded_index}'></datalist>`);
 
-                            if (first_item_matched == false) {
+                //loop through and parse the data to check if the item name is present in the database
+                for (let uniqueKey in fetchedData2) {
 
-                                //append html code to insert dynamic dropdown select function
-                                $("#destination" + itemAdded_index).append(`<datalist id='destination_dropdown${itemAdded_index}'></datalist>`);
-                                first_item_matched = true;
+                    let filtered_uom = fetchedData2[uniqueKey]['uom'];
 
-                                console.log("First item appended! Dropdown injected");
-                            }
+                    //converting to string format 
+                    let string_uom_filtered = filtered_uom.toString();
 
-                            //checked if its the first item, now add the option values
-
-                            $("#destination_dropdown" + itemAdded_index).append(`<option id='${string_destination_filtered}'>${string_destination_filtered}</option>`);
-
-                            console.log('Items appended: ' + string_destination_filtered);
-                        }
-                    }
-                });
+                    //checked if its the first item, now add the option values
+                    $("#uom_dropdown" + itemAdded_index).append(`<option id='${string_uom_filtered}'>${string_uom_filtered}</option>`);
+                }
             });
 
             //this is the code to get the selected item from the dropdown list and then get the itemcode, quantity, uom from the database
@@ -539,4 +540,92 @@ $(document).ready(function () {
             }
         });
     });
+
+
+    //PUSHING DATA INTO THE DESTINATION DATABASE
+    //WILL BE RUN ONLY ONCE
+
+//     let destination1= {
+//         'destination': 'Comilla GPC'
+//     }
+
+//     let destination2= {
+//         'destination': 'Jassore GPC'
+//     }
+
+//     let destination3= {
+//         'destination': 'UK Warehouse'
+//     }
+
+//     let destination4= {
+//         'destination': 'Rajshahi Regional Office'
+//     }
+
+//     let destination5= {
+//         'destination': 'Gulshan GPC'
+//     }
+
+//     let update_Destination_database =  database.ref('databases/Destination_database').push(destination1);
+//     update_Destination_database =  database.ref('databases/Destination_database').push(destination2);
+//     update_Destination_database =  database.ref('databases/Destination_database').push(destination3);
+//     update_Destination_database =  database.ref('databases/Destination_database').push(destination4);
+//     update_Destination_database =  database.ref('databases/Destination_database').push(destination5);
+
+    // PUSHING DATA INTO THE DESTINATION DATABASE
+    //     WILL BE RUN ONLY ONCE
+
+//         let uom1= {
+//             'uom': 'feet'
+//         }
+
+//         let uom2= {
+//             'uom': 'meter'
+//         }
+
+//         let uom3= {
+//             'uom': 'pcs'
+//         }
+
+//         let uom4= {
+//             'uom': 'sq M'
+//         }
+
+//         let uom5= {
+//             'uom': 'job'
+//         }
+
+//         let uom6= {
+//             'uom': 'cu.M'
+//         }
+
+//         let uom7= {
+//             'uom': 'sets'
+//         }
+
+//         let uom8= {
+//             'uom': 'coil'
+//         }
+
+//         let uom9= {
+//             'uom': 'no.'
+//         }
+
+//         let uom10= {
+//             'uom': 'litre'
+//         }
+
+        
+
+//         let update_Destination_database =  database.ref('databases/uom_database').push(uom1);
+//         update_Destination_database =  database.ref('databases/uom_database').push(uom2);
+//         update_Destination_database =  database.ref('databases/uom_database').push(uom3);
+//         update_Destination_database =  database.ref('databases/uom_database').push(uom4);
+//         update_Destination_database =  database.ref('databases/uom_database').push(uom5);
+//         update_Destination_database =  database.ref('databases/uom_database').push(uom6);
+//         update_Destination_database =  database.ref('databases/uom_database').push(uom7);
+//         update_Destination_database =  database.ref('databases/uom_database').push(uom8);
+//         update_Destination_database =  database.ref('databases/uom_database').push(uom9);
+//         update_Destination_database =  database.ref('databases/uom_database').push(uom10);
+        
 });
+

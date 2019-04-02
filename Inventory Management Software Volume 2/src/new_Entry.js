@@ -179,6 +179,42 @@ $(document).ready(function () {
                     }
                 }
             });
+
+            //////FILTERING FOR UOM
+            //STATIC DROPDOWN added by fetching data from the uom_database when the page reloads 
+
+            //fetch the data from destination database
+
+            let response2 = database.ref('databases/uom_database').once('value');
+
+            response2.then(function (snapshot) {
+
+                let fetchedData2 = snapshot.val();
+
+                //delete the existing dropdown at the start of a keypress to avoid multiple entries on every keypress and so that the dropdown is freshly populated on every keypress
+                $("#uom_dropdown" + itemAdded_index).empty();
+
+                //get item name from the input field
+                let searched_uom = $("#uom" + itemAdded_index).val();
+
+                //append html code to insert dynamic dropdown select function
+                $("#uom" + itemAdded_index).append(`<datalist id='uom_dropdown${itemAdded_index}'></datalist>`);
+
+                //loop through and parse the data to check if the item name is present in the database
+                for (let uniqueKey in fetchedData2) {
+
+                    let filtered_uom = fetchedData2[uniqueKey]['uom'];
+
+                    //converting to string format 
+                    let string_uom_filtered = filtered_uom.toString();
+
+                    //checked if its the first item, now add the option values
+                    $("#uom_dropdown" + itemAdded_index).append(`<option id='${string_uom_filtered}'>${string_uom_filtered}</option>`);
+
+                    console.log('Items appended: ' + string_uom_filtered);
+    
+                }
+            });
             
             //this is the code to get the selected item from the dropdown list and then get the itemcode, quantity, uom from the database
             $('#filter_itemName'+itemAdded_index).click(function(){
