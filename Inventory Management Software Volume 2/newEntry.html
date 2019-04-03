@@ -32,7 +32,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
 
-	
+
 
 </head>
 
@@ -202,7 +202,8 @@
 
 											<div class="col-sm-8">
 												<div class="col-sm-9 itemCode_col_length">
-													<input type="text" list="itemName_dropdown0" class="form-control" id="itemName0" placeholder="Item name" required>
+													<input type="text" list="itemName_dropdown0" class="form-control" id="itemName0" placeholder="Item name"
+													 required>
 												</div>
 												<div class="col-sm-2">
 													<i class="fas fa-filter" id='filter_itemName0'></i>
@@ -215,7 +216,8 @@
 											<label for="field-1" class="col-sm-4 control-label">UoM</label>
 
 											<div class="col-sm-8">
-												<input type="text" class="form-control" id="uom0" list="uom_dropdown0" placeholder="Unit of Measurement" required>
+												<input type="text" class="form-control" id="uom0" list="uom_dropdown0" placeholder="Unit of Measurement"
+												 required>
 											</div>
 										</div>
 									</div>
@@ -325,6 +327,15 @@
 								<div class=row>
 									<div class="col-md-4">
 										<div class="form-group ss-item-required">
+											<label for="field-1" class="col-sm-4 control-label">Inventory</label>
+
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="inventoryName0" list='inventoryName_dropdown0' placeholder="Name the inventory you're buying it for">
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group ss-item-required">
 											<label for="field-1" class="col-sm-4 control-label">Issue Date</label>
 
 											<div class="col-sm-8">
@@ -332,12 +343,12 @@
 											</div>
 										</div>
 									</div>
-									<div class="col-md-4"></div>
-										<div class="col-md-4">
-											<button type="submit" class="btn btn-dark fileButton formButton" id='submit_newEntry1' style="margin-left: 30%;">Submit</button>
-											<button type="button" class="btn btn-dark new_item formButton" id='add_newItem1' style="margin-left: 5%;">Add a new Item</button>
-										</div>
+									<div class="col-md-4">
+										<button type="submit" class="btn btn-dark fileButton formButton" id='submit_newEntry1' style="margin-left: 30%;">Submit</button>
+										<button type="button" class="btn btn-dark new_item formButton" id='add_newItem1' style="margin-left: 5%;">Add
+											a new Item</button>
 									</div>
+								</div>
 								<br>
 							</div>
 						</form>
@@ -364,7 +375,8 @@
 											<label for="field-1" class="col-sm-4 control-label">Item name</label>
 
 											<div class="col-sm-6" style="margin-right:0; padding-right:0;">
-												<input type="text" class="form-control" list="itemName_dropdown1" id="itemName1" placeholder="Item name" required>
+												<input type="text" class="form-control" list="itemName_dropdown1" id="itemName1" placeholder="Item name"
+												 required>
 											</div>
 											<div class="col-sm-1" style="margin-right:0; padding-right:0;">
 												<i class="fas fa-filter" id='filter_itemName1'></i>
@@ -377,7 +389,8 @@
 												<label for="field-1" class="col-sm-4 control-label">UoM</label>
 
 												<div class="col-sm-8" style="padding-left:10%;">
-													<input type="text" class="form-control" id="uom1" list="uom_dropdown1" placeholder="Unit of Measurement" required>
+													<input type="text" class="form-control" id="uom1" list="uom_dropdown1" placeholder="Unit of Measurement"
+													 required>
 												</div>
 											</div>
 										</div>
@@ -492,6 +505,16 @@
 								<div class=row>
 									<div class="col-md-4">
 										<div class="form-group ss-item-required">
+											<label for="field-1" class="col-sm-4 control-label">Inventory</label>
+
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="inventoryName1" list='inventoryName_dropdown1' placeholder="Name the inventory you're buying it for">
+											</div>
+										</div>
+									</div>
+
+									<div class="col-md-4">
+										<div class="form-group ss-item-required">
 											<label for="field-1" class="col-sm-4 control-label">Issue Date</label>
 
 											<div class="col-sm-8">
@@ -499,10 +522,10 @@
 											</div>
 										</div>
 									</div>
-									<div class="col-md-4"></div>
 									<div class="col-md-4">
 										<button type="submit" class="btn btn-dark fileButton formButton" id='submit_newEntry2' style="margin-left: 30%;">Submit</button>
-										<button type="button" class="btn btn-dark new_item formButton" id='add_newItem2' style="margin-left: 5%;">Add a new Item</button>
+										<button type="button" class="btn btn-dark new_item formButton" id='add_newItem2' style="margin-left: 5%;">Add
+											a new Item</button>
 									</div>
 								</div>
 								<br>
@@ -532,7 +555,8 @@
 											<label for="field-1" class="col-sm-4 control-label">Item name</label>
 
 											<div class="col-sm-6" style="margin-right:0; padding-right:0;">
-												<input type="text" class="form-control" list="itemName_dropdown2" id="itemName2" placeholder="Item name" required>
+												<input type="text" class="form-control" list="itemName_dropdown2" id="itemName2" placeholder="Item name"
+												 required>
 											</div>
 											<div class="col-sm-1" style="margin-right:0; padding-right:0;">
 												<i class="fas fa-filter" id='filter_itemName2'></i>
@@ -545,7 +569,8 @@
 												<label for="field-1" class="col-sm-4 control-label">UoM</label>
 
 												<div class="col-sm-8" style="padding-left:10%;">
-													<input type="text" class="form-control" id="uom2" list="uom_dropdown2" placeholder="Unit of Measurement" required>
+													<input type="text" class="form-control" id="uom2" list="uom_dropdown2" placeholder="Unit of Measurement"
+													 required>
 												</div>
 											</div>
 										</div>
@@ -661,6 +686,15 @@
 								<div class=row>
 									<div class="col-md-4">
 										<div class="form-group ss-item-required">
+											<label for="field-1" class="col-sm-4 control-label">Inventory</label>
+
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="inventoryName2" list='inventoryName_dropdown2' placeholder="Name the inventory you're buying it for">
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group ss-item-required">
 											<label for="field-1" class="col-sm-4 control-label">Issue Date</label>
 
 											<div class="col-sm-8">
@@ -668,10 +702,10 @@
 											</div>
 										</div>
 									</div>
-									<div class="col-md-4"></div>
 									<div class="col-md-4">
 										<button type="submit" class="btn btn-dark fileButton formButton" id='submit_newEntry3' style="margin-left: 30%;">Submit</button>
-										<button type="button" class="btn btn-dark new_item formButton" id='add_newItem3' style="margin-left: 5%;">Add a new Item</button>
+										<button type="button" class="btn btn-dark new_item formButton" id='add_newItem3' style="margin-left: 5%;">Add
+											a new Item</button>
 									</div>
 								</div>
 								<br>
@@ -701,7 +735,8 @@
 											<label for="field-1" class="col-sm-4 control-label">Item name</label>
 
 											<div class="col-sm-6" style="margin-right:0; padding-right:0;">
-												<input type="text" class="form-control" list="itemName_dropdown3" id="itemName3" placeholder="Item name" required>
+												<input type="text" class="form-control" list="itemName_dropdown3" id="itemName3" placeholder="Item name"
+												 required>
 											</div>
 											<div class="col-sm-1" style="margin-right:0; padding-right:0;">
 												<i class="fas fa-filter" id='filter_itemName3'></i>
@@ -714,7 +749,8 @@
 												<label for="field-1" class="col-sm-4 control-label">UoM</label>
 
 												<div class="col-sm-8" style="padding-left:10%;">
-													<input type="text" class="form-control" id="uom3" list="uom_dropdown3" placeholder="Unit of Measurement" required>
+													<input type="text" class="form-control" id="uom3" list="uom_dropdown3" placeholder="Unit of Measurement"
+													 required>
 												</div>
 											</div>
 										</div>
@@ -830,6 +866,15 @@
 								<div class=row>
 									<div class="col-md-4">
 										<div class="form-group ss-item-required">
+											<label for="field-1" class="col-sm-4 control-label">Inventory</label>
+
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="inventoryName3" list='inventoryName_dropdown3' placeholder="Name the inventory you're buying it for">
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group ss-item-required">
 											<label for="field-1" class="col-sm-4 control-label">Issue Date</label>
 
 											<div class="col-sm-8">
@@ -837,10 +882,10 @@
 											</div>
 										</div>
 									</div>
-									<div class="col-md-4"></div>
 									<div class="col-md-4">
 										<button type="submit" class="btn btn-dark fileButton formButton" id='submit_newEntry4' style="margin-left: 30%;">Submit</button>
-										<button type="button" class="btn btn-dark new_item formButton" id='add_newItem4' style="margin-left: 5%;">Add a new Item</button>
+										<button type="button" class="btn btn-dark new_item formButton" id='add_newItem4' style="margin-left: 5%;">Add
+											a new Item</button>
 									</div>
 								</div>
 								<br>
@@ -870,7 +915,8 @@
 											<label for="field-1" class="col-sm-4 control-label">Item name</label>
 
 											<div class="col-sm-6" style="margin-right:0; padding-right:0;">
-												<input type="text" class="form-control" list="itemName_dropdown4" id="itemName4" placeholder="Item name" required>
+												<input type="text" class="form-control" list="itemName_dropdown4" id="itemName4" placeholder="Item name"
+												 required>
 											</div>
 											<div class="col-sm-1" style="margin-right:0; padding-right:0;">
 												<i class="fas fa-filter" id='filter_itemName4'></i>
@@ -883,7 +929,8 @@
 												<label for="field-1" class="col-sm-4 control-label">UoM</label>
 
 												<div class="col-sm-8" style="padding-left:10%;">
-													<input type="text" class="form-control" id="uom4" list="uom_dropdown4" placeholder="Unit of Measurement" required>
+													<input type="text" class="form-control" id="uom4" list="uom_dropdown4" placeholder="Unit of Measurement"
+													 required>
 												</div>
 											</div>
 										</div>
@@ -999,6 +1046,15 @@
 								<div class=row>
 									<div class="col-md-4">
 										<div class="form-group ss-item-required">
+											<label for="field-1" class="col-sm-4 control-label">Inventory</label>
+
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="inventoryName4" list='inventoryName_dropdown4' placeholder="Name the inventory you're buying it for">
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group ss-item-required">
 											<label for="field-1" class="col-sm-4 control-label">Issue Date</label>
 
 											<div class="col-sm-8">
@@ -1006,7 +1062,6 @@
 											</div>
 										</div>
 									</div>
-									<div class="col-md-4"></div>
 									<div class="col-md-4">
 										<button type="submit" class="btn btn-dark fileButton formButton" id='submit_newEntry5' style="margin-left: 30%;">Submit</button>
 									</div>
