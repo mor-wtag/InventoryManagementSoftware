@@ -79,9 +79,7 @@ function initialLoad(){
             
             let reversed_uniqueKey = uniqueKey_Array[reversed_uniqueKey_index];
         
-
-        //loop through and parse the data then create TR in the table with this data
-        // for (let uniqueKey in fetchedData){
+            //loop through and parse the data then create TR in the table with this data
             let itemCode = fetchedData[reversed_uniqueKey]['itemCode'];
             let itemName = fetchedData[reversed_uniqueKey]['itemName'];
             let uom = fetchedData[reversed_uniqueKey]['uom'];
@@ -107,7 +105,6 @@ function initialLoad(){
                     </td
                 </tr>
             `);
-
         }
 
         //---- EVENT LISTENER FOR SORTING---- 
@@ -155,7 +152,7 @@ function initialLoad(){
                                 nil so far
                             </td
                         </tr>
-                    `);
+                        `);
                     break;
                     }
                 }
@@ -251,7 +248,6 @@ function initialLoad(){
 
                  console.log('Found the item code you were looking for: '+ string_itemName_filtered); //adding the item that's not converted to lowercase so that it can be used to get the correct information from the database
                 // appending elements into the databaseTable
-                // appending elements into the databaseTable
                 $('#inventory_tableBody').append(/*html*/`
                 <tr data-key="${reversed_uniqueKey}">
                     <td>
@@ -268,11 +264,11 @@ function initialLoad(){
                     </td>
                     <td>
                         nil so far
-                    </td
+                    </td>
                 </tr>
                 `);
             }
         }
-    });
+        });
     });
 }

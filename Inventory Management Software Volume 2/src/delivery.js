@@ -36,7 +36,7 @@ firebase.auth().onAuthStateChanged(user => {
     else {
         //user is not logged in, do nothing
         console.log('Not logged in...');
-        window.location.href = "../login.html";
+        window.location.href = "./login.html";
     }
 });
 
