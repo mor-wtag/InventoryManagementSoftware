@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Neon Admin Panel" />
+    <meta name="author" content="" />
+
+    <link rel="icon" href="assets/images/favicon.ico">
+
+    <title>InventoryManagementSoftware | Inventory</title>
+
+    <link rel="stylesheet" href="assets/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css">
+    <link rel="stylesheet" href="assets/css/font-icons/entypo/css/entypo.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/css/neon-core.css">
+    <link rel="stylesheet" href="assets/css/neon-theme.css">
+    <link rel="stylesheet" href="assets/css/neon-forms.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+	 crossorigin="anonymous">
+
+    <!-- Imported styles on this page -->
+    <link rel="stylesheet" href="assets/js/datatables/datatables.css">
+    <link rel="stylesheet" href="assets/js/select2/select2-bootstrap.css">
+    <link rel="stylesheet" href="assets/js/select2/select2.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+
+
+    <script src="assets/js/jquery-1.11.3.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
+
+</head>
+
+<body class="page-body  page-fade" data-url="http://neon.dev">
+
+    <div class="page-container">
+        <!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
+
+        <div class="sidebar-menu">
+
+            <div class="sidebar-menu-inner">
+
+                <header class="logo-env">
+
+                    <!-- logo -->
+                    <div class="logo">
+                        <a href="index.html">
+                            <img src="assets/images/GrameephoneLogo.png" width="150" alt="" />
+                        </a>
+                    </div>
+
+                    <!-- logo collapse icon -->
+                    <div class="sidebar-collapse">
+                        <a href="#" class="sidebar-collapse-icon">
+                            <!-- add class "with-animation" if you want sidebar to have animation during expanding/collapsing transition -->
+                            <i class="entypo-menu"></i>
+                        </a>
+                    </div>
+
+
+                    <!-- open/close menu icon (do not remove if you want to enable menu on mobile devices) -->
+                    <div class="sidebar-mobile-menu visible-xs">
+                        <a href="#" class="with-animation">
+                            <!-- add class "with-animation" to support animation -->
+                            <i class="entypo-menu"></i>
+                        </a>
+                    </div>
+
+                </header>
+
+
+                <ul id="main-menu" class="main-menu">
+                    <!-- add class "multiple-expanded" to allow multiple submenus to open -->
+                    <!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
+                    <li class="has-sub">
+                        <a href="index.html">
+                            <i class="entypo-gauge"></i>
+                            <span class="title">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="has-sub">
+                        <a href="newEntry.html">
+                            <i class="entypo-layout"></i>
+                            <span class="title">New Entry</span>
+                        </a>
+                    </li>
+                    <li class="active opened active has-sub">
+                        <a href="inventory.html">
+                            <i class="entypo-monitor"></i>
+                            <span class="title">Inventory</span>
+                        </a>
+                    </li>
+                    <li class="has-sub">
+                        <a href="entry_log.html">
+                            <i class="entypo-newspaper"></i>
+                            <span class="title">Entry Log</span>
+                        </a>
+                    </li>
+                    <li class="has-sub">
+                        <a href="qualityAssurance.html">
+                            <i class="entypo-doc-text"></i>
+                            <span class="title">Quality Assurance</span>
+                        </a>
+                    </li>
+                    <li class="has-sub">
+                        <a href="ageing.html">
+                            <i class="entypo-window"></i>
+                            <span class="title">Ageing</span>
+                        </a>
+                    </li>
+                    <li class="has-sub">
+                        <a href="delivery.html?#">
+                            <i class="entypo-bag"></i>
+                            <span class="title">Delivery</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="main-content">
+
+            <div class="row">
+                <div class="col-md-6 col-sm-8 clearfix">
+
+                    <ul class="user-info pull-left pull-none-xsm">
+
+                        <!-- Profile Info -->
+                        <li class="profile-info dropdown">
+                            <!-- add class "pull-right" if you want to place this from right -->
+
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="assets/images/GrameephoneLogoTop.png" alt="" width="200" />
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Raw Links -->
+                <div class="col-md-6 col-sm-8 clearfix hidden-xs">
+
+                    <ul class="list-inline links-list pull-right">
+                        <li>
+                            <a href="login.html">
+                                Log Out <i class="entypo-logout right"></i>
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+
+            </div>
+            <hr />
+
+            <div class="col-md-10">
+                <h3>Inventory</h3>
+            </div>
+            <div class="col-md-2">
+                <div class="active-cyan-3 active-cyan-4 mb-4">
+                    <input class="form-control search_field" id="search_inventory" type="text" placeholder="Search for Item" aria-label="Search">
+                </div>
+            </div>
+            <table class="table table-bordered datatable inventory_table" id="table-1">
+                <thead>
+                    <tr>
+                        <th>Item Code</th>
+                        <th>Item Description</th>
+                        <th>UoM</th>
+                        <th>Quantity <i class="fas fa-angle-up" id="quantity_sort_asc" style="padding:0; margin:0;"></i> <i class="fas fa-angle-down" id="quantity_sort_des" style="padding:0; margin:0;"></i></th>
+                        <th>Others</th>
+                    </tr>
+                </thead>
+                <tbody id='inventory_tableBody'>
+                    <tr class="odd gradeX">
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Item Code</th>
+                        <th>Item Description</th>
+                        <th>UoM</th>
+                        <th>Quantity</th>
+                        <th>Others</th>
+                    </tr>
+                </tfoot>
+            </table>
+            <br />
+        </div>
+    </div>
+
+    <br />
+    <script>
+        
+    </script>
+
+    <!-- Bottom scripts (common) -->
+    <script src="assets/js/gsap/TweenMax.min.js"></script>
+    <script src="assets/js/jquery-ui/js/jquery-ui-1.10.3.minimal.min.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+    <script src="assets/js/joinable.js"></script>
+    <script src="assets/js/resizeable.js"></script>
+    <script src="assets/js/neon-api.js"></script>
+
+    <script src="assets/js/datatables/datatables.js"></script>
+    <script src="assets/js/datatables/datatables.min.js"></script>
+
+    
+    <!-- Imported scripts on this page -->
+    <script src="assets/js/datatables/datatables.js"></script>
+    <script src="assets/js/select2/select2.min.js"></script>
+    <script src="assets/js/neon-chat.js"></script>
+    <script src="assets/js/bootstrap-datepicker.js"></script>
+
+
+    <!-- JavaScripts initializations and stuff -->
+    <script src="assets/js/neon-custom.js"></script>
+
+
+    <!-- Demo Settings -->
+    <script src="assets/js/neon-demo.js"></script>
+    <script src="src/inventory.js"></script>
+    <!-- <script src="src/excess.js"></script>" -->
+    <script src="src/new_Entry.js"></script>
+</body>
+
+</html>
