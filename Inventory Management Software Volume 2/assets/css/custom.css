@@ -142,13 +142,18 @@ tr:nth-child(even) {
 }
 
 /* changing color for buttons */
-.formButton{
+.btn-dark{
     width: 30%;
     background-color:#343a40;
     color:white;
 }
 
-.formButton:hover{
+#exportToExcel{
+    width: 20%;
+    margin-right: 2%;
+}
+
+.btn-dark:hover{
     cursor:pointer;
     color: lightgray;
 }
