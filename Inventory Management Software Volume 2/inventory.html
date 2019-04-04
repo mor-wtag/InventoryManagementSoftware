@@ -35,6 +35,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
 
+    <script src="assets/js/jquery-1.11.3.min.js"></script>
+    <script src="assets\libraries\SheetJS\dist\xlsx.full.min.js"></script>
+    <script src="assets\libraries\FileSaver\dist\FileSaver.min.js"></script>
+
+
 </head>
 
 <body class="page-body  page-fade" data-url="http://neon.dev">
@@ -156,16 +161,18 @@
 
             </div>
             <hr />
-
-            <div class="col-md-10">
-                <h3>Inventory</h3>
-            </div>
-            <div class="col-md-2">
-                <div class="active-cyan-3 active-cyan-4 mb-4">
-                    <input class="form-control search_field" id="search_inventory" type="text" placeholder="Search for Item" aria-label="Search">
+            <div class="row">
+                <div class="col-md-7">
+                    <h3>Inventory</h3>
+                </div>
+                <div class="col-md-5">
+                    <div class="active-cyan-3 active-cyan-4" style="float:right;">
+                        <input class="form-control search_field" id="search_inventory" type="text" placeholder="Search for Item" aria-label="Search">
+                    </div>
+                    <button type="button" class="btn btn-dark" id="exportToExcel" style="float:right;">Export</button>
                 </div>
             </div>
-            <table class="table table-bordered datatable inventory_table" id="table-1">
+            <table class="table table-bordered datatable inventory_table" id="inventory_table">
                 <thead>
                     <tr>
                         <th>Item Code</th>
@@ -176,8 +183,6 @@
                     </tr>
                 </thead>
                 <tbody id='inventory_tableBody'>
-                    <tr class="odd gradeX">
-                    </tr>
                 </tbody>
                 <tfoot>
                     <tr>
@@ -213,7 +218,6 @@
     <!-- Imported scripts on this page -->
     <script src="assets/js/datatables/datatables.js"></script>
     <script src="assets/js/select2/select2.min.js"></script>
-    <script src="assets/js/neon-chat.js"></script>
     <script src="assets/js/bootstrap-datepicker.js"></script>
 
 
@@ -224,7 +228,6 @@
     <!-- Demo Settings -->
     <script src="assets/js/neon-demo.js"></script>
     <script src="src/inventory.js"></script>
-    <!-- <script src="src/excess.js"></script>" -->
     <script src="src/new_Entry.js"></script>
 </body>
 
