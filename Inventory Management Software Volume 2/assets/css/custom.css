@@ -151,6 +151,7 @@ tr:nth-child(even) {
 #exportToExcel{
     width: 20%;
     margin-right: 2%;
+    margin-top:1.5%;
 }
 
 .btn-dark:hover{
@@ -164,4 +165,61 @@ tr:nth-child(even) {
 
 .formButton:active{
     color:white;
+}
+/* DATE RANGE */
+/* this code here is for the date range selecting box */
+
+/* BOILERPLATE */
+/* BOILERPLATE */
+/* *, *:before, *:after {-webkit-box-sizing:border-box; -moz-box-sizing:border-box; box-sizing:border-box;} */
+
+/* html {font-size:16px; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%;} */
+
+/* body {font-style:normal; font-size:1rem; line-height:1.286rem; font-family:helvetica, arial, sans-serif; background-color:#efefef; color:#333; text-align:left;} */
+
+/* #pageWrapper {width:984px; margin:1.429rem auto; border:solid 1px #ccc; background-color:#fff; padding:1rem;} */
+
+/* .pageSection {display:block; margin-top:1.429rem; clear:both;} */
+/* .pageSection:first-child {margin-top:0;}
+
+h1,h2,h3,h4,h5,h6 {color: black; font-weight:normal; text-rendering:optimizelegibility;} */
+
+
+p {margin-top:1rem; font-size:1rem;}
+p:first-child, h1 + p {margin-top:0.5rem;}
+
+a, a:focus, a:link {color:#1971c4; text-decoration:none; outline:0;}
+a:hover {color:#1c3d73;}
+a:active {color:#1c3d73;}
+
+.bulletedList {margin-top:0.5rem;}
+.bulletedList li {margin:0.5rem 0 0 0;}
+.bulletedList li:first-child {margin-top:0;}
+.bulletedList li:before {content:"\f21b"; font-family:"Ionicons"; float:left; margin-right:0.5rem; font-size:0.7143rem;}
+
+.clearContent:after {clear: both; content: "."; display:block; height:0; visibility:hidden;}
+
+/* END OF BOILERPLATE */
+
+/* form {width:100%; margin-top:1rem; font-size:1rem;} */
+label {display:block;font-size:1.2rem;}
+.inputField {border:solid 1px #ccc; padding:0.2857rem; -webkit-border-radius:0.2857rem; -moz-border-radius:0.2857rem; border-radius:0.2857rem; font-size:1.2rem;}
+label + .inputField {margin-top:0.2857rem;}
+.shortInputField {width:30%;}
+.dateRangeWrapper:after {position:relative; right:30px; top:2px; font-family:"Ionicons"; content:"\f117"; font-size:1.429rem; line-height:1.714rem; pointer-events:none;}
+
+.ui-datepicker .ui-datepicker-header {
+    border: 1px solid steelblue;
+    background: steelblue;
+    color: aliceblue;
+}
+
+/* Calander icon */
+.fa, .far, .fas {
+    font-family: "Font Awesome 5 Free";
+    margin-top: -0.1%;
+    margin-left: 93%;
+    position: absolute;
+    font-size: 1.5em;
+    color: black;
 }
