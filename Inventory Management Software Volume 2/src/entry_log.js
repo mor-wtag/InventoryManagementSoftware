@@ -536,9 +536,9 @@ function initialLoad(){
                 
         //EXPORT TABLE TO EXCEL FILE
 
-        $("#exportToExcel").click(function(){
+        $("#exportToExcel_entryLog").click(function(){
 
-            $("#exportToExcel").css('color','white');
+            $("#exportToExcel_entryLog").css('color','white');
 
             //creating a workbook from the table
             var wb = XLSX.utils.table_to_book(document.getElementById('entryLog_table'), {sheet:"Sheet JS"});
@@ -553,7 +553,7 @@ function initialLoad(){
                     return buf;
             }
                 //saving file downloading
-                saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'inventoryTable.xlsx');
+                saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'Entry Log.xlsx');
         });
 
         $(document).ready(function(){
@@ -565,8 +565,5 @@ function initialLoad(){
                   constrainInput: true
               });
         });
-
-        
-  
     });
 }
