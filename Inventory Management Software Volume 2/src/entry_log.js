@@ -388,7 +388,7 @@ function initialLoad(){
                 if (myDateRangeTarget.is("input")) {
                   myDateRangeTarget.datepicker(options);
                 }
-                myDateRangeTarget.wrap("<div class=\"dateRangeWrapper\"></div>");
+                // myDateRangeTarget.wrap("<div class=\"dateRangeWrapper\"></div>");
               });
             };
           }(jQuery));
@@ -531,10 +531,31 @@ function initialLoad(){
                 }
 
             });
-            
-
         });
-          
+
+                
+        //EXPORT TABLE TO EXCEL FILE
+
+        $("#exportToExcel").click(function(){
+
+            $("#exportToExcel").css('color','white');
+
+            //creating a workbook from the table
+            var wb = XLSX.utils.table_to_book(document.getElementById('entryLog_table'), {sheet:"Sheet JS"});
+            //writing the binary type data
+            var wbout = XLSX.write(wb, {bookType:'xlsx', bookSST:true, type: 'binary'});
+            //function to parse the table
+            function s2ab(s) {
+                var buf = new ArrayBuffer(s.length);
+                var view = new Uint8Array(buf);
+                for (var i=0; i<s.length; i++) 
+                    view[i] = s.charCodeAt(i) & 0xFF;
+                    return buf;
+            }
+                //saving file downloading
+                saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'inventoryTable.xlsx');
+        });
+
         $(document).ready(function(){
               $("#txtDateRange").dateRangePicker({
                   showOn: "focus",

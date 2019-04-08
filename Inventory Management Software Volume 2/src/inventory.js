@@ -107,28 +107,28 @@ function initialLoad(){
                     </td
                 </tr>
             `);
-            //checking to see if table has been populated and the last data is populated
-
-            if (reversed_uniqueKey_index==0){
-                //creating a workbook from the table
-                var wb = XLSX.utils.table_to_book(document.getElementById('inventory_table'), {sheet:"Sheet JS"});
-                //writing the binary type data
-                var wbout = XLSX.write(wb, {bookType:'xlsx', bookSST:true, type: 'binary'});
-                //function to parse the table
-                function s2ab(s) {
-                    var buf = new ArrayBuffer(s.length);
-                    var view = new Uint8Array(buf);
-                    for (var i=0; i<s.length; i++) 
-                        view[i] = s.charCodeAt(i) & 0xFF;
-                        return buf;
-                }
-                $("#exportToExcel").click(function(){
-                    $("#exportToExcel").css('color','white');
-                    //saving file downloading
-                    saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'inventoryTable.xlsx');
-                });
-            }
         }
+
+        //EXPORT TO EXCEL
+            
+        $("#exportToExcel").click(function(){
+            $("#exportToExcel").css('color','white');
+
+            //creating a workbook from the table
+            var wb = XLSX.utils.table_to_book(document.getElementById('inventory_table'), {sheet:"Sheet JS"});
+            //writing the binary type data
+            var wbout = XLSX.write(wb, {bookType:'xlsx', bookSST:true, type: 'binary'});
+            //function to parse the table
+             function s2ab(s) {
+                var buf = new ArrayBuffer(s.length);
+                var view = new Uint8Array(buf);
+                for (var i=0; i<s.length; i++) 
+                    view[i] = s.charCodeAt(i) & 0xFF;
+                    return buf;
+            }
+            //saving file downloading
+            saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'inventoryTable.xlsx');
+        });
 
         //---- EVENT LISTENER FOR SORTING---- 
         //this code here is for sorting the quantity of items both in ascending and decending order by clicking on the icons beside the quantity
