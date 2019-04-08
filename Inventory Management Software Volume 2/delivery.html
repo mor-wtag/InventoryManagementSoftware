@@ -22,9 +22,17 @@
     <link rel="stylesheet" href="assets/css/neon-theme.css">
     <link rel="stylesheet" href="assets/css/neon-forms.css">
     <link rel="stylesheet" href="assets/css/custom.css">
+    <link rel='stylesheet' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css'>
 
     <script src="assets/js/jquery-1.11.3.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
+
+    <!-- imported cdn for daterange picker and export to excel file -->
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
+    <script src="assets\libraries\SheetJS\dist\xlsx.full.min.js"></script>
+    <script src="assets\libraries\FileSaver\dist\FileSaver.min.js"></script>
 
 </head>
 
@@ -177,26 +185,27 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-										<div class="form-group ss-item-required">
-											<label for="field-1" class="col-sm-4 control-label">Item name</label>
+                                        <div class="form-group ss-item-required">
+                                            <label for="field-1" class="col-sm-4 control-label">Item name</label>
 
-											<div class="col-sm-8">
-												<div class="col-sm-9 itemCode_col_length">
-													<input type="text" list="itemName_dropdown0" class="form-control" id="itemName0" placeholder="Item name" required>
-												</div>
-												<div class="col-sm-2">
-													<i class="fas fa-filter" id='filter_itemName0'></i>
-												</div>
-											</div>
-										</div>
-									</div>
+                                            <div class="col-sm-8">
+                                                <div class="col-sm-9 itemCode_col_length">
+                                                    <input type="text" list="itemName_dropdown0" class="form-control"
+                                                        id="itemName0" placeholder="Item name" required>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <i class="fas fa-filter" id='filter_itemName0'></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-md-4">
                                         <div class="form-group ss-item-required">
                                             <label for="field-1" class="col-sm-4 control-label">UoM</label>
 
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" list="uom_dropdown0" id="uom0" placeholder="Unit of Measurement"
-                                                    required>
+                                                <input type="text" class="form-control" list="uom_dropdown0" id="uom0"
+                                                    placeholder="Unit of Measurement" required>
                                             </div>
                                         </div>
                                     </div>
@@ -224,8 +233,8 @@
                                             <label for="field-1" class="col-sm-4 control-label">Destination</label>
 
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" list="destination_dropdown0" id="destination0" placeholder="Enter where the item is being delivered"
-                                                    required>
+                                                <input type="text" class="form-control" list="destination_dropdown0" id="destination0"
+                                                    placeholder="Enter where the item is being delivered" required>
                                             </div>
                                         </div>
                                     </div>
@@ -246,9 +255,10 @@
                                     <div class="col-md-4">
                                         <div class="form-group ss-item-required">
                                             <label for="field-1" class="col-sm-4 control-label">Inventory</label>
-        
+
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" id="inventoryName0" list='inventoryName_dropdown0' placeholder="Inventory you want to deliver the item from">
+                                                <input type="text" class="form-control" id="inventoryName0" list='inventoryName_dropdown0'
+                                                    placeholder="Inventory you want to deliver the item from">
                                             </div>
                                         </div>
                                     </div>
@@ -283,32 +293,33 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-										<div class="form-group ss-item-required">
-											<label for="field-1" class="col-sm-4 control-label">Item name</label>
+                                        <div class="form-group ss-item-required">
+                                            <label for="field-1" class="col-sm-4 control-label">Item name</label>
 
-											<div class="col-sm-6" style="margin-right:0; padding-right:0;">
-												<input type="text" class="form-control" list="itemName_dropdown1" id="itemName1" placeholder="Item name" required>
-											</div>
-											<div class="col-sm-1" style="margin-right:0; padding-right:0;">
-												<i class="fas fa-filter" id='filter_itemName1'></i>
-											</div>
-										</div>
-									</div>
+                                            <div class="col-sm-6" style="margin-right:0; padding-right:0;">
+                                                <input type="text" class="form-control" list="itemName_dropdown1" id="itemName1"
+                                                    placeholder="Item name" required>
+                                            </div>
+                                            <div class="col-sm-1" style="margin-right:0; padding-right:0;">
+                                                <i class="fas fa-filter" id='filter_itemName1'></i>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-md-4">
-										<div class="col-md-10">
-											<div class="form-group ss-item-required">
-												<label for="field-1" class="col-sm-4 control-label">UoM</label>
+                                        <div class="col-md-10">
+                                            <div class="form-group ss-item-required">
+                                                <label for="field-1" class="col-sm-4 control-label">UoM</label>
 
-												<div class="col-sm-8" style="padding-left:10%;">
-													<input type="text" class="form-control" list="uom_dropdown1" id="uom1" placeholder="Unit of Measurement"
-                                                    required>
-												</div>
-											</div>
-										</div>
-										<div class="col-md-1">
-											<i class="fas fa-times" id="hide_form1"></i>
-										</div>
-									</div>
+                                                <div class="col-sm-8" style="padding-left:10%;">
+                                                    <input type="text" class="form-control" list="uom_dropdown1" id="uom1"
+                                                        placeholder="Unit of Measurement" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <i class="fas fa-times" id="hide_form1"></i>
+                                        </div>
+                                    </div>
                                 </div>
                                 <br>
                                 <div class="row">
@@ -332,8 +343,8 @@
                                             <label for="field-1" class="col-sm-4 control-label">Destination</label>
 
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" list="destination_dropdown1" id="destination1" placeholder="Enter where the item is being delivered"
-                                                    required>
+                                                <input type="text" class="form-control" list="destination_dropdown1" id="destination1"
+                                                    placeholder="Enter where the item is being delivered" required>
                                             </div>
                                         </div>
                                     </div>
@@ -350,15 +361,16 @@
                                 </div>
                                 <br>
                                 <div class="row">
-                                        <div class="col-md-4">
-                                                <div class="form-group ss-item-required">
-                                                    <label for="field-1" class="col-sm-4 control-label">Inventory</label>
-                
-                                                    <div class="col-sm-8">
-                                                        <input type="text" class="form-control" id="inventoryName1" list='inventoryName_dropdown1' placeholder="Inventory you want to deliver the item from">
-                                                    </div>
-                                                </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group ss-item-required">
+                                            <label for="field-1" class="col-sm-4 control-label">Inventory</label>
+
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="inventoryName1" list='inventoryName_dropdown1'
+                                                    placeholder="Inventory you want to deliver the item from">
                                             </div>
+                                        </div>
+                                    </div>
                                     <div class="col-md-4"></div>
                                     <div class="col-md-4">
                                         <button type="submit" class="btn btn-dark fileButton formButton" id='submit_delivery2'
@@ -391,32 +403,33 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-										<div class="form-group ss-item-required">
-											<label for="field-1" class="col-sm-4 control-label">Item name</label>
+                                        <div class="form-group ss-item-required">
+                                            <label for="field-1" class="col-sm-4 control-label">Item name</label>
 
-											<div class="col-sm-6" style="margin-right:0; padding-right:0;">
-												<input type="text" class="form-control" list="itemName_dropdown2" id="itemName2" placeholder="Item name" required>
-											</div>
-											<div class="col-sm-1" style="margin-right:0; padding-right:0;">
-												<i class="fas fa-filter" id='filter_itemName2'></i>
-											</div>
-										</div>
-									</div>
+                                            <div class="col-sm-6" style="margin-right:0; padding-right:0;">
+                                                <input type="text" class="form-control" list="itemName_dropdown2" id="itemName2"
+                                                    placeholder="Item name" required>
+                                            </div>
+                                            <div class="col-sm-1" style="margin-right:0; padding-right:0;">
+                                                <i class="fas fa-filter" id='filter_itemName2'></i>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-md-4">
-										<div class="col-md-10">
-											<div class="form-group ss-item-required">
-												<label for="field-1" class="col-sm-4 control-label">UoM</label>
+                                        <div class="col-md-10">
+                                            <div class="form-group ss-item-required">
+                                                <label for="field-1" class="col-sm-4 control-label">UoM</label>
 
-												<div class="col-sm-8" style="padding-left:10%;">
-													<input type="text" class="form-control" list="uom_dropdown2" id="uom2" placeholder="Unit of Measurement"
-                                                    required>
-												</div>
-											</div>
-										</div>
-										<div class="col-md-1">
-											<i class="fas fa-times" id="hide_form2"></i>
-										</div>
-									</div>
+                                                <div class="col-sm-8" style="padding-left:10%;">
+                                                    <input type="text" class="form-control" list="uom_dropdown2" id="uom2"
+                                                        placeholder="Unit of Measurement" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <i class="fas fa-times" id="hide_form2"></i>
+                                        </div>
+                                    </div>
                                 </div>
                                 <br>
 
@@ -441,8 +454,8 @@
                                             <label for="field-1" class="col-sm-4 control-label">Destination</label>
 
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" list="destination_dropdown2" id="destination2" placeholder="Enter where the item is being delivered"
-                                                    required>
+                                                <input type="text" class="form-control" list="destination_dropdown2" id="destination2"
+                                                    placeholder="Enter where the item is being delivered" required>
                                             </div>
                                         </div>
                                     </div>
@@ -460,15 +473,16 @@
                                 <br>
 
                                 <div class="row">
-                                        <div class="col-md-4">
-                                                <div class="form-group ss-item-required">
-                                                    <label for="field-1" class="col-sm-4 control-label">Inventory</label>
-                
-                                                    <div class="col-sm-8">
-                                                        <input type="text" class="form-control" id="inventoryName2" list='inventoryName_dropdown2' placeholder="Inventory you want to deliver the item from">
-                                                    </div>
-                                                </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group ss-item-required">
+                                            <label for="field-1" class="col-sm-4 control-label">Inventory</label>
+
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="inventoryName2" list='inventoryName_dropdown2'
+                                                    placeholder="Inventory you want to deliver the item from">
                                             </div>
+                                        </div>
+                                    </div>
                                     <div class="col-md-4"></div>
                                     <div class="col-md-4">
                                         <button type="submit" class="btn btn-dark fileButton formButton" id='submit_delivery3'
@@ -502,32 +516,33 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-										<div class="form-group ss-item-required">
-											<label for="field-1" class="col-sm-4 control-label">Item name</label>
+                                        <div class="form-group ss-item-required">
+                                            <label for="field-1" class="col-sm-4 control-label">Item name</label>
 
-											<div class="col-sm-6" style="margin-right:0; padding-right:0;">
-												<input type="text" class="form-control" list="itemName_dropdown3" id="itemName3" placeholder="Item name" required>
-											</div>
-											<div class="col-sm-1" style="margin-right:0; padding-right:0;">
-												<i class="fas fa-filter" id='filter_itemName3'></i>
-											</div>
-										</div>
-									</div>
+                                            <div class="col-sm-6" style="margin-right:0; padding-right:0;">
+                                                <input type="text" class="form-control" list="itemName_dropdown3" id="itemName3"
+                                                    placeholder="Item name" required>
+                                            </div>
+                                            <div class="col-sm-1" style="margin-right:0; padding-right:0;">
+                                                <i class="fas fa-filter" id='filter_itemName3'></i>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-md-4">
-										<div class="col-md-10">
-											<div class="form-group ss-item-required">
-												<label for="field-1" class="col-sm-4 control-label">UoM</label>
+                                        <div class="col-md-10">
+                                            <div class="form-group ss-item-required">
+                                                <label for="field-1" class="col-sm-4 control-label">UoM</label>
 
-												<div class="col-sm-8" style="padding-left:10%;">
-													<input type="text" class="form-control" list="uom_dropdown3" id="uom3" placeholder="Unit of Measurement"
-                                                    required>
-												</div>
-											</div>
-										</div>
-										<div class="col-md-1">
-											<i class="fas fa-times" id="hide_form3"></i>
-										</div>
-									</div>
+                                                <div class="col-sm-8" style="padding-left:10%;">
+                                                    <input type="text" class="form-control" list="uom_dropdown3" id="uom3"
+                                                        placeholder="Unit of Measurement" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <i class="fas fa-times" id="hide_form3"></i>
+                                        </div>
+                                    </div>
                                 </div>
                                 <br>
 
@@ -552,8 +567,8 @@
                                             <label for="field-1" class="col-sm-4 control-label">Destination</label>
 
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" list="destination_dropdown3" id="destination3" placeholder="Enter where the item is being delivered"
-                                                    required>
+                                                <input type="text" class="form-control" list="destination_dropdown3" id="destination3"
+                                                    placeholder="Enter where the item is being delivered" required>
                                             </div>
                                         </div>
                                     </div>
@@ -571,15 +586,16 @@
                                 <br>
 
                                 <div class="row">
-                                        <div class="col-md-4">
-                                                <div class="form-group ss-item-required">
-                                                    <label for="field-1" class="col-sm-4 control-label">Inventory</label>
-                
-                                                    <div class="col-sm-8">
-                                                        <input type="text" class="form-control" id="inventoryName3" list='inventoryName_dropdown3' placeholder="Inventory you want to deliver the item from">
-                                                    </div>
-                                                </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group ss-item-required">
+                                            <label for="field-1" class="col-sm-4 control-label">Inventory</label>
+
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="inventoryName3" list='inventoryName_dropdown3'
+                                                    placeholder="Inventory you want to deliver the item from">
                                             </div>
+                                        </div>
+                                    </div>
                                     <div class="col-md-4"></div>
                                     <div class="col-md-4">
                                         <button type="submit" class="btn btn-dark fileButton formButton" id='submit_delivery4'
@@ -613,32 +629,33 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-										<div class="form-group ss-item-required">
-											<label for="field-1" class="col-sm-4 control-label">Item name</label>
+                                        <div class="form-group ss-item-required">
+                                            <label for="field-1" class="col-sm-4 control-label">Item name</label>
 
-											<div class="col-sm-6" style="margin-right:0; padding-right:0;">
-												<input type="text" class="form-control" list="itemName_dropdown4" id="itemName4" placeholder="Item name" required>
-											</div>
-											<div class="col-sm-1" style="margin-right:0; padding-right:0;">
-												<i class="fas fa-filter" id='filter_itemName4'></i>
-											</div>
-										</div>
-									</div>
+                                            <div class="col-sm-6" style="margin-right:0; padding-right:0;">
+                                                <input type="text" class="form-control" list="itemName_dropdown4" id="itemName4"
+                                                    placeholder="Item name" required>
+                                            </div>
+                                            <div class="col-sm-1" style="margin-right:0; padding-right:0;">
+                                                <i class="fas fa-filter" id='filter_itemName4'></i>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-md-4">
-										<div class="col-md-10">
-											<div class="form-group ss-item-required">
-												<label for="field-1" class="col-sm-4 control-label">UoM</label>
+                                        <div class="col-md-10">
+                                            <div class="form-group ss-item-required">
+                                                <label for="field-1" class="col-sm-4 control-label">UoM</label>
 
-												<div class="col-sm-8" style="padding-left:10%;">
-													<input type="text" class="form-control" list="uom_dropdown4" id="uom4" placeholder="Unit of Measurement"
-                                                    required>
-												</div>
-											</div>
-										</div>
-										<div class="col-md-1">
-											<i class="fas fa-times" id="hide_form4"></i>
-										</div>
-									</div>
+                                                <div class="col-sm-8" style="padding-left:10%;">
+                                                    <input type="text" class="form-control" list="uom_dropdown4" id="uom4"
+                                                        placeholder="Unit of Measurement" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <i class="fas fa-times" id="hide_form4"></i>
+                                        </div>
+                                    </div>
                                 </div>
                                 <br>
 
@@ -663,8 +680,8 @@
                                             <label for="field-1" class="col-sm-4 control-label">Destination</label>
 
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" list="destination_dropdown4" id="destination4" placeholder="Enter where the item is being delivered"
-                                                    required>
+                                                <input type="text" class="form-control" list="destination_dropdown4" id="destination4"
+                                                    placeholder="Enter where the item is being delivered" required>
                                             </div>
                                         </div>
                                     </div>
@@ -682,15 +699,16 @@
                                 <br>
 
                                 <div class="row">
-                                        <div class="col-md-4">
-                                                <div class="form-group ss-item-required">
-                                                    <label for="field-1" class="col-sm-4 control-label">Inventory</label>
-                
-                                                    <div class="col-sm-8">
-                                                        <input type="text" class="form-control" id="inventoryName4" list='inventoryName_dropdown4' placeholder="Inventory you want to deliver the item from">
-                                                    </div>
-                                                </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group ss-item-required">
+                                            <label for="field-1" class="col-sm-4 control-label">Inventory</label>
+
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="inventoryName4" list='inventoryName_dropdown4'
+                                                    placeholder="Inventory you want to deliver the item from">
                                             </div>
+                                        </div>
+                                    </div>
                                     <div class="col-md-4"></div>
                                     <div class="col-md-4">
                                         <button type="submit" class="btn btn-dark fileButton formButton" id='submit_delivery5'
@@ -704,7 +722,7 @@
                 </div>
             </div>
 
-            <div class="col-md-10">
+            <!-- <div class="col-md-10">
                 <h3>Delivered Item Log</h3>
             </div>
             <div class="col-md-2">
@@ -712,8 +730,28 @@
                     <input class="form-control search_field" id="search_delivery" type="text" placeholder="Search for Item"
                         aria-label="Search">
                 </div>
+            </div> -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-4">
+                        <h3>Delivered Item Log</h3>
+                    </div>
+                    <div class="active-cyan-3 active-cyan-4">
+                        <input class="form-control search_field col-md-3" id="search_delivery" type="text" placeholder="Search for Item"
+                            aria-label="Search">
+                    </div>
+                    <form class="col-md-3" id="dateRange_form">
+                        <input type="text" id="txtDateRange" name="txtDateRange" class="form-control inputField shortInputField dateRangeField"
+                            placeholder="Select a date-range" data-from-field="txtDateFrom" data-to-field="txtDateTo" />
+                        <input type="hidden" id="txtDateFrom" value="" />
+                        <input type="hidden" id="txtDateTo" value="" />
+                        <i class="far fa-calendar-alt" id="dateRange_icon"></i>
+                    </form>
+                    <button type="button" class="btn btn-dark col-md-2 exportToExcel" id="exportToExcel_delivery">Export</button>
+                </div>
             </div>
-            <table class="table table-bordered datatable delivery_log_table" id="table-1">
+            <br>
+            <table class="table table-bordered datatable delivery_log_table" id="deliveryLog_table">
                 <thead>
                     <tr>
                         <th>Item Code</th>
@@ -787,6 +825,10 @@
 
     <!-- Demo Settings -->
     <script src="assets/js/neon-demo.js"></script>
+
+
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+	<script src='http://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
 
 </body>
 
