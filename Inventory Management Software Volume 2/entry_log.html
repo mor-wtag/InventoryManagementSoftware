@@ -27,6 +27,10 @@
 	<link rel='stylesheet' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css'>
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
+    <script src="assets\libraries\SheetJS\dist\xlsx.full.min.js"></script>
+    <script src="assets\libraries\FileSaver\dist\FileSaver.min.js"></script>
 </head>
 
 <body class="page-body  page-fade" data-url="http://neon.dev">
@@ -149,23 +153,24 @@
 			</div>
 
 			<hr />
-            <div class="col-md-3"><h3>Entry Log</h3></div>
-			<div class="col-md-7">
-				<form>
-				
-						<input type="text" id="txtDateRange" name="txtDateRange" class="form-control inputField shortInputField dateRangeField" placeholder="Select a date-range" data-from-field="txtDateFrom" data-to-field="txtDateTo" style="float:right;margin-top:1.5%;"/>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="col-md-4"><h3>Entry Log</h3></div>
+					<div class="active-cyan-3 active-cyan-4">
+						<input class="form-control search_field col-md-3" id="search_entryLog" type="text" placeholder="Search for Item" aria-label="Search">
+					</div>
+					<form class="col-md-3" id="dateRange_form">
+						<input type="text" id="txtDateRange" name="txtDateRange" class="form-control inputField shortInputField dateRangeField" placeholder="Select a date-range" data-from-field="txtDateFrom" data-to-field="txtDateTo"/>
 						<input type="hidden" id="txtDateFrom" value="" />
 						<input type="hidden" id="txtDateTo" value="" />
 						<i class="far fa-calendar-alt" id="dateRange_icon"></i>
-				</form>
-			</div>
-			<div class="col-md-2">
-				<div class="active-cyan-3 active-cyan-4 mb-4">
-					<input class="form-control search_field" id="search_entryLog" type="text" placeholder="Search for Item" aria-label="Search">
+					</form>
+					<button type="button" class="btn btn-dark col-md-2" id="exportToExcel">Export</button>
 				</div>
 			</div>
+			<br>
 
-            <table class="table table-bordered datatable" id="table-1">
+            <table class="table table-bordered datatable" id="entryLog_table">
                 <thead>
                     <tr class="odd gradeX">
                         <th>Item Code.</th>
