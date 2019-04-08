@@ -173,7 +173,7 @@ tr:nth-child(even) {
     color:white;
 }
 
-#search_entryLog{
+#search_entryLog, #search_delivery{
     float: right;
     width: 15%;
 }
@@ -183,13 +183,14 @@ tr:nth-child(even) {
     float: right;
 }
 
+
 #dateRange_form {
     width: 16%;
     float: right;
     margin-top: 1%;
 }
 
-#exportToExcel {
+.exportToExcel {
     width: 10%;
     float: right;
     margin-top: 1%;
