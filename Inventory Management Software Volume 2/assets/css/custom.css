@@ -133,12 +133,24 @@ tr:nth-child(even) {
 
 /* This code is for the search bar in the inventory page */
 .active-cyan-4 input[type=text]:focus:not([readonly]) {
-    border: 1px solid #4dd0e1;
-    box-shadow: 0 0 0 1px #4dd0e1;
+    border: 1px solid  #343a40;
+    box-shadow: 0 0 0 1px  #343a40;
+    color:black;
+    font-weight:bold;
+}
+
+.active-cyan-4 input[type=text]::placeholder:focus{
+    font-weight:bold;
+}
+
+#txtDateRange:focus{
+    border: 1px solid  #343a40;
+    box-shadow: 0 0 0 1px  #343a40;
+    font-weight:bold;
 }
 
 .search_field{
-    margin-top:5%;
+    margin-top:1%;
 }
 
 /* changing color for buttons */
@@ -146,12 +158,6 @@ tr:nth-child(even) {
     width: 30%;
     background-color:#343a40;
     color:white;
-}
-
-#exportToExcel{
-    width: 20%;
-    margin-right: 2%;
-    margin-top:1.5%;
 }
 
 .btn-dark:hover{
@@ -165,6 +171,37 @@ tr:nth-child(even) {
 
 .formButton:active{
     color:white;
+}
+
+#search_entryLog{
+    float: right;
+    width: 15%;
+}
+
+#search_inventory{
+    width: 30%;
+    float: right;
+}
+
+#dateRange_form {
+    width: 16%;
+    float: right;
+    margin-top: 1%;
+}
+
+#exportToExcel {
+    width: 10%;
+    float: right;
+    margin-top: 1%;
+    color: white;
+}
+
+#exportToExcel_inventory {
+    width: 20%;
+    float: right;
+    margin-top: 1%;
+    color: white;
+    margin-right: 2%;
 }
 /* DATE RANGE */
 /* this code here is for the date range selecting box */
@@ -203,9 +240,16 @@ a:active {color:#1c3d73;}
 
 /* form {width:100%; margin-top:1rem; font-size:1rem;} */
 label {display:block;font-size:1.2rem;}
-.inputField {border:solid 1px #ccc; padding:0.2857rem; -webkit-border-radius:0.2857rem; -moz-border-radius:0.2857rem; border-radius:0.2857rem; font-size:1.2rem;}
+.inputField {
+    border: solid 1px #f2f2f2;
+    padding: 0.2857rem;
+    -webkit-border-radius: 0.2857rem;
+    -moz-border-radius: 0.2857rem;
+    border-radius: 0.2857rem;
+    font-size: 1.2rem;
+    color: #343a40;
+}
 label + .inputField {margin-top:0.2857rem;}
-.shortInputField {width:30%;}
 .dateRangeWrapper:after {position:relative; right:30px; top:2px; font-family:"Ionicons"; content:"\f117"; font-size:1.429rem; line-height:1.714rem; pointer-events:none;}
 
 .ui-datepicker .ui-datepicker-header {
@@ -217,8 +261,11 @@ label + .inputField {margin-top:0.2857rem;}
 /* Calander icon */
 .fa, .far, .fas {
     font-family: "Font Awesome 5 Free";
-    margin-top: -0.1%;
-    margin-left: 93%;
+}
+
+#dateRange_icon {
+    margin-top: -12.1%;
+    margin-left: 73%;
     position: absolute;
     font-size: 1.5em;
     color: black;
