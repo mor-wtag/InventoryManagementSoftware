@@ -282,7 +282,17 @@ label + .inputField {margin-top:0.2857rem;}
     box-shadow: 3px 3px 4px 0px #999999;
 }
 
+.tile_icon{
+    top: 12%;
+    width: 35%;
+    float: right;
+    opacity: 0.3;
+}
 
+#first_tile_icon{
+    width: 32%;
+    margin-bottom: 2%;
+}
 
 /* changing index tables css */
 .table-bordered > tfoot > tr > th, .table-bordered > tfoot > tr > td {
