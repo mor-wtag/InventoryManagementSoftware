@@ -157,19 +157,19 @@
 		
 				<div class="tile-stats tile-red" id="zero_quantity_tile">
 					<!-- <div class="icon"><i class="entypo-users"></i></div> -->
-					<div class="num" id="zero_quantity_data" data-start="0"  data-duration="3000" data-delay="3000">0</div>
+					<div class="num" id="zero_quantity_data" data-start="0"  data-end="0" data-duration="1500" data-delay="1500">0</div>
 		
-					<h3>Items that have run out</h3>
+					<h3>Items run out</h3>
 				</div>
 			</div>
 
 			<div class="col-sm-3 col-xs-6">
 		
-				<div class="tile-stats tile-green">
+				<div class="tile-stats tile-aqua" id="lessThan5_quantity_tile">
 					<!-- <div class="icon"><i class="entypo-chart-bar"></i></div> -->
-					<div class="num" data-start="0" data-end="135" data-postfix="" data-duration="1500" data-delay="600">0</div>
+					<div class="num" id="lessThan5_quantity_data" data-start="0" data-end="0" data-postfix="" data-duration="1500" data-delay="600">0</div>
 		
-					<h3>BOQs Uploaded</h3>
+					<h3>Items running out</h3>
 					<!-- <p>this is the average value.</p> -->
 				</div>
 		
@@ -179,7 +179,7 @@
 		
 			<div class="col-sm-3 col-xs-6">
 		
-				<div class="tile-stats tile-aqua">
+				<div class="tile-stats tile-green" id="third_tile">
 					<!-- <div class="icon"><i class="entypo-mail"></i></div> -->
 					<div class="num" data-start="0" data-end="23" data-postfix="" data-duration="1500" data-delay="1200">0</div>
 		
@@ -191,7 +191,7 @@
 		
 			<div class="col-sm-3 col-xs-6">
 		
-				<div class="tile-stats tile-blue">
+				<div class="tile-stats tile-blue" id="fourth_tile">
 					<!-- <div class="icon"><i class="entypo-rss"></i></div> -->
 					<div class="num" data-start="0" data-end="52" data-postfix="" data-duration="1500" data-delay="1800">0</div>
 		
@@ -206,7 +206,7 @@
 			
 			<!-- CONTENT ON CLICKING TITLE -->
 			<!-- table that will b e visible if the tile is clicked -->
-			<table class="table-bordered datatables zero_quantity_table" id="zero_quantity_table">
+			<table class="table-bordered datatables tile_table" id="zero_quantity_table">
 				<thead>
 					<tr>
 						<th>Item Code</th>
@@ -218,16 +218,25 @@
 				</thead>
 				<tbody id='zero_quantity_table_tableBody'>
 				</tbody>
-				<tfoot>
-					<tr>
-						<th>Item Code</th>
-						<th>Item Description</th>
-						<th>UoM</th>
-						<th>Quantity</th>
-
-					</tr>
-				</tfoot>
 			</table>
+
+			<div class="row datatables_wrapper lessThan5_quantity_table_wrapper">
+			
+				<!-- CONTENT ON CLICKING TITLE -->
+				<!-- table that will b e visible if the tile is clicked -->
+				<table class="table-bordered datatables tile_table" id="lessThan5_quantity_table">
+					<thead>
+						<tr>
+							<th>Item Code</th>
+							<th>Item Description</th>
+							<th>UoM</th>
+							<th>Quantity</th>
+	
+						</tr>
+					</thead>
+					<tbody id='lessThan5_quantity_table_tableBody'>
+					</tbody>
+				</table>
 
 		</div>
 		
