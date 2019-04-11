@@ -14,7 +14,8 @@ let config = {
 let initialize = firebase.initializeApp(config);
 let database = firebase.database();
 
-let items_with_zero_quantity = 0 //first tile
+let items_with_zero_quantity = $('#zero_quantity_data').attr("data-end"); //first tile number
+let items_with_lessThan5_quantity = $('#lessThan5_quantity_data').attr("data-end"); //second tile number
 
 // RealTime listener
 //this checks to see if user is logged in 
@@ -27,46 +28,69 @@ firebase.auth().onAuthStateChanged(user => {
     else {
         //user is not logged in, send him to login page
         console.log('Not logged in...');
-        window.location.href= "./login.html";
+        window.location.href = "./login.html";
     }
 });
 
-function initialLoad(){
+function initialLoad() {
 
     //FETCH DATA FROM THE DATABASE AND INITIALIZE EVERYTHING IN OUR PAGE
 
     //READING FROM FIREBASE DATABASE
-    database.ref('databases/InventoryDatabase').once('value').then(function(snapshot){
+    database.ref('databases/InventoryDatabase').once('value').then(function (snapshot) {
 
         console.log("Got data from the inventory!");
 
         let fetchedData_inventory = snapshot.val();
         console.log(fetchedData_inventory);
 
-        //FIRST TILE
-        //ITEMS HAVING ZERO QUANTITY
+        //---FIRST & SECOND TILE---
+        //ITEMS HAVING ZERO AND LTE5 QUANTITY
 
         //This code here is to check how many items have zero quantity in inventory database and pushing the number into the first tile
-        for (let uniqueKey in fetchedData_inventory){
+        for (let uniqueKey in fetchedData_inventory) {
 
             //Initialize the quantity only so that we can only check the ones who have zero quantity
             let quantity = fetchedData_inventory[uniqueKey]['quantity'];
 
-            if (quantity==0){
-
+            if (quantity == 0) {
                 console.log("Found an item with zero quantity!");
 
                 //item increment
-                items_with_zero_quantity+=1;
+                items_with_zero_quantity += 1;
 
-                //loop through and parse the data then create TR in the table with this data
-                let itemCode = fetchedData_inventory[uniqueKey]['itemCode'];
-                let itemName = fetchedData_inventory[uniqueKey]['itemName'];
-                let uom = fetchedData_inventory[uniqueKey]['uom'];
+                let tableToAppendData = $("#zero_quantity_table_tableBody"); //getting the table in which we will append the data
+                
+                 //calling function to append to table   
+                appendItemsIntoTable(uniqueKey, quantity, tableToAppendData);  
+            }
 
-                //append in the table that's not being displayed
-                // appending elements into the databaseTable
-                $('#zero_quantity_table_tableBody').append(/*html*/`
+            else if(quantity <= 5){
+
+                console.log("Found an item with less than 5 quantities!");
+
+                //item increment
+                items_with_lessThan5_quantity +=1;
+
+                let tableToAppendData = $("#lessThan5_quantity_table_tableBody");
+
+                //calling function to append to table   
+                appendItemsIntoTable(uniqueKey, quantity, tableToAppendData);
+
+            }
+        }
+
+        function appendItemsIntoTable(uniqueKey, quantity, tableToAppendData) {
+
+            console.log("Got into the function to append items into the table");
+            //loop through and parse the data then create TR in the table with this data
+            let itemCode = fetchedData_inventory[uniqueKey]['itemCode'];
+            let itemName = fetchedData_inventory[uniqueKey]['itemName'];
+            let uom = fetchedData_inventory[uniqueKey]['uom'];
+
+            //append in the table that's not being displayed
+            // appending elements into the databaseTable
+            $(tableToAppendData).append(/*html*/`
                 <tr data-key="${uniqueKey}">
                     <td>
                         ${itemCode}
@@ -82,31 +106,50 @@ function initialLoad(){
                     </td>
                 </tr>
                 `);
-            }
         }
 
-        //appending the value into the first tile
-        $('#zero_quantity_data').data("end", items_with_zero_quantity); //NOT WORKING
-
+        //CLICKING FIRST TILE
+        $('#zero_quantity_data').attr('data-end',items_with_zero_quantity); //NOT WORKING
         //adding database value to the tile
         // $("#zero_quantity_data").text(items_with_zero_quantity);
+        //on clicking the tile, the dables below will become invisible, and the data table will become visible
+        $('#zero_quantity_tile').click(function () {
 
-         //onclicking the tile, the dables below will become invisible, and the data table will become visible
-         $('#zero_quantity_tile').click(function(){
-
-            console.log("Tile clicked!");
-
-            //making the table visible
-            $('#zero_quantity_table').toggle();
+            $('.tile_table').css("display","none");
 
             //making all tables invisible
             $('.index_mainContent_below_tiles').animate({
-                top:'30%'
+                top: '30%'
             }, 200);
 
-            
+            //making the table visible
+            $('#zero_quantity_table').toggle();
         });
-        
+
+        //---SECOND TILE---
+        //ITEMS HAVING LESS THAN OR EQUAL TO 5 QUANTITY
+        $('#lessThan5_quantity_data').attr('data-end',items_with_lessThan5_quantity); //NOT WORKING
+        //adding database value to the tile
+        // $("#lessThan5_quantity_data").text(items_with_lessThan5_quantity);
+        //onclicking the tile, the dables below will become invisible, and the data table will become visible
+        $('#lessThan5_quantity_tile').click(function () {
+
+            $('.tile_table').css("display","none");
+
+            //making all tables invisible
+            $('.index_mainContent_below_tiles').animate({
+                top: '30%'
+            }, 200);
+
+            //making the table visible
+            $('#lessThan5_quantity_table').toggle();
+
+            
+
+
+
+        });
+
         //after clicking the first tile, it will show a table listing the names of all the items havinfg 0 quantity
 
     });
