@@ -14,8 +14,12 @@ let config = {
 let initialize = firebase.initializeApp(config);
 let database = firebase.database();
 
-let items_with_zero_quantity = $('#zero_quantity_data').attr("data-end"); //first tile number
-let items_with_lessThan5_quantity = $('#lessThan5_quantity_data').attr("data-end"); //second tile number
+// let items_with_zero_quantity = parseInt($('#zero_quantity_data').attr("data-end")); //first tile number
+// let items_with_lessThan5_quantity = parseInt($('#lessThan5_quantity_data').attr("data-end")); //second tile number
+
+let items_with_zero_quantity = 0;
+let items_with_lessThan5_quantity = 0;
+let total_quantity=0;
 
 // RealTime listener
 //this checks to see if user is logged in 
@@ -53,6 +57,10 @@ function initialLoad() {
             //Initialize the quantity only so that we can only check the ones who have zero quantity
             let quantity = fetchedData_inventory[uniqueKey]['quantity'];
 
+            //this is for the THIRD tile
+            //to keep track of total number of quantity
+            total_quantity = parseInt(total_quantity) + parseInt(quantity);
+
             if (quantity == 0) {
                 console.log("Found an item with zero quantity!");
 
@@ -79,6 +87,8 @@ function initialLoad() {
 
             }
         }
+
+        console.log("total_quantity: "+total_quantity);
 
         function appendItemsIntoTable(uniqueKey, quantity, tableToAppendData) {
 
@@ -108,10 +118,10 @@ function initialLoad() {
                 `);
         }
 
-        //CLICKING FIRST TILE
+        //---FIRST TILE---
         $('#zero_quantity_data').attr('data-end',items_with_zero_quantity); //NOT WORKING
         //adding database value to the tile
-        // $("#zero_quantity_data").text(items_with_zero_quantity);
+        $("#zero_quantity_data").text(items_with_zero_quantity);
         //on clicking the tile, the dables below will become invisible, and the data table will become visible
         $('#zero_quantity_tile').click(function () {
 
@@ -130,7 +140,7 @@ function initialLoad() {
         //ITEMS HAVING LESS THAN OR EQUAL TO 5 QUANTITY
         $('#lessThan5_quantity_data').attr('data-end',items_with_lessThan5_quantity); //NOT WORKING
         //adding database value to the tile
-        // $("#lessThan5_quantity_data").text(items_with_lessThan5_quantity);
+        $("#lessThan5_quantity_data").text(items_with_lessThan5_quantity);
         //onclicking the tile, the dables below will become invisible, and the data table will become visible
         $('#lessThan5_quantity_tile').click(function () {
 
@@ -143,12 +153,10 @@ function initialLoad() {
 
             //making the table visible
             $('#lessThan5_quantity_table').toggle();
-
-            
-
-
-
         });
+
+        ////---THIRD TILE---
+        
 
         //after clicking the first tile, it will show a table listing the names of all the items havinfg 0 quantity
 
