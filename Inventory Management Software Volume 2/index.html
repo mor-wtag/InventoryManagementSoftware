@@ -33,6 +33,8 @@
 
 	<script src="assets/js/jquery-1.11.3.min.js"></script>
 
+	<a href="https://icons8.com/icon/97492/warehouse"></a>
+
 </head>
 <body class="page-body  page-fade" data-url="http://neon.dev">
 
@@ -47,7 +49,7 @@
 				<!-- logo -->
 				<div class="logo">
 					<a href="index.html">
-						<img src="assets/images/GrameephoneLogo.png" width="150" alt="" />
+						<img src="assets/images/GrameephoneLogo.png" width="150" alt=""/>
 					</a>
 				</div>
 
@@ -156,7 +158,7 @@
 			<div class="col-sm-3 col-xs-6">
 		
 				<div class="tile-stats tile-red" id="zero_quantity_tile">
-					<!-- <div class="icon"><i class="entypo-users"></i></div> -->
+					<div class="icon"><img class="tile_icon" id="first_tile_icon" src="assets/images/empty_warehouse.png"></div>
 					<div class="num" id="zero_quantity_data" data-start="0"  data-end="0" data-duration="1500" data-delay="1500">0</div>
 		
 					<h3>Items run out</h3>
@@ -166,7 +168,7 @@
 			<div class="col-sm-3 col-xs-6">
 		
 				<div class="tile-stats tile-aqua" id="lessThan5_quantity_tile">
-					<!-- <div class="icon"><i class="entypo-chart-bar"></i></div> -->
+					<div class="icon"><img class="tile_icon" src="assets/images/filled_warehouse.png"></div>
 					<div class="num" id="lessThan5_quantity_data" data-start="0" data-end="0" data-postfix="" data-duration="1500" data-delay="600">0</div>
 		
 					<h3>Items running out</h3>
@@ -180,10 +182,10 @@
 			<div class="col-sm-3 col-xs-6">
 		
 				<div class="tile-stats tile-green" id="third_tile">
-					<!-- <div class="icon"><i class="entypo-mail"></i></div> -->
+					
 					<div class="num" data-start="0" data-end="23" data-postfix="" data-duration="1500" data-delay="1200">0</div>
 		
-					<h3>Items Transferred/ Delivered</h3>
+					<h3>Total items in inventory</h3>
 					<!-- <p>messages per day.</p> -->
 				</div>
 		
