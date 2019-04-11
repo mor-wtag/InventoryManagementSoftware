@@ -204,24 +204,6 @@ tr:nth-child(even) {
     color: white;
     margin-right: 2%;
 }
-/* DATE RANGE */
-/* this code here is for the date range selecting box */
-
-/* BOILERPLATE */
-/* BOILERPLATE */
-/* *, *:before, *:after {-webkit-box-sizing:border-box; -moz-box-sizing:border-box; box-sizing:border-box;} */
-
-/* html {font-size:16px; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%;} */
-
-/* body {font-style:normal; font-size:1rem; line-height:1.286rem; font-family:helvetica, arial, sans-serif; background-color:#efefef; color:#333; text-align:left;} */
-
-/* #pageWrapper {width:984px; margin:1.429rem auto; border:solid 1px #ccc; background-color:#fff; padding:1rem;} */
-
-/* .pageSection {display:block; margin-top:1.429rem; clear:both;} */
-/* .pageSection:first-child {margin-top:0;}
-
-h1,h2,h3,h4,h5,h6 {color: black; font-weight:normal; text-rendering:optimizelegibility;} */
-
 
 p {margin-top:1rem; font-size:1rem;}
 p:first-child, h1 + p {margin-top:0.5rem;}
@@ -270,4 +252,46 @@ label + .inputField {margin-top:0.2857rem;}
     position: absolute;
     font-size: 1.5em;
     color: black;
+}
+
+/* ----INDEX PAGE---- */
+
+ #zero_quantity_table{
+    width: auto;
+    margin-left: 2%;
+    font-size: 1.4em;
+    font-family: Calibri;
+    display: none;
+    border:none;
+    margin: 4% 29% 9% 1%;
+}
+
+#zero_quantity_tile{
+    background: linear-gradient(-90deg, #06beb6, #48b1bf);
+} 
+
+.tile-stats:hover{
+    cursor:pointer;
+}
+
+/* changing index table css */
+.zero_quantity_table.table-bordered > tfoot > tr > th, .table-bordered > tfoot > tr > td {
+    background: #48b1bf;
+    border-top-width: 1px;
+    color: #ffffff;
+    font-weight:bold;
+}
+
+.zero_quantity_table.table-bordered > thead > tr > th, .table-bordered > thead > tr > td {
+    background:  #48b1bf;
+    border-bottom-width: 0px;
+    color: #ffffff;
+    border-bottom: 0 !important;
+    font-weight:bold;
+}
+
+.zero_quantity_table.table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td {
+    border: 1px solid #ebebeb;
+    background:#4fb8c5d1;
+    color: white;
 }
