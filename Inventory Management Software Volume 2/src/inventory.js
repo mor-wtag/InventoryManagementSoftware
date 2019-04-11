@@ -102,9 +102,6 @@ function initialLoad(){
                     <td>
                         ${quantity}
                     </td>
-                    <td>
-                        nil so far
-                    </td
                 </tr>
             `);
         }

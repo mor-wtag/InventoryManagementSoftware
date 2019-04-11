@@ -59,19 +59,53 @@ function initialLoad(){
                 //item increment
                 items_with_zero_quantity+=1;
 
-                //appending the value into the first tile
-                $("#zero_quantity_data").data('end', '100');
-
-                $("#zero_quantity_data").html('100');
-
                 //loop through and parse the data then create TR in the table with this data
                 let itemCode = fetchedData_inventory[uniqueKey]['itemCode'];
                 let itemName = fetchedData_inventory[uniqueKey]['itemName'];
                 let uom = fetchedData_inventory[uniqueKey]['uom'];
+
+                //append in the table that's not being displayed
+                // appending elements into the databaseTable
+                $('#zero_quantity_table_tableBody').append(/*html*/`
+                <tr data-key="${uniqueKey}">
+                    <td>
+                        ${itemCode}
+                    </td>
+                    <td>
+                        ${itemName}
+                    </td>
+                    <td>
+                        ${uom}
+                    </td>
+                    <td>
+                        ${quantity}
+                    </td>
+                </tr>
+                `);
             }
-
-
         }
+
+        //appending the value into the first tile
+        $('#zero_quantity_data').data("end", items_with_zero_quantity); //NOT WORKING
+
+        //adding database value to the tile
+        // $("#zero_quantity_data").text(items_with_zero_quantity);
+
+         //onclicking the tile, the dables below will become invisible, and the data table will become visible
+         $('#zero_quantity_tile').click(function(){
+
+            console.log("Tile clicked!");
+
+            //making the table visible
+            $('#zero_quantity_table').toggle();
+
+            //making all tables invisible
+            $('.index_mainContent_below_tiles').animate({
+                top:'30%'
+            }, 200);
+
+            
+        });
         
         //after clicking the first tile, it will show a table listing the names of all the items havinfg 0 quantity
 
