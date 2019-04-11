@@ -256,42 +256,71 @@ label + .inputField {margin-top:0.2857rem;}
 
 /* ----INDEX PAGE---- */
 
- #zero_quantity_table{
+ .tile_table{
     width: auto;
     margin-left: 2%;
-    font-size: 1.4em;
+    font-size: 1.2em;
     font-family: Calibri;
     display: none;
     border:none;
     margin: 4% 29% 9% 1%;
+    -webkit-box-shadow: 7px 6px 4px -2px rgba(0,0,0,0.69);
+    -moz-box-shadow: 7px 6px 4px -2px rgba(0,0,0,0.69);
+    box-shadow: 3px 3px 4px 0px #999999;
+    
 }
-
-#zero_quantity_tile{
-    background: linear-gradient(-90deg, #06beb6, #48b1bf);
-} 
 
 .tile-stats:hover{
     cursor:pointer;
 }
 
-/* changing index table css */
-.zero_quantity_table.table-bordered > tfoot > tr > th, .table-bordered > tfoot > tr > td {
-    background: #48b1bf;
-    border-top-width: 1px;
-    color: #ffffff;
-    font-weight:bold;
+/* tiles css changing in index page */
+
+.tile-stats{
+    -webkit-box-shadow: 3px 3px 4px -2px rgba(148,127,148,1);
+    -moz-box-shadow: 3px 3px 4px -2px rgba(148,127,148,1);
+    box-shadow: 3px 3px 4px 0px #999999;
 }
 
-.zero_quantity_table.table-bordered > thead > tr > th, .table-bordered > thead > tr > td {
-    background:  #48b1bf;
+
+
+/* changing index tables css */
+.table-bordered > tfoot > tr > th, .table-bordered > tfoot > tr > td {
+    background: #303641;
     border-bottom-width: 0px;
     color: #ffffff;
     border-bottom: 0 !important;
-    font-weight:bold;
+    font-weight: bold;
+    font-size: 1.1em;
+    border: none;
 }
 
-.zero_quantity_table.table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td {
-    border: 1px solid #ebebeb;
-    background:#4fb8c5d1;
-    color: white;
+.table-bordered > thead > tr > th, .table-bordered > thead > tr > td {
+    background: #303641;
+    /* border-bottom-width: 0px; */
+    color: #ffffff;
+    border-bottom: 0 !important;
+    font-weight: bold;
+    font-size: 1.1em;
+    border: none;
+    width: 1%;
 }
+
+.table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td {
+    background: #324e7c00;
+    color: #373e4a;
+    font-size: 1.1em;
+    border:none;
+}
+
+.table-bordered{
+    -webkit-box-shadow: 7px 6px 4px -2px rgba(0,0,0,0.69);
+    -moz-box-shadow: 7px 6px 4px -2px rgba(0,0,0,0.69);
+    box-shadow: 3px 3px 4px 0px #999999;
+    border:none;
+}
+
+#lessThan5_quantity_table{
+    margin-left: 2%;
+}
+
