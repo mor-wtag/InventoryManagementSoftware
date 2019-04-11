@@ -20,6 +20,15 @@
 	<link rel="stylesheet" href="assets/css/neon-forms.css">
 	<link rel="stylesheet" href="assets/css/custom.css">
 
+	 <!-- Imported styles on this page -->
+	 <link rel="stylesheet" href="assets/js/datatables/datatables.css">
+	 <link rel="stylesheet" href="assets/js/select2/select2-bootstrap.css">
+	 <link rel="stylesheet" href="assets/js/select2/select2.css">
+	 <link rel="stylesheet" href="assets/css/custom.css">
+
+	 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+	 crossorigin="anonymous">
+
 	<script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
 
 	<script src="assets/js/jquery-1.11.3.min.js"></script>
@@ -146,15 +155,14 @@
 		<div class="row">
 			<div class="col-sm-3 col-xs-6">
 		
-				<div class="tile-stats tile-red" id="zero_quantity">
+				<div class="tile-stats tile-red" id="zero_quantity_tile">
 					<!-- <div class="icon"><i class="entypo-users"></i></div> -->
-					<div class="num" id="zero_quantity_data" data-start="0" data-end="" data-duration="1500" data-delay="0">0</div>
+					<div class="num" id="zero_quantity_data" data-start="0"  data-duration="3000" data-delay="3000">0</div>
 		
 					<h3>Items that have run out</h3>
-					<!-- <p>so far in our blog, and our website.</p> -->
 				</div>
 			</div>
-		
+
 			<div class="col-sm-3 col-xs-6">
 		
 				<div class="tile-stats tile-green">
@@ -194,8 +202,36 @@
 		</div>
 		
 		<br />
+		<div class="row datatables_wrapper zero_quantity_table_wrapper">
+			
+			<!-- CONTENT ON CLICKING TITLE -->
+			<!-- table that will b e visible if the tile is clicked -->
+			<table class="table-bordered datatables zero_quantity_table" id="zero_quantity_table">
+				<thead>
+					<tr>
+						<th>Item Code</th>
+						<th>Item Description</th>
+						<th>UoM</th>
+						<th>Quantity</th>
+
+					</tr>
+				</thead>
+				<tbody id='zero_quantity_table_tableBody'>
+				</tbody>
+				<tfoot>
+					<tr>
+						<th>Item Code</th>
+						<th>Item Description</th>
+						<th>UoM</th>
+						<th>Quantity</th>
+
+					</tr>
+				</tfoot>
+			</table>
+
+		</div>
 		
-		<div class="row">
+		<div class="row index_mainContent_below_tiles">
 			<div class="col-sm-6">
 				<!-- Timeline Here -->
 				<div class="panel panel-invert">
@@ -242,7 +278,7 @@
 		
 		<br />
 		
-		<div class="row">
+		<div class="row index_mainContent_below_tiles">
 		
 			<div class="col-sm-6">
 					<div class="panel panel-invert">
@@ -298,6 +334,8 @@
 	<!-- Demo Settings -->
 	<script src="assets/js/neon-demo.js"></script>
 	<script src="src/index.js"></script>
+
+	
 
 </body>
 </html>
