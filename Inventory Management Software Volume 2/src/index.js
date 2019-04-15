@@ -125,15 +125,15 @@ function initialLoad() {
         //on clicking the tile, the dables below will become invisible, and the data table will become visible
         $('#zero_quantity_tile').click(function () {
 
+            //making the table visible
+            $('#zero_quantity_table').toggle();
+
             $('.tile_table').css("display","none");
 
             //making all tables invisible
             $('.index_mainContent_below_tiles').animate({
                 top: '30%'
             }, 200);
-
-            //making the table visible
-            $('#zero_quantity_table').toggle();
         });
 
         //---SECOND TILE---
@@ -156,12 +156,13 @@ function initialLoad() {
         });
 
         ////---THIRD TILE---
-        
-
-        //after clicking the first tile, it will show a table listing the names of all the items havinfg 0 quantity
-
+        //TOTAL NUMBER OF ITEMS IN THE INVENTORY
+        $('#total_quantity_data').attr('data-end',total_quantity);
+        //adding database value to the tile
+        $("#total_quantity_data").text(total_quantity);
+        //onclicking the tile, the dables below will become invisible, and the data table will become visible
+        $('#total_quantity_data').click(function () {
+        });
     });
 
 }
-
-
