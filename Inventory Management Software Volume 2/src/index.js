@@ -20,6 +20,7 @@ let database = firebase.database();
 let items_with_zero_quantity = 0;
 let items_with_lessThan5_quantity = 0;
 let total_quantity=0;
+let total_quantity_delivered=0;
 
 // RealTime listener
 //this checks to see if user is logged in 
@@ -125,15 +126,15 @@ function initialLoad() {
         //on clicking the tile, the dables below will become invisible, and the data table will become visible
         $('#zero_quantity_tile').click(function () {
 
-            //making the table visible
-            $('#zero_quantity_table').toggle();
-
             $('.tile_table').css("display","none");
 
             //making all tables invisible
             $('.index_mainContent_below_tiles').animate({
                 top: '30%'
             }, 200);
+
+            //making the table visible
+            $('#zero_quantity_table').toggle();
         });
 
         //---SECOND TILE---
@@ -162,6 +163,33 @@ function initialLoad() {
         $("#total_quantity_data").text(total_quantity);
         //onclicking the tile, the dables below will become invisible, and the data table will become visible
         $('#total_quantity_data').click(function () {
+            window.location.href = "./inventory.html";
+        });
+
+        ////---FOURTH TILE---
+        //ITEMS DELIVERED
+        database.ref('databases/delivery_log').once('value').then(function (snapshot) {
+
+            console.log("Got data from the delivery log!");
+    
+            let fetchedData_delivery = snapshot.val();
+            console.log(fetchedData_inventory);
+
+            for (let uniqueKey in fetchedData_delivery) {
+                let quantity_delivered = fetchedData_delivery[uniqueKey]['quantity'];
+
+                //adding each quantity
+                total_quantity_delivered += parseInt(quantity_delivered); 
+
+                console.log("total_quantity_delivered: "+total_quantity_delivered);
+            }
+            console.log("total_quantity_delivered: "+total_quantity_delivered);
+
+            $('#total_quantity_delivered').attr('data-end',total_quantity_delivered);
+            //adding database value to the tile
+            $("#total_quantity_delivered").text(total_quantity_delivered);
+
+            
         });
     });
 
