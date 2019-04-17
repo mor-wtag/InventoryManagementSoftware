@@ -19,8 +19,9 @@ let database = firebase.database();
 
 let items_with_zero_quantity = 0;
 let items_with_lessThan5_quantity = 0;
-let total_quantity=0;
-let total_quantity_delivered=0;
+let total_quantity = 0;
+let total_quantity_delivered = 0;
+let quantity_by_destination_array = [];
 
 // RealTime listener
 //this checks to see if user is logged in 
@@ -49,59 +50,67 @@ function initialLoad() {
         let fetchedData_inventory = snapshot.val();
         console.log(fetchedData_inventory);
 
-        //---FIRST & SECOND TILE---
-        //ITEMS HAVING ZERO AND LTE5 QUANTITY
+        database.ref('databases/DeliveryDatabase').once('value').then(function (snapshot) {
 
-        //This code here is to check how many items have zero quantity in inventory database and pushing the number into the first tile
-        for (let uniqueKey in fetchedData_inventory) {
+            console.log("Got data from the delivery database!");
 
-            //Initialize the quantity only so that we can only check the ones who have zero quantity
-            let quantity = fetchedData_inventory[uniqueKey]['quantity'];
+            let fetchedData_delivery = snapshot.val();
+            console.log(fetchedData_delivery);
 
-            //this is for the THIRD tile
-            //to keep track of total number of quantity
-            total_quantity = parseInt(total_quantity) + parseInt(quantity);
+            //---FIRST & SECOND TILE---
+            //ITEMS HAVING ZERO AND LTE5 QUANTITY
 
-            if (quantity == 0) {
-                console.log("Found an item with zero quantity!");
+            //This code here is to check how many items have zero quantity in inventory database and pushing the number into the first tile
+            for (let uniqueKey in fetchedData_inventory) {
 
-                //item increment
-                items_with_zero_quantity += 1;
+                //Initialize the quantity only so that we can only check the ones who have zero quantity
+                let quantity = fetchedData_inventory[uniqueKey]['quantity'];
 
-                let tableToAppendData = $("#zero_quantity_table_tableBody"); //getting the table in which we will append the data
-                
-                 //calling function to append to table   
-                appendItemsIntoTable(uniqueKey, quantity, tableToAppendData);  
+                //this is for the THIRD tile
+                //to keep track of total number of quantity
+                total_quantity = parseInt(total_quantity) + parseInt(quantity);
+
+                if (quantity == 0) {
+                    console.log("Found an item with zero quantity!");
+
+                    //item increment
+                    items_with_zero_quantity += 1;
+
+                    let tableToAppendData = $("#zero_quantity_table_tableBody"); //getting the table in which we will append the data
+
+                    //calling function to append to table   
+                    appendItemsIntoTable(uniqueKey, fetchedData_inventory, tableToAppendData);
+                }
+
+                else if (quantity <= 5) {
+
+                    console.log("Found an item with less than 5 quantities!");
+
+                    //item increment
+                    items_with_lessThan5_quantity += 1;
+
+                    let tableToAppendData = $("#lessThan5_quantity_table_tableBody");
+
+                    //calling function to append to table   
+                    appendItemsIntoTable(uniqueKey, fetchedData_inventory, tableToAppendData);
+
+                }
             }
 
-            else if(quantity <= 5){
+            console.log("total_quantity: " + total_quantity);
 
-                console.log("Found an item with less than 5 quantities!");
+            function appendItemsIntoTable(uniqueKey, database_table, tableToAppendData) {
 
-                //item increment
-                items_with_lessThan5_quantity +=1;
+                console.log("Got into the function to append items into the table");
+                //loop through and parse the data then create TR in the table with this data
+                let itemCode = database_table[uniqueKey]['itemCode'];
+                let itemName = database_table[uniqueKey]['itemName'];
+                let uom = database_table[uniqueKey]['uom'];
+                let quantity = database_table[uniqueKey]['quantity'];
 
-                let tableToAppendData = $("#lessThan5_quantity_table_tableBody");
-
-                //calling function to append to table   
-                appendItemsIntoTable(uniqueKey, quantity, tableToAppendData);
-
-            }
-        }
-
-        console.log("total_quantity: "+total_quantity);
-
-        function appendItemsIntoTable(uniqueKey, quantity, tableToAppendData) {
-
-            console.log("Got into the function to append items into the table");
-            //loop through and parse the data then create TR in the table with this data
-            let itemCode = fetchedData_inventory[uniqueKey]['itemCode'];
-            let itemName = fetchedData_inventory[uniqueKey]['itemName'];
-            let uom = fetchedData_inventory[uniqueKey]['uom'];
-
-            //append in the table that's not being displayed
-            // appending elements into the databaseTable
-            $(tableToAppendData).append(/*html*/`
+                //append in the table that's not being displayed
+                // appending elements into the databaseTable
+                $(tableToAppendData).append(/*html*/`
                 <tr data-key="${uniqueKey}">
                     <td>
                         ${itemCode}
@@ -117,80 +126,149 @@ function initialLoad() {
                     </td>
                 </tr>
                 `);
-        }
+            }
 
-        //---FIRST TILE---
-        $('#zero_quantity_data').attr('data-end',items_with_zero_quantity); //NOT WORKING
-        //adding database value to the tile
-        $("#zero_quantity_data").text(items_with_zero_quantity);
-        //on clicking the tile, the dables below will become invisible, and the data table will become visible
-        $('#zero_quantity_tile').click(function () {
+            //---FIRST TILE---
+            $('#zero_quantity_data').attr('data-end', items_with_zero_quantity); //NOT WORKING
+            //adding database value to the tile
+            $("#zero_quantity_data").text(items_with_zero_quantity);
+            //on clicking the tile, the dables below will become invisible, and the data table will become visible
+            $('#zero_quantity_tile').click(function () {
 
-            $('.tile_table').css("display","none");
+                $('#lessThan5_quantity_table').css("display", "none");
+                $('#index_delivery_table').css("display", "none");
 
-            //making all tables invisible
-            $('.index_mainContent_below_tiles').animate({
-                top: '30%'
-            }, 200);
+                //making all tables invisible
+                $('.index_mainContent_below_tiles').animate({
+                    top: '30%'
+                }, 200);
 
-            //making the table visible
-            $('#zero_quantity_table').toggle();
-        });
+                //making the table visible
+                $('#zero_quantity_table').toggle();
+            });
 
-        //---SECOND TILE---
-        //ITEMS HAVING LESS THAN OR EQUAL TO 5 QUANTITY
-        $('#lessThan5_quantity_data').attr('data-end',items_with_lessThan5_quantity); //NOT WORKING
-        //adding database value to the tile
-        $("#lessThan5_quantity_data").text(items_with_lessThan5_quantity);
-        //onclicking the tile, the dables below will become invisible, and the data table will become visible
-        $('#lessThan5_quantity_tile').click(function () {
+            //---SECOND TILE---
+            //ITEMS HAVING LESS THAN OR EQUAL TO 5 QUANTITY
+            $('#lessThan5_quantity_data').attr('data-end', items_with_lessThan5_quantity); //NOT WORKING
+            //adding database value to the tile
+            $("#lessThan5_quantity_data").text(items_with_lessThan5_quantity);
+            //onclicking the tile, the dables below will become invisible, and the data table will become visible
+            $('#lessThan5_quantity_tile').click(function () {
 
-            $('.tile_table').css("display","none");
+                $('#zero_quantity_table').css("display", "none");
+                $('#index_delivery_table').css("display", "none");
 
-            //making all tables invisible
-            $('.index_mainContent_below_tiles').animate({
-                top: '30%'
-            }, 200);
+                //making all tables invisible
+                $('.index_mainContent_below_tiles').animate({
+                    top: '30%'
+                }, 200);
 
-            //making the table visible
-            $('#lessThan5_quantity_table').toggle();
-        });
+                //making the table visible
+                $('#lessThan5_quantity_table').toggle();
+            });
 
-        ////---THIRD TILE---
-        //TOTAL NUMBER OF ITEMS IN THE INVENTORY
-        $('#total_quantity_data').attr('data-end',total_quantity);
-        //adding database value to the tile
-        $("#total_quantity_data").text(total_quantity);
-        //onclicking the tile, the dables below will become invisible, and the data table will become visible
-        $('#total_quantity_data').click(function () {
-            window.location.href = "./inventory.html";
-        });
+            ////---THIRD TILE---
+            //TOTAL NUMBER OF ITEMS IN THE INVENTORY
+            $('#total_quantity_data').attr('data-end', total_quantity);
+            //adding database value to the tile
+            $("#total_quantity_data").text(total_quantity);
+            //onclicking the tile, the dables below will become invisible, and the data table will become visible
+            $('#total_quantity_tile').click(function () {
+                window.location.href = "./inventory.html";
+            });
 
-        ////---FOURTH TILE---
-        //ITEMS DELIVERED
-        database.ref('databases/delivery_log').once('value').then(function (snapshot) {
-
-            console.log("Got data from the delivery log!");
-    
-            let fetchedData_delivery = snapshot.val();
-            console.log(fetchedData_inventory);
-
+            ////---FOURTH TILE---
+            //ITEMS DELIVERED
             for (let uniqueKey in fetchedData_delivery) {
                 let quantity_delivered = fetchedData_delivery[uniqueKey]['quantity'];
 
                 //adding each quantity
-                total_quantity_delivered += parseInt(quantity_delivered); 
+                total_quantity_delivered += parseInt(quantity_delivered);
 
-                console.log("total_quantity_delivered: "+total_quantity_delivered);
+                let tableToAppendData = $("#index_delivery_tableBody"); //getting the table in which we will append the data
+
+                //calling function to append to table   
+                appendItemsIntoTable(uniqueKey, fetchedData_delivery, tableToAppendData);
             }
-            console.log("total_quantity_delivered: "+total_quantity_delivered);
 
-            $('#total_quantity_delivered').attr('data-end',total_quantity_delivered);
+            console.log("total_quantity_delivered: " + total_quantity_delivered);
+            //trying to change the data end value
+            $('#total_quantity_delivered').attr('data-end', total_quantity_delivered);
             //adding database value to the tile
             $("#total_quantity_delivered").text(total_quantity_delivered);
+            //onclicking the tile, the dables below will become invisible, and the data table will become visible
+            $('#items_delivered_tile').click(function () {
 
-            
+                $('#zero_quantity_table').css("display", "none");
+                $('#lessThan5_quantity_table').css("display", "none");
+
+                //making all tables invisible
+                $('.index_mainContent_below_tiles').animate({
+                    top: '30%'
+                }, 200);
+
+                //making the table visible
+                $('#index_delivery_table').toggle();
+            });
+
+            //---BAR CHART---
+            //DESTINATION WISE ITEM CONSUMPTION
+            //Fetching data from DESTINATION DATABASE
+            database.ref('databases/Destination_database').once('value').then(function (snapshot) {
+
+                console.log("Got data from the Destination_database!");
+        
+                let fetchedData_destination = snapshot.val();
+                console.log(fetchedData_destination);
+
+                for (let uniqueKey in fetchedData_delivery) {
+                    destination_index=0;
+                    let destination_destination = fetchedData_destination[uniqueKey]['destination'];
+                    let quantity_destination = fetchedData_destination[uniqueKey]['quantity'];
+
+                    quantity_by_destination_array[destination_index] = quantity;
+
+                }
+
+                var ctx = document.getElementById('BarChart').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple'],
+                        datasets: [{
+                            label: 'Item consumption',
+                            data: [12, 19, 3, 5, 2, 3],
+                            backgroundColor: [
+                                '#cc2424',
+                                '#0f7ca9',
+                                '#8df08c',
+                                '#ff623f',
+                                '#731077'
+                            ]
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                },
+                                gridLines: {
+                                    display: false
+                                },
+                            }],
+
+                            xAxes: [{
+                                gridLines: {
+                                    display: false
+                                },
+                                categoryPercentage: 1.0,
+                                barPercentage: 0.9
+                            }]
+                        }
+                    }
+                });
+            });
         });
     });
-
 }

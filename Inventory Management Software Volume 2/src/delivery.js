@@ -21,6 +21,8 @@ let today;
 let totalAmount;
 let itemfound = false;
 let uniqueKey_Array = [];
+let itemfound_Delivery = false;
+let destination_array = [];
 console.log('itemfound: ' + itemfound);
 
 // RealTime listener
@@ -40,11 +42,7 @@ firebase.auth().onAuthStateChanged(user => {
     }
 });
 
-//submit form
-
 const dbRefObject = firebase.database().ref().child('databases'); //children of database object
-const dbRefElement = dbRefObject.child('new_Entry'); //children of database object
-const dbRefInventory = dbRefObject.child('Inventorydatabase'); //children of database object
 
 //submit form
 
@@ -316,6 +314,14 @@ $(document).ready(function () {
                         'current_date': today
                     };
 
+                    //FOR DELIVERY DATABASE
+                    let update_data_delivery = {
+                        'itemCode': itemCode,
+                        'itemName': itemName,
+                        'uom': uom,
+                        'quantity': quantity
+                    };
+
                     console.log(update_data_delivery_log);
 
                     // //check to see if the data is present in the inventory
@@ -355,6 +361,47 @@ $(document).ready(function () {
                         alert("Could not find the item " + itemName + " in the inventory! Please check if the item code is correct.");
                         return false;
                     }
+                    
+                    //CHECKING FOR ITEMS IN THE DELIVERY DATABASE
+                    let response4 = database.ref('databases/DeliveryDatabase').once('value');
+            
+                    response4.then(function(snapshot){
+        
+                        console.log('itemfound: '+itemfound);
+        
+                        let fetchedData_delivery = snapshot.val();
+        
+                        //loop through and parse the data then create TR in the table with this data
+                        for (let uniqueKey in fetchedData_delivery){
+        
+                            let itemCode_fetched_delivery = fetchedData_delivery[uniqueKey]['itemCode'];
+                            let existingQuantity_delivery = fetchedData_delivery[uniqueKey]['quantity'];
+                             
+                            if (itemCode_fetched_delivery == itemCode){
+        
+                                //THIS MEANS ITEM EXISTS IN DATABASE SO JUST INCREMENT IT BY QUANTITY
+                                let newQuantity_delivery = parseInt(quantity) + parseInt(existingQuantity_delivery);
+        
+                                let data = {
+                                    'quantity': newQuantity_delivery
+                                }
+        
+                                itemfound_Delivery=true;
+        
+                                let updating_inventory = database.ref('databases/DeliveryDatabase/' + uniqueKey).update(data).then(function(){
+                                });
+                            }
+                        }
+                        if (itemfound_Delivery == false) {
+                            // THIS MEANS ITEM DOES NOT EXIST IN DATASBE SO JUST SET IT TO A NEW ITEM WITH QUANTITY
+                            // pushing the inventory data
+    
+                            let pushing_delivery = database.ref('databases/DeliveryDatabase/').push(update_data_delivery).then(function(){
+                            });              
+        
+                        }
+                    });
+                        
 
                     //CODE TO CHECK IF DESTINATION IS PRESENT IN THE DATABASE
                     //If destination not prresent in database, add it to the database
@@ -372,6 +419,7 @@ $(document).ready(function () {
                         for (let uniqueKey in fetchedData3) {
 
                             let filtered_destination = fetchedData3[uniqueKey]['destination'];
+                            let quantity_destination = fetchedData3[uniqueKey]['quantity'];
 
                             //look for partial/complete match of the item Name searched string and the item name found in database string
 
@@ -379,7 +427,17 @@ $(document).ready(function () {
 
                                 console.log("destination found! "+destination);
                                 destination_found=true;
-                                break;
+
+                                newQuantity = parseInt(quantity) + parseInt(quantity_destination);
+                                let quantity_data= 
+                                    {
+                                        quantity: newQuantity
+                                    }   
+                                //updating the quantity in the destination database for the destinations present in te database
+                                let update_quantity_in_destination_database = database.ref('databases/Destination_database/' + uniqueKey).update(quantity_data).then(function(){
+                                    break;
+                                });
+                                
                             }
                         }
 
@@ -393,14 +451,15 @@ $(document).ready(function () {
                             if (add_destination_into_database==true){
                                 //will be triggered if the user clicks OK
                                 //hence add the destinmation into the database
-                                console.log("destination Not found! "+destination+". Appening destination into the destination database");
+                                console.log("destination Not found! "+destination+". Appending destination into the destination database");
 
                                 let destination_to_be_pushed =
                                 {
-                                    'destination': destination
+                                    'destination': destination,
+                                    'quantity': quantity
                                 }
-
-                                let update_Destination_database =  database.ref('databases/Destination_database').push(destination_to_be_pushed); //push new destination into database
+                                 //push new destination into database
+                                let update_Destination_database =  database.ref('databases/Destination_database').push(destination_to_be_pushed);
                             }      
                             else{
                                 return false;
