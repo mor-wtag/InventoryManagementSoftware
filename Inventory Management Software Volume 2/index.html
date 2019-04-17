@@ -26,11 +26,12 @@
 	 <link rel="stylesheet" href="assets/js/select2/select2.css">
 	 <link rel="stylesheet" href="assets/css/custom.css">
 
+	 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js">
 	 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
 	 crossorigin="anonymous">
 
 	<script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
 	<script src="assets/js/jquery-1.11.3.min.js"></script>
 
 	<a href="https://icons8.com/icon/97492/warehouse"></a>
@@ -155,11 +156,10 @@
 		
 		
 		<div class="row">
-			<div class="col-sm-3 col-xs-6">
-		
+			<div class="col-sm-3 col-xs-6">		
 				<div class="tile-stats tile-red" id="zero_quantity_tile">
 					<div class="icon"><img class="tile_icon" id="first_tile_icon" src="assets/images/empty_warehouse.png"></div>
-					<div class="num" id="zero_quantity_data" data-start="0"  data-end="0" data-duration="1500" data-delay="1500">0</div>
+					<div class="num" id="zero_quantity_data" data-start="0" data-end="" data-duration="1500" data-delay="1500">0</div>
 		
 					<h3>Items run out</h3>
 				</div>
@@ -193,7 +193,7 @@
 		
 			<div class="col-sm-3 col-xs-6">
 		
-				<div class="tile-stats tile-blue" id="fourth_tile">
+				<div class="tile-stats tile-blue" id="items_delivered_tile">
 					<div class="icon"><img class="tile_icon" id="delivery_icon" src="assets/images/warehouse_delivery.png"></div>
 					<div class="num" id="total_quantity_delivered" data-start="0" data-postfix="" data-duration="1500" data-delay="1800">0</div>
 		
@@ -207,7 +207,7 @@
 		<div class="row datatables_wrapper zero_quantity_table_wrapper">
 			
 			<!-- CONTENT ON CLICKING TITLE -->
-			<!-- table that will b e visible if the tile is clicked -->
+			<!-- table that will be visible if the tile is clicked -->
 			<table class="table-bordered datatables tile_table" id="zero_quantity_table">
 				<thead>
 					<tr>
@@ -221,6 +221,20 @@
 				<tbody id='zero_quantity_table_tableBody'>
 				</tbody>
 			</table>
+			<!-- CONTENT ON CLICKING TITLE -->
+			<!-- table that will be visible if the tile is clicked -->
+			<table class="table-bordered datatables tile_table" id="index_delivery_table">
+					<thead>
+						<tr>
+							<th>Item Code</th>
+							<th>Item Description</th>
+							<th>UoM</th>
+							<th>Quantity</th>
+						</tr>
+					</thead>
+					<tbody id='index_delivery_tableBody'>
+					</tbody>
+				</table>
 
 			<div class="row datatables_wrapper lessThan5_quantity_table_wrapper">
 			
@@ -244,9 +258,8 @@
 		
 		<div class="row index_mainContent_below_tiles">
 			<div class="col-sm-6">
-				<!-- Timeline Here -->
-				<div class="panel panel-invert">
-						<div class="panel-heading">
+				<canvas id="BarChart" width="40%" height="25%"></canvas>
+						<!-- <div class="panel-heading">
 							<div class="panel-title">Inventory Running out</div>
 						</div>
 						
@@ -256,7 +269,7 @@
 								<p>Diesel Generator- 20 left</p>
 							</div>
 							
-						</div>
+						</div> -->
 				</div>
 			</div>
 		
