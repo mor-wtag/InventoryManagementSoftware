@@ -21,7 +21,10 @@ let items_with_zero_quantity = 0;
 let items_with_lessThan5_quantity = 0;
 let total_quantity = 0;
 let total_quantity_delivered = 0;
-let quantity_by_destination_array = [];
+let quantity_by_destination_array;
+let destination_array = [];
+let uniqueKey_Array_for_destination = [];
+let decending_sorted_array =[];
 
 // RealTime listener
 //this checks to see if user is logged in 
@@ -220,16 +223,25 @@ function initialLoad() {
         
                 let fetchedData_destination = snapshot.val();
                 console.log(fetchedData_destination);
+                destination_index=0;
 
-                for (let uniqueKey in fetchedData_delivery) {
-                    destination_index=0;
+                for (let uniqueKey in fetchedData_destination) {
+                    
                     let destination_destination = fetchedData_destination[uniqueKey]['destination'];
                     let quantity_destination = fetchedData_destination[uniqueKey]['quantity'];
 
-                    quantity_by_destination_array[destination_index] = quantity;
-
+                    quantity_by_destination_array[destination_index][0] = quantity_destination;
+                    quantity_by_destination_array[destination_index][1] = uniqueKey;
+                    destination_index++;
                 }
+                //sorting array in decending order
+                let sliced_array = quantity_by_destination_array.slice();
+                decending_sorted_array = sliced_array.sort((a,b) => b[0]-a[0]);
+                console.log(decending_sorted_array);
+                
+                //selecting the top 5 destinations with the most quantities
 
+                //BAR CHART CODE FROM CHART.JS
                 var ctx = document.getElementById('BarChart').getContext('2d');
                 var myChart = new Chart(ctx, {
                     type: 'bar',
@@ -237,7 +249,7 @@ function initialLoad() {
                         labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple'],
                         datasets: [{
                             label: 'Item consumption',
-                            data: [12, 19, 3, 5, 2, 3],
+                            data: [`${decending_sorted_array[0]}`, `${decending_sorted_array[1]}`, `${decending_sorted_array[2]}`, `${decending_sorted_array[3]}`, `${decending_sorted_array[4]}`, `${decending_sorted_array[5]}`],
                             backgroundColor: [
                                 '#cc2424',
                                 '#0f7ca9',
