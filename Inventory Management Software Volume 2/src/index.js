@@ -21,7 +21,7 @@ let items_with_zero_quantity = 0;
 let items_with_lessThan5_quantity = 0;
 let total_quantity = 0;
 let total_quantity_delivered = 0;
-let quantity_by_destination_array;
+let quantity_by_destination_array=[];
 let destination_array = [];
 let uniqueKey_Array_for_destination = [];
 let decending_sorted_array =[];
@@ -230,26 +230,46 @@ function initialLoad() {
                     let destination_destination = fetchedData_destination[uniqueKey]['destination'];
                     let quantity_destination = fetchedData_destination[uniqueKey]['quantity'];
 
-                    quantity_by_destination_array[destination_index][0] = quantity_destination;
-                    quantity_by_destination_array[destination_index][1] = uniqueKey;
+                    quantity_by_destination_array[destination_index] = quantity_destination;
+                    destination_array[destination_index] = destination_destination;
                     destination_index++;
                 }
                 //sorting array in decending order
                 let sliced_array = quantity_by_destination_array.slice();
-                decending_sorted_array = sliced_array.sort((a,b) => b[0]-a[0]);
+                decending_sorted_array = sliced_array.sort((a,b) => b-a);
                 console.log(decending_sorted_array);
                 
                 //selecting the top 5 destinations with the most quantities
+                //finding out the destinations with the most quantities
+                //1) combine the arrays:
+                var list = [];
+                for (var j = 0; j < quantity_by_destination_array.length ; j++) 
+                    list.push({'quantity': quantity_by_destination_array[j], 'destination': destination_array[j]});
+
+                //2) sort:
+                list.sort(function(a, b) {
+                    return ((a.quantity > b.quantity) ? -1 : ((a.quantity == b.quantity) ? 0 : 1));
+                    //Sort could be modified to, for example, sort on the age 
+                    // if the name is the same.
+                });
+                //3) separate them back out:
+                // for (var k = 0; k < list.length; k++) {
+                //     quantity_by_destination_array[k] = list[k].name;
+                //     ages[k] = list[k].age;
+                // }
+
+                console.log(list);
+                console.log(list[0].quantity);
 
                 //BAR CHART CODE FROM CHART.JS
                 var ctx = document.getElementById('BarChart').getContext('2d');
                 var myChart = new Chart(ctx, {
                     type: 'bar',
                     data: {
-                        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple'],
+                        labels: [`${list[0].destination}`, `${list[1].destination}`, `${list[2].destination}`, `${list[3].destination}`, `${list[4].destination}`],
                         datasets: [{
                             label: 'Item consumption',
-                            data: [`${decending_sorted_array[0]}`, `${decending_sorted_array[1]}`, `${decending_sorted_array[2]}`, `${decending_sorted_array[3]}`, `${decending_sorted_array[4]}`, `${decending_sorted_array[5]}`],
+                            data: [`${list[0].quantity}`, `${list[1].quantity}`, `${list[2].quantity}`, `${list[3].quantity}`, `${list[4].quantity}`],
                             backgroundColor: [
                                 '#cc2424',
                                 '#0f7ca9',
@@ -263,18 +283,20 @@ function initialLoad() {
                         scales: {
                             yAxes: [{
                                 ticks: {
-                                    beginAtZero: true
+                                    beginAtZero: true,
                                 },
                                 gridLines: {
-                                    display: false
+                                    display: false,
+                                    color: "#303641c9"
                                 },
                             }],
 
                             xAxes: [{
                                 gridLines: {
-                                    display: false
+                                    display: false,
+                                    color: "#303641c9"
                                 },
-                                categoryPercentage: 1.0,
+                                categoryPercentage: 0.9,
                                 barPercentage: 0.9
                             }]
                         }
