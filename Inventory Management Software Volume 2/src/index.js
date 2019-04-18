@@ -23,7 +23,8 @@ let total_quantity = 0;
 let total_quantity_delivered = 0;
 let quantity_by_destination_array=[];
 let destination_array = [];
-let uniqueKey_Array_for_destination = [];
+let quantity_deliveryDatabase = [];
+let itemName_deliveryDatabase = [];
 let decending_sorted_array =[];
 
 // RealTime listener
@@ -224,7 +225,7 @@ function initialLoad() {
                 let fetchedData_destination = snapshot.val();
                 console.log(fetchedData_destination);
                 destination_index=0;
-
+                //storing the destination and quantity into two arrays 
                 for (let uniqueKey in fetchedData_destination) {
                     
                     let destination_destination = fetchedData_destination[uniqueKey]['destination'];
@@ -234,49 +235,122 @@ function initialLoad() {
                     destination_array[destination_index] = destination_destination;
                     destination_index++;
                 }
-                //sorting array in decending order
-                let sliced_array = quantity_by_destination_array.slice();
-                decending_sorted_array = sliced_array.sort((a,b) => b-a);
-                console.log(decending_sorted_array);
-                
-                //selecting the top 5 destinations with the most quantities
+
+                //SORTING ARRAYS
                 //finding out the destinations with the most quantities
+                //sorting the quantities keeping the destination recorded
+
                 //1) combine the arrays:
-                var list = [];
+                var list_quantityByDestination = [];
                 for (var j = 0; j < quantity_by_destination_array.length ; j++) 
-                    list.push({'quantity': quantity_by_destination_array[j], 'destination': destination_array[j]});
+                    list_quantityByDestination.push({'quantity': quantity_by_destination_array[j], 'destination': destination_array[j]});
 
                 //2) sort:
-                list.sort(function(a, b) {
+                list_quantityByDestination.sort(function(a, b) {
                     return ((a.quantity > b.quantity) ? -1 : ((a.quantity == b.quantity) ? 0 : 1));
-                    //Sort could be modified to, for example, sort on the age 
-                    // if the name is the same.
                 });
-                //3) separate them back out:
-                // for (var k = 0; k < list.length; k++) {
-                //     quantity_by_destination_array[k] = list[k].name;
-                //     ages[k] = list[k].age;
-                // }
-
-                console.log(list);
-                console.log(list[0].quantity);
+                console.log(list_quantityByDestination);
+                console.log(list_quantityByDestination[0].quantity);
 
                 //BAR CHART CODE FROM CHART.JS
                 var ctx = document.getElementById('BarChart').getContext('2d');
                 var myChart = new Chart(ctx, {
                     type: 'bar',
                     data: {
-                        labels: [`${list[0].destination}`, `${list[1].destination}`, `${list[2].destination}`, `${list[3].destination}`, `${list[4].destination}`],
+                        labels: [`${list_quantityByDestination[0].destination}`, `${list_quantityByDestination[1].destination}`, `${list_quantityByDestination[2].destination}`, `${list_quantityByDestination[3].destination}`, `${list_quantityByDestination[4].destination}`],
                         datasets: [{
                             label: 'Item consumption',
-                            data: [`${list[0].quantity}`, `${list[1].quantity}`, `${list[2].quantity}`, `${list[3].quantity}`, `${list[4].quantity}`],
+                            data: [`${list_quantityByDestination[0].quantity}`, `${list_quantityByDestination[1].quantity}`, `${list_quantityByDestination[2].quantity}`, `${list_quantityByDestination[3].quantity}`, `${list_quantityByDestination[4].quantity}`],
                             backgroundColor: [
                                 '#cc2424',
                                 '#0f7ca9',
                                 '#8df08c',
                                 '#ff623f',
                                 '#731077'
-                            ]
+                            ],
+                            borderColor: [
+                                '#980f0f',
+                                '#085a7b',
+                                '#45a044',
+                                '#de4725',
+                                '#450548'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true,
+                                },
+                                gridLines: {
+                                    display: false,
+                                    color: "#303641c9"
+                                },
+                            }],
+
+                            xAxes: [{
+                                gridLines: {
+                                    display: false,
+                                    color: "#303641c9"
+                                },
+                                categoryPercentage: 0.9,
+                                barPercentage: 0.9
+                            }]
+                        }
+                    }
+                });
+
+                //---LINE CHART---
+                //MOST FREQUENTLY USED ITEMS
+                //This code will take the most delivered item from the database and then give data of what items have been delievered the most
+                let delivery_index=0;
+                for (let uniqueKey in fetchedData_delivery) {
+                    let quantity_delivered = fetchedData_delivery[uniqueKey]['quantity'];
+                    let item_delivered = fetchedData_delivery[uniqueKey]['itemName'];
+
+                    //save the quantity and item name into two arrays
+                    quantity_deliveryDatabase[delivery_index] = quantity_delivered;
+                    itemName_deliveryDatabase[delivery_index] = item_delivered;
+                    delivery_index++;
+                }
+                //SORTING array in decending order
+
+                //finding out the destinations with the most quantities
+                //sorting the quantities keeping the destination recorded
+
+                //1) combine the arrays:
+                var list_quantityByDelivery = [];
+                for (var j = 0; j < quantity_by_destination_array.length ; j++) 
+                    list_quantityByDelivery.push({'quantity': quantity_deliveryDatabase[j], 'itemName': itemName_deliveryDatabase[j]});
+
+                //2) sort:
+                list_quantityByDelivery.sort(function(a, b) {
+                    return ((a.quantity > b.quantity) ? -1 : ((a.quantity == b.quantity) ? 0 : 1));
+                });
+                console.log(list_quantityByDelivery);
+
+                //LINE CHART CODE FROM CHART.JS
+                var ctxy = document.getElementById('LineChart').getContext('2d');
+                var myCharts = new Chart(ctxy, {
+                    type: 'line',
+                    data: {
+                        labels: [`${list_quantityByDelivery[0].itemName}`, `${list_quantityByDelivery[1].itemName}`, `${list_quantityByDelivery[2].itemName}`, `${list_quantityByDelivery[3].itemName}`, `${list_quantityByDelivery[4].itemName}`],
+                        datasets: [{
+                            label: 'Frequently used items',
+                            fillColor:'blue',
+                            data: [`${list_quantityByDelivery[0].quantity}`, `${list_quantityByDelivery[1].quantity}`, `${list_quantityByDelivery[2].quantity}`, `${list_quantityByDelivery[3].quantity}`, `${list_quantityByDelivery[4].quantity}`],
+                            backgroundColor: '#5af5e5bd',
+                            // borderColor: '#0f7ca9',
+                            pointBackgroundColor: [
+                                '#cc2424',
+                                '#0f7ca9',
+                                '#8df08c',
+                                '#ff623f',
+                                '#731077'
+                            ],
+                            // pointBorderColor: ''
                         }]
                     },
                     options: {
