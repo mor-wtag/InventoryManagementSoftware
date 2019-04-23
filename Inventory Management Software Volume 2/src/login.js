@@ -44,7 +44,6 @@ $('input[type="submit"]').click(function () {
         });
     });
 
-
     // get all elements
     const txtemail = $('#UserName_ID');
     const txtpassword = $('#Password_ID');
@@ -71,11 +70,64 @@ $('input[type="submit"]').click(function () {
 
             Error_String = err.code.substr(5);
             alert('Incorrect Username/Password' + ' | Error Code: ' +  Error_String);
+            window.location.reload();
+            return false;
 
         });
 
     });
 });
+
+//SIGN UP PAGE
+//On clicking Sign up button, display the signup bar and 
+$("#newAccountBtn").click(function(){
+
+    $('#login_wrapper').css('display','none');
+    $('#signUp_wrapper').css('display','inline-block');
+
+    //on submitting sign up form
+    //clicking the Sign up button
+
+    $("#signUpbtn").click(function(){
+
+        //take values of the input fields
+        let signup_userID = $("#signup_user").val();
+        let signup_password = $("#signup_password").val();
+        let signup_identification_key = $("#signup_identification_key").val();
+        
+        const auth = firebase.auth();
+
+        console.log("signup_userID: "+signup_userID);
+        console.log("signup_password: "+signup_password);
+        console.log("signup_identification_key: "+signup_identification_key);
+
+        //IMPORTANT
+        //if a new user wants to sign in, they have to know the identification Key. Identification key is hardcoded for now
+        let identificationKey = 'REM123';
+
+        //check if identification key is the same as the user entered
+        if (signup_identification_key == identificationKey){
+            
+
+            let signup_promise = firebase.auth().createUserWithEmailAndPassword(signup_userID, signup_password).catch(function(error) {
+                // Handle Errors here.
+                console.log(error.code);
+                console.log(error.message);
+              });
+              signup_promise.then(function(user){
+                console.log(user);
+                alert("User Aunthication Varified! New account created.");
+                window.location.reload();
+                return false;
+              });
+        }
+        else{
+            alert("Sign up credentials not varified! Please check if the Identification Key is correct");
+        }
+    });
+});
+
+
 
 // promise.then(function(){
 

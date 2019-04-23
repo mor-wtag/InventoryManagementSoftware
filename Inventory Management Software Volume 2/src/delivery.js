@@ -335,22 +335,27 @@ $(document).ready(function () {
 
                         if (itemCode_fetched == itemCode) {
 
-                            //THIS MEANS ITEM EXISTS IN DATABASE SO JUST INCREMENT IT BY QUANTITY
-                            let newQuantity = parseInt(existingQuantity) - parseInt(quantity);
+                            if ( parseInt(existingQuantity)>0 && parseInt(existingQuantity)>=parseInt(quantity)){
 
-                            console.log("New Updated Quantity: " + newQuantity);
+                                //THIS MEANS ITEM EXISTS IN DATABASE SO JUST INCREMENT IT BY QUANTITY
+                                let newQuantity = parseInt(existingQuantity) - parseInt(quantity);
 
-                            let data = {
-                                'quantity': newQuantity
+                                console.log("New Updated Quantity: " + newQuantity);
+
+                                let data = {
+                                    'quantity': newQuantity
+                                }
+
+                                itemfound = true;
+
+                                let updating_inventory = database.ref('databases/InventoryDatabase/' + uniqueKey).update(data).then(function () {
+
+                                    //push item in the delivery log database
+                                    let update_delivery_log = database.ref('databases/delivery_log').push(update_data_delivery_log).then(function () {
+                                        alert("Item delivered successfully!");
+                                    });
+                                });
                             }
-
-                            itemfound = true;
-
-                            let updating_inventory = database.ref('databases/InventoryDatabase/' + uniqueKey).update(data).then(function () {
-
-                                //push item in the delivery log database
-                                let update_delivery_log = database.ref('databases/delivery_log').push(update_data_delivery_log);
-                            });
                         }      
                     }
 
