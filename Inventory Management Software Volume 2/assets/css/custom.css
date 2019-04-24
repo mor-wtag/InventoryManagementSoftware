@@ -127,8 +127,9 @@ tr:nth-child(even) {
 /* changing color for buttons */
 .btn-dark{
     width: 30%;
-    background-color:#343a40;
+    background-color:#3478f59c;
     color:white;
+    font-weight: bold;
 }
 
 .btn-dark:hover{
@@ -147,14 +148,18 @@ tr:nth-child(even) {
 #search_entryLog, #search_delivery{
     float: right;
     width: 15%;
+    border: 1px solid #3478f59c;
 }
 
 #search_inventory{
     width: 30%;
     float: right;
+    border: 1px solid #3478f59c;
 }
 
-
+#txtDateRange{
+    border: 1px solid #3478f59c;
+}
 #dateRange_form {
     width: 16%;
     float: right;
@@ -270,7 +275,7 @@ label + .inputField {margin-top:0.2857rem;}
 }
 /* changing index tables css */
 .table-bordered > tfoot > tr > th, .table-bordered > tfoot > tr > td {
-    background: #303641;
+    background: #3478f59c;
     border-bottom-width: 0px;
     color: #ffffff;
     border-bottom: 0 !important;
@@ -280,7 +285,7 @@ label + .inputField {margin-top:0.2857rem;}
 }
 
 .table-bordered > thead > tr > th, .table-bordered > thead > tr > td {
-    background: #303641;
+    background: #3478f59c;
     /* border-bottom-width: 0px; */
     color: #ffffff;
     border-bottom: 0 !important;
