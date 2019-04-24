@@ -274,6 +274,8 @@ $(document).ready(function () {
 
             $("#form_delivery" + itemAdded_index).submit(function (config) {
 
+                let itemfound = "itemfound"+itemAdded_index; //creating a dynamic boolean 
+
                 let submitButtonClicked = "#form_delivery" + itemAdded_index; //to know which form is the current form
 
                 //take value of the item code and item name to compare later
@@ -878,9 +880,9 @@ $(document).ready(function () {
 
         //EXPORT TABLE TO EXCEL FILE
 
-        $("#exportToExcel_delivery").click(function(){
+        $("#exportToExcel_deliveryLog").click(function(){
 
-            $("#exportToExcel_delivery").css('color','white');
+            $("#exportToExcel_deliveryLog").css('color','white');
 
             //creating a workbook from the table
             var wb = XLSX.utils.table_to_book(document.getElementById('deliveryLog_table'), {sheet:"Sheet JS"});
@@ -909,33 +911,33 @@ $(document).ready(function () {
       });
     });
 
-//---LOGOUT---
-$("#logoutBtn").click(function(){
+    //---LOGOUT---
+    $("#logoutBtn").click(function(){
 
-    //ask if sure they want to sign out
+        //ask if sure they want to sign out
+        
+        let signOut = confirm("Are you sure you want to sign out?");
+
+        if (signOut == true){
+
+            //user clicked ok
+
+            firebase.auth().signOut().then(function() {
+                // Sign-out successful.
+                //send back to the login page
+                window.location.href = "./login.html";
+
+            }).catch(function(error) {
+            // An error happened.
+            alert("error.code");
+            });
+        }
+        else{
+            //user clicked cancel
+            //stay in the same page
+            return false;
+        }
     
-    let signOut = confirm("Are you sure you want to sign out?");
-
-    if (signOut == true){
-
-        //user clicked ok
-
-        firebase.auth().signOut().then(function() {
-            // Sign-out successful.
-            //send back to the login page
-            window.location.href = "./login.html";
-
-        }).catch(function(error) {
-          // An error happened.
-          alert("error.code");
-        });
-    }
-    else{
-        //user clicked cancel
-        //stay in the same page
-        return false;
-    }
-    
-});   
+    });   
 });
 

@@ -63,47 +63,66 @@ function initialLoad() {
         //SORTING THE ARRAYS USING JS BUILT IN FUNCTION
 
         // Sort the numbers in the Quantity array in ascending order
-        let decending_sorted_array = quantity_Array.slice();
-        decending_sorted_array.sort((a, b) => b - a)
 
-        // Reversing the array to get the descending order quantities
-        let ascending_sorted_array = decending_sorted_array.slice();
-        ascending_sorted_array.reverse();
+        //SORTING ARRAYS
+        //finding out the destinations with the most quantities
+        //sorting the quantities keeping the destination recorded
+
+        //1) combine the arrays:
+        let list_decending_sorted = [];
+        for (var j = 0; j < uniqueKey_Array.length; j++)
+            list_decending_sorted.push({'quantity': quantity_Array[j], 'uniqueKey': uniqueKey_Array[j]});
+
+        //2) sort:
+        list_decending_sorted.sort(function (a, b) {
+            return ((a.quantity > b.quantity) ? -1 : ((a.quantity == b.quantity) ? 0 : 1));
+        });
 
         console.log('uniqueKey_Array: ' + uniqueKey_Array);
         console.log('quantity_Array: ' + quantity_Array);
-        console.log('decending_sorted_array: ' + decending_sorted_array);
-        console.log('ascending_sorted_array: ' + ascending_sorted_array);
+        console.log(list_decending_sorted);
+        console.log(list_decending_sorted[0].quantity);
+        // console.log('ascending_sorted_array: ' + ascending_sorted_array);
+
+        //FUNCTION TO APPEND ITEMS INTO THE TABLE
+        function appendItemsIntoTable(uniqueKey, database_table, tableToAppendData) {
+
+            console.log("Got into the function to append items into the table");
+            //loop through and parse the data then create TR in the table with this data
+            let itemCode = database_table[uniqueKey]['itemCode'];
+            let itemName = database_table[uniqueKey]['itemName'];
+            let uom = database_table[uniqueKey]['uom'];
+            let quantity = database_table[uniqueKey]['quantity'];
+
+            //append in the table that's not being displayed
+            // appending elements into the databaseTable
+            $(tableToAppendData).append(/*html*/`
+            <tr data-key="${uniqueKey}">
+                <td>
+                    ${itemCode}
+                </td>
+                <td>
+                    ${itemName}
+                </td>
+                <td>
+                    ${uom}
+                </td>
+                <td>
+                    ${quantity}
+                </td>
+            </tr>
+            `);
+        }
 
         //from the unique key array, reverse it and set each variable so that the fetched data from that unique key can be found
         for (let reversed_uniqueKey_index = uniqueKey_Array.length - 1; reversed_uniqueKey_index >= 0; reversed_uniqueKey_index--) {
 
             let reversed_uniqueKey = uniqueKey_Array[reversed_uniqueKey_index];
 
-            //loop through and parse the data then create TR in the table with this data
-            let itemCode = fetchedData[reversed_uniqueKey]['itemCode'];
-            let itemName = fetchedData[reversed_uniqueKey]['itemName'];
-            let uom = fetchedData[reversed_uniqueKey]['uom'];
-            let quantity = fetchedData[reversed_uniqueKey]['quantity'];
-
-            // appending elements into the databaseTable
-            $('#inventory_tableBody').append(/*html*/`
-                <tr data-key="${reversed_uniqueKey}">
-                    <td>
-                        ${itemCode}
-                    </td>
-                    <td>
-                        ${itemName}
-                    </td>
-                    <td>
-                        ${uom}
-                    </td>
-                    <td>
-                        ${quantity}
-                    </td>
-                </tr>
-            `);
+            //Calling the function to append the items into the table in the reversed order, providing uniquekey, database table and table body
+            appendItemsIntoTable(reversed_uniqueKey, fetchedData, inventory_tableBody);
         }
+
 
         //EXPORT TO EXCEL
 
@@ -126,96 +145,40 @@ function initialLoad() {
             saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), 'inventoryTable.xlsx');
         });
 
-        //---- EVENT LISTENER FOR SORTING---- 
-        //this code here is for sorting the quantity of items both in ascending and decending order by clicking on the icons beside the quantity
+        // ---- EVENT LISTENER FOR SORTING---- 
+        // this code here is for sorting the quantity of items both in ascending and decending order by clicking on the icons beside the quantity
 
-        //code for matching and appending the ASCENDING SORTED QUANTITY elements into the table 
+        // code for matching and appending the ASCENDING SORTED QUANTITY elements into the table 
 
-        $("#quantity_sort_asc").click(function () {
+        $("#quantity_sort_des").click(function () {
 
             $('#inventory_tableBody').empty();  //emptying the table so that sorted values can be appended
 
-            console.log('ascending_sorted_array: ' + ascending_sorted_array);
-
             //loop through the Ascending Order Array in order to match it with elements in the database
 
-            for (let asc_sorted_index = 0; asc_sorted_index < ascending_sorted_array.length; asc_sorted_index++) {
+            for (let asc_sorted_index = 0; asc_sorted_index < uniqueKey_Array.length; asc_sorted_index++) {
 
-                //loop through and parse the data then create TR in the table with this data
-                for (let uniqueKey in fetchedData) {
-                    let itemCode = fetchedData[uniqueKey]['itemCode'];
-                    let itemName = fetchedData[uniqueKey]['itemName'];
-                    let uom = fetchedData[uniqueKey]['uom'];
-                    let quantity = fetchedData[uniqueKey]['quantity'];
+                let key_to_be_passed = list_decending_sorted[asc_sorted_index].uniqueKey;
 
-                    if (quantity == ascending_sorted_array[asc_sorted_index]) {
-
-                        console.log(`Appending item: itemCode=${itemCode}, itemName= ${itemName}, uom= ${uom}, quantity=${quantity}`);
-                        console.log(`Quantity: ${quantity}`);
-
-                        $('#inventory_tableBody').append(/*html*/`
-                        <tr data-key="${uniqueKey}">
-                            <td>
-                                ${itemCode}
-                            </td>
-                            <td>
-                                ${itemName}
-                            </td>
-                            <td>
-                                ${uom}
-                            </td>
-                            <td>
-                                ${quantity}
-                            </td>
-                        </tr>
-                        `);
-                        break;
-                    }
-                }
+                appendItemsIntoTable(key_to_be_passed, fetchedData, inventory_tableBody);
             }
         });
 
         //code for matching and appending the DECENDING SORTED QUANTITY elements into the table 
 
-        $("#quantity_sort_des").click(function () {
+        $("#quantity_sort_asc").click(function () {
 
-            console.log("Fot inside the decending order sorting function");
+            console.log("Got inside the decending order sorting function");
 
             $('#inventory_tableBody').empty();  //emptying the table so that sorted values can be appended
 
-            console.log('decending_sorted_array: ' + decending_sorted_array);
-
             //loop through the Ascending Order Array in order to match it with elements in the database
 
-            for (let dec_sorted_index = 0; dec_sorted_index < decending_sorted_array.length; dec_sorted_index++) {
+            for (let dec_sorted_index = uniqueKey_Array.length-1; dec_sorted_index>=0; dec_sorted_index--) {
 
-                //loop through and parse the data then create TR in the table with this data
-                for (let uniqueKey in fetchedData) {
-                    let itemCode = fetchedData[uniqueKey]['itemCode'];
-                    let itemName = fetchedData[uniqueKey]['itemName'];
-                    let uom = fetchedData[uniqueKey]['uom'];
-                    let quantity = fetchedData[uniqueKey]['quantity'];
+                let key_to_be_passed = list_decending_sorted[dec_sorted_index].uniqueKey;
 
-                    if (quantity == decending_sorted_array[dec_sorted_index]) {
-                        $('#inventory_tableBody').append(/*html*/`
-                        <tr data-key="${uniqueKey}">
-                            <td>
-                                ${itemCode}
-                            </td>
-                            <td>
-                                ${itemName}
-                            </td>
-                            <td>
-                                ${uom}
-                            </td>
-                            <td>
-                                ${quantity}
-                            </td>
-                        </tr>
-                    `);
-                        break;
-                    }
-                }
+                appendItemsIntoTable(key_to_be_passed, fetchedData, inventory_tableBody);
             }
 
         });
@@ -242,17 +205,10 @@ function initialLoad() {
 
                 let reversed_uniqueKey = uniqueKey_Array[reversed_uniqueKey_index];
 
-
-                //loop through and parse the data then create TR in the table with this data
-                let itemCode = fetchedData[reversed_uniqueKey]['itemCode'];
                 let itemName = fetchedData[reversed_uniqueKey]['itemName'];
-                let uom = fetchedData[reversed_uniqueKey]['uom'];
-                let quantity = fetchedData[reversed_uniqueKey]['quantity'];
 
                 let string_itemName_filtered = itemName.toString();
-
                 let string_searched_itemName = search_inventory.toString().toLowerCase();
-
                 let string_itemName_filtered_lowercase = string_itemName_filtered.toLowerCase();// lowercase version of the filtered string item so that it can be compared
 
                 //look for partial/complete match of the item Name searched string and the item name found in database string
@@ -260,23 +216,9 @@ function initialLoad() {
                 if (string_itemName_filtered_lowercase.includes(string_searched_itemName)) {
 
                     console.log('Found the item code you were looking for: ' + string_itemName_filtered); //adding the item that's not converted to lowercase so that it can be used to get the correct information from the database
+                    
                     // appending elements into the databaseTable
-                    $('#inventory_tableBody').append(/*html*/`
-                <tr data-key="${reversed_uniqueKey}">
-                    <td>
-                        ${itemCode}
-                    </td>
-                    <td>
-                        ${itemName}
-                    </td>
-                    <td>
-                        ${uom}
-                    </td>
-                    <td>
-                        ${quantity}
-                    </td>
-                </tr>
-                `);
+                    appendItemsIntoTable(reversed_uniqueKey, fetchedData, inventory_tableBody);
                 }
             }
 
@@ -284,31 +226,31 @@ function initialLoad() {
     });
 
     //---LOGOUT---
-    $("#logoutBtn").click(function(){
+    $("#logoutBtn").click(function () {
 
         //ask if sure they want to sign out
-        
+
         let signOut = confirm("Are you sure you want to sign out?");
 
-        if (signOut == true){
+        if (signOut == true) {
 
             //user clicked ok
 
-            firebase.auth().signOut().then(function() {
+            firebase.auth().signOut().then(function () {
                 // Sign-out successful.
                 //send back to the login page
                 window.location.href = "./login.html";
 
-            }).catch(function(error) {
-              // An error happened.
-              alert("error.code");
+            }).catch(function (error) {
+                // An error happened.
+                alert("error.code");
             });
         }
-        else{
+        else {
             //user clicked cancel
             //stay in the same page
             return false;
         }
-        
+
     });
 }
