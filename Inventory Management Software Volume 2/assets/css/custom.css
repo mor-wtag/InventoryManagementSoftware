@@ -317,3 +317,13 @@ label + .inputField {margin-top:0.2857rem;}
 #signUpBar{
     top:32%;
 }
+
+#logoutBtn:hover{
+    cursor: pointer;
+    color: darkcyan;
+}
+
+#logoutBtn{
+    font-weight:bold;
+    color: darkslateblue;
+}
