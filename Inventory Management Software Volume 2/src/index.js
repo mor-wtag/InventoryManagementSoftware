@@ -44,7 +44,7 @@ firebase.auth().onAuthStateChanged(user => {
 
 function initialLoad() {
 
-    //FETCH DATA FROM THE DATABASE AND INITIALIZE EVERYTHING IN OUR PAGE
+    //FETCH DATA FROM THE DATABASE AND INITIALIZE EVERYTHING IN PAGE
 
     //READING FROM FIREBASE DATABASE
     database.ref('databases/InventoryDatabase').once('value').then(function (snapshot) {
@@ -136,6 +136,7 @@ function initialLoad() {
             $('#zero_quantity_data').attr('data-end', items_with_zero_quantity); //NOT WORKING
             //adding database value to the tile
             $("#zero_quantity_data").text(items_with_zero_quantity);
+
             //on clicking the tile, the dables below will become invisible, and the data table will become visible
             $('#zero_quantity_tile').click(function () {
 
@@ -378,5 +379,34 @@ function initialLoad() {
                 });
             });
         });
+    });
+
+    //---LOGOUT---
+    $("#logoutBtn").click(function(){
+
+        //ask if sure they want to sign out
+        
+        let signOut = confirm("Are you sure you want to sign out?");
+
+        if (signOut == true){
+
+            //user clicked ok
+
+            firebase.auth().signOut().then(function() {
+                // Sign-out successful.
+                //send back to the login page
+                window.location.href = "./login.html";
+
+            }).catch(function(error) {
+              // An error happened.
+              alert("error.code");
+            });
+        }
+        else{
+            //user clicked cancel
+            //stay in the same page
+            return false;
+        }
+        
     });
 }
