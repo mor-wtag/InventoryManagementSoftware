@@ -909,91 +909,33 @@ $(document).ready(function () {
       });
     });
 
+//---LOGOUT---
+$("#logoutBtn").click(function(){
 
-    //PUSHING DATA INTO THE DESTINATION DATABASE
-    //WILL BE RUN ONLY ONCE
+    //ask if sure they want to sign out
+    
+    let signOut = confirm("Are you sure you want to sign out?");
 
-//     let destination1= {
-//         'destination': 'Comilla GPC'
-//     }
+    if (signOut == true){
 
-//     let destination2= {
-//         'destination': 'Jassore GPC'
-//     }
+        //user clicked ok
 
-//     let destination3= {
-//         'destination': 'UK Warehouse'
-//     }
+        firebase.auth().signOut().then(function() {
+            // Sign-out successful.
+            //send back to the login page
+            window.location.href = "./login.html";
 
-//     let destination4= {
-//         'destination': 'Rajshahi Regional Office'
-//     }
-
-//     let destination5= {
-//         'destination': 'Gulshan GPC'
-//     }
-
-//     let update_Destination_database =  database.ref('databases/Destination_database').push(destination1);
-//     update_Destination_database =  database.ref('databases/Destination_database').push(destination2);
-//     update_Destination_database =  database.ref('databases/Destination_database').push(destination3);
-//     update_Destination_database =  database.ref('databases/Destination_database').push(destination4);
-//     update_Destination_database =  database.ref('databases/Destination_database').push(destination5);
-
-    // PUSHING DATA INTO THE DESTINATION DATABASE
-    //     WILL BE RUN ONLY ONCE
-
-//         let uom1= {
-//             'uom': 'feet'
-//         }
-
-//         let uom2= {
-//             'uom': 'meter'
-//         }
-
-//         let uom3= {
-//             'uom': 'pcs'
-//         }
-
-//         let uom4= {
-//             'uom': 'sq M'
-//         }
-
-//         let uom5= {
-//             'uom': 'job'
-//         }
-
-//         let uom6= {
-//             'uom': 'cu.M'
-//         }
-
-//         let uom7= {
-//             'uom': 'sets'
-//         }
-
-//         let uom8= {
-//             'uom': 'coil'
-//         }
-
-//         let uom9= {
-//             'uom': 'no.'
-//         }
-
-//         let uom10= {
-//             'uom': 'litre'
-//         }
-
-        
-
-//         let update_Destination_database =  database.ref('databases/uom_database').push(uom1);
-//         update_Destination_database =  database.ref('databases/uom_database').push(uom2);
-//         update_Destination_database =  database.ref('databases/uom_database').push(uom3);
-//         update_Destination_database =  database.ref('databases/uom_database').push(uom4);
-//         update_Destination_database =  database.ref('databases/uom_database').push(uom5);
-//         update_Destination_database =  database.ref('databases/uom_database').push(uom6);
-//         update_Destination_database =  database.ref('databases/uom_database').push(uom7);
-//         update_Destination_database =  database.ref('databases/uom_database').push(uom8);
-//         update_Destination_database =  database.ref('databases/uom_database').push(uom9);
-//         update_Destination_database =  database.ref('databases/uom_database').push(uom10);
-        
+        }).catch(function(error) {
+          // An error happened.
+          alert("error.code");
+        });
+    }
+    else{
+        //user clicked cancel
+        //stay in the same page
+        return false;
+    }
+    
+});   
 });
 

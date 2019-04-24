@@ -572,4 +572,33 @@ $(document).ready(function () {
     reader.readAsBinaryString(oFile);
     }
 
+    //---LOGOUT---
+    $("#logoutBtn").click(function(){
+
+        //ask if sure they want to sign out
+        
+        let signOut = confirm("Are you sure you want to sign out?");
+
+        if (signOut == true){
+
+            //user clicked ok
+
+            firebase.auth().signOut().then(function() {
+                // Sign-out successful.
+                //send back to the login page
+                window.location.href = "./login.html";
+
+            }).catch(function(error) {
+              // An error happened.
+              alert("error.code");
+            });
+        }
+        else{
+            //user clicked cancel
+            //stay in the same page
+            return false;
+        }
+        
+    });
+
 });
