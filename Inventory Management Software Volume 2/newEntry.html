@@ -31,7 +31,8 @@
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
-
+    <script src="assets\libraries\SheetJS\dist\xlsx.full.min.js"></script>
+    <script src="assets\libraries\FileSaver\dist\FileSaver.min.js"></script>
 
 
 </head>
@@ -96,15 +97,22 @@
 						</a>
 					</li>
 					<li class="has-sub">
+						<a href="delivery.html?#">
+							<i class="entypo-bag"></i>
+							<span class="title">Delivery</span>
+						</a>
+					</li>
+					<li class="has-sub">
 						<a href="entry_log.html">
 							<i class="entypo-newspaper"></i>
 							<span class="title">Entry Log</span>
 						</a>
 					</li>
+					
 					<li class="has-sub">
-						<a href="delivery.html?#">
-							<i class="entypo-bag"></i>
-							<span class="title">Delivery</span>
+						<a href="delivery_log.html">
+							<i class="entypo-newspaper"></i>
+							<span class="title">Delivery Log</span>
 						</a>
 					</li>
 				</ul>
@@ -146,7 +154,6 @@
 			<h3>Add a new item</h3>
 
 			<div class="col-md-12" id='newEntryForm_wrapper'>
-
 				<div class="row">
 
 					<div class="panel panel-primary" data-collapsed="0">
@@ -154,13 +161,6 @@
 						<div class="panel-heading">
 							<div class="panel-title">
 								Please fill out the form below to add a new item in the Inventory
-							</div>
-
-							<div class="panel-options">
-								<a href="#sample-modal" data-toggle="modal" data-target="#sample-modal-dialog-1" class="bg"><i class="entypo-cog"></i></a>
-								<a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
-								<a href="#" data-rel="reload"><i class="entypo-arrows-ccw"></i></a>
-								<a href="#" data-rel="close"><i class="entypo-cancel"></i></a>
 							</div>
 						</div>
 
@@ -1024,12 +1024,6 @@
 								<div class="panel-title">
 									Upload a BOQ instead
 								</div>
-								<div class="panel-options">
-									<a href="#sample-modal" data-toggle="modal" data-target="#sample-modal-dialog-1" class="bg"><i class="entypo-cog"></i></a>
-									<a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
-									<a href="#" data-rel="reload"><i class="entypo-arrows-ccw"></i></a>
-									<a href="#" data-rel="close"><i class="entypo-cancel"></i></a>
-								</div>
 							</div>
 							<div class='form_submit' id='form_boq'>
 								<div class="panel-body">
@@ -1044,60 +1038,77 @@
 						</div>
 					</div>
 				</div>
-
 			</div>
 
-		</div>
-	</div>
-	</div>
-
-	<!-- Old version of the software -->
-
-	<!-- <table class="table table-bordered">
-
-					<tbody>
-						<tr>
-							<td>Upload BOQ</td>
-							<td><input type="file" value="upload" class="fileButton" id="fileButton_BOQ" /></td>
+			<div class="col-md-12">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="col-md-4"><h3>Entry Log</h3></div>
+						<div class="active-cyan-3 active-cyan-4">
+							<input class="form-control search_field col-md-3" id="search_entryLog" type="text" placeholder="Search for Item" aria-label="Search">
+						</div>
+						<form class="col-md-3" id="dateRange_form">
+							<input type="text" id="txtDateRange" name="txtDateRange" class="form-control inputField shortInputField dateRangeField" placeholder="Select a date-range" data-from-field="txtDateFrom" data-to-field="txtDateTo"/>
+							<input type="hidden" id="txtDateFrom" value="" />
+							<input type="hidden" id="txtDateTo" value="" />
+							<i class="far fa-calendar-alt" id="dateRange_icon"></i>
+						</form>
+						<button type="button" class="btn btn-dark exportToExcel col-md-2" id="exportToExcel_entryLog">Export</button>
+					</div>
+				</div>
+				<br>
+	
+				<table class="table table-bordered datatable" id="entryLog_table">
+					<thead>
+						<tr class="odd gradeX">
+							<th>Item Code.</th>
+							<th>Item Description</th>
+							<th>UOM</th>
+							<th>Quantity</th>
+							<th>Unit Rate</th>
+							<th>Total Amount</th>
+							<th>Main Contract</th>
+							<th>Main Vendor</th>
+							<th>Novated Contract</th>
+							<th>Novated Vendor</th>
+							<th>PR No.</th>
+							<th>PO No.</th>
+							<th>Delivery challan</th>
+							<th>Issue Date</th>
+							<th>Entry logged by</th>
+							<th>Entry logged date</th>
 						</tr>
-
-						<tr>
-							<td>Upload PO</td>
-							<td><input type="file" value="upload" class="fileButton" id="fileButton_PO" /></td>							
-						</tr>
-
-						<tr>
-							<td>Upload Delivery Challan</td>
-							<td><input type="file" value="upload" class="fileButton" id="fileButton_DelChal" /></td>							
-						</tr>
-
-						<tr>
-							<td>Quality Assured?</td>
-							<td>
-								<div class='newEntry_fields' id='qualAssr'>
-								<div>Quality Assured?</div>
-								<input type="checkbox" name="QualAssrYes" value="QualAssrYes">Yes<br>
-								<input type="checkbox" name="QualAssrNo" value="QualAssrNo">No<br>
-								<input type="checkbox" name="QualAssrPar" value="QualAssrPar">Partial<br>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td></td>
-							<td>
-							<input type="submit" value="Submit" class='fileButton' style='margin-right:65%'>
-							</td>
-						</tr>
-
+					</thead>
+					<tbody id="entry_log_tableBody">
 					</tbody>
+					<tfoot>
+						<tr>
+							<th>Item Code.</th>
+							<th>Item Description</th>
+							<th>UOM</th>
+							<th>Quantity</th>
+							<th>Unit Rate</th>
+							<th>Total Amount</th>
+							<th>Main Contract</th>
+							<th>Main Vendor</th>
+							<th>Novated Contract</th>
+							<th>Novated Vendor</th>
+							<th>PR No.</th>
+							<th>PO No.</th>
+							<th>Delivery challan</th>
+							<th>Issue Date</th>
+							<th>Entry logged by</th>
+							<th>Entry logged date</th>
+						</tr>
+					</tfoot>
 				</table>
+				<br />
+
 			</div>
-			<div class="col-md-2 col-sm-2 clearfix"></div>
+
 		</div>
-
-		<br /> -->
-
-
+	</div>
+	</div>
 
 	<!-- Bottom scripts (common) -->
 	<script src="assets/js/gsap/TweenMax.min.js"></script>
@@ -1109,13 +1120,20 @@
 
 	<!-- Imported scripts on this page -->
 	<script src="assets/js/jquery.sparkline.min.js"></script>
+	<script src="assets/js/datatables/datatables.js"></script>
+	<script src="assets/js/select2/select2.min.js"></script>
 
 	<!-- JavaScripts initializations and stuff -->
 	<script src="assets/js/neon-custom.js"></script>
 
 
 	<!-- Demo Settings -->
+	<script src="assets/js/neon-demo.js"></script>
 	<script src="src/new_Entry.js"></script>
+	<!-- <script src="src/entry_log.js"></script> -->
+
+	<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+	<script src='http://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
 
 </body>
 

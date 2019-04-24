@@ -11,7 +11,7 @@
 
 	<link rel="icon" href="assets/images/favicon.ico">
 
-	<title>InventoryManagementSoftware|newEntry</title>
+	<title>InventoryManagementSoftware|Delivery Log</title>
 
 	<link rel="stylesheet" href="assets/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css">
 	<link rel="stylesheet" href="assets/css/font-icons/entypo/css/entypo.css">
@@ -30,8 +30,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
     <script src="assets\libraries\SheetJS\dist\xlsx.full.min.js"></script>
-	<script src="assets\libraries\FileSaver\dist\FileSaver.min.js"></script>
-	
+    <script src="assets\libraries\FileSaver\dist\FileSaver.min.js"></script>
 </head>
 
 <body class="page-body  page-fade" data-url="http://neon.dev">
@@ -99,14 +98,14 @@
 							<span class="title">Delivery</span>
 						</a>
 					</li>
-                    <li class="active opened active has-sub">
+                    <li class="has-sub">
 						<a href="entry_log.html">
 							<i class="entypo-newspaper"></i>
 							<span class="title">Entry Log</span>
 						</a>
 					</li>
 					
-					<li class="has-sub">
+					<li class="active opened active has-sub">
 						<a href="delivery_log.html">
 							<i class="entypo-newspaper"></i>
 							<span class="title">Delivery Log</span>
@@ -149,7 +148,7 @@
 			<hr />
 			<div class="row">
 				<div class="col-md-12">
-					<div class="col-md-4"><h3>Entry Log</h3></div>
+					<div class="col-md-4"><h3>Delivery Log</h3></div>
 					<div class="active-cyan-3 active-cyan-4">
 						<input class="form-control search_field col-md-3" id="search_entryLog" type="text" placeholder="Search for Item" aria-label="Search">
 					</div>
@@ -159,52 +158,36 @@
 						<input type="hidden" id="txtDateTo" value="" />
 						<i class="far fa-calendar-alt" id="dateRange_icon"></i>
 					</form>
-					<button type="button" class="btn btn-dark exportToExcel col-md-2" id="exportToExcel_entryLog">Export</button>
+					<button type="button" class="btn btn-dark exportToExcel col-md-2" id="exportToExcel_deliveryLog">Export</button>
 				</div>
 			</div>
 			<br>
 
-            <table class="table table-bordered datatable" id="entryLog_table">
+            <table class="table table-bordered datatable" id="deliveryLog_table">
                 <thead>
                     <tr class="odd gradeX">
-                        <th>Item Code.</th>
-                        <th>Item Description</th>
-                        <th>UOM</th>
-						<th>Quantity</th>
-						<th>Unit Rate</th>
-						<th>Total Amount</th>
-						<th>Main Contract</th>
-						<th>Main Vendor</th>
-						<th>Novated Contract</th>
-						<th>Novated Vendor</th>
-						<th>PR No.</th>
-						<th>PO No.</th>
-						<th>Delivery challan</th>
-						<th>Issue Date</th>
-						<th>Entry logged by</th>
-						<th>Entry logged date</th>
+                        <th>Item Code</th>
+                        <th>Item Name</th>
+                        <th>uom</th>
+                        <th>Quantity</th>
+                        <th>Destination</th>
+                        <th>Issue date</th>
+                        <th>User</th>
+                        <th>Logged date</th>
                     </tr>
                 </thead>
-                <tbody id="entry_log_tableBody">
+                <tbody id="delivery_log_tableBody">
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th>Item Code.</th>
-                        <th>Item Description</th>
-                        <th>UOM</th>
-						<th>Quantity</th>
-						<th>Unit Rate</th>
-						<th>Total Amount</th>
-						<th>Main Contract</th>
-						<th>Main Vendor</th>
-						<th>Novated Contract</th>
-						<th>Novated Vendor</th>
-						<th>PR No.</th>
-						<th>PO No.</th>
-						<th>Delivery challan</th>
-						<th>Issue Date</th>
-						<th>Entry logged by</th>
-						<th>Entry logged date</th>
+                        <th>Item Code</th>
+                        <th>Item Name</th>
+                        <th>uom</th>
+                        <th>Quantity</th>
+                        <th>Destination</th>
+                        <th>Issue date</th>
+                        <th>User</th>
+                        <th>Logged date</th>
                     </tr>
                 </tfoot>
             </table>
@@ -239,9 +222,7 @@
 
     <!-- Demo Settings -->
 	<script src="assets/js/neon-demo.js"></script>
-	<!-- <script src="src/entry_log.js"></script> -->
-
-	<script src="src/new_Entry.js"></script>
+	<script src="src/delivery.js"></script>
 
 	<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 	<script src='http://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
