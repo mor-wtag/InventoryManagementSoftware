@@ -12,7 +12,8 @@
 
   <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
 
-  <!-- <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-auth.js"></script> -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+	 crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 </head>
@@ -74,43 +75,49 @@
           </div>
 
           <div class='login_fields' id="signUpBar" >
-          <div class='login_fields__user' >
-            <div class='icon'>
-              <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/user_icon_copy.png'>
+            <div class='login_fields__user' >
+              <div class='icon'>
+                <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/user_icon_copy.png'>
+              </div>
+              <input placeholder='Email' type='text' id='signup_user'>
+              <div class='validation'>
+                <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/tick.png'>
+              </div>
+              </input>
             </div>
-            <input placeholder='Email' type='text' id='signup_user'>
-            <div class='validation'>
-              <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/tick.png'>
+            <div class='login_fields__password'>
+              <div class='icon' id="password_icon">
+                <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/lock_icon_copy.png'>
+              </div>
+              <input placeholder='Password' type='password' id="signup_password">
+              <div class='validation'>
+                <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/tick.png'>
+              </div>
             </div>
-            </input>
+            <div class='login_fields__password'>
+              <div class='icon'>
+                <i class="fas fa-key" id="key_icon"></i>
+              </div>
+              <input placeholder='IdentificationKey' type='password' id="signup_identification_key">
+              <div class='validation'>
+                <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/tick.png'>
+              </div>
+            </div>
+            <div class='login_fields__submit'>
+              <input type='button' value='signUp' id='signUpbtn'>
+              <div class='forgot'>
+              </div>
+            </div>
           </div>
-          <div class='login_fields__password'>
-            <div class='icon'>
-              <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/lock_icon_copy.png'>
-            </div>
-            <input placeholder='Password' type='password' id="signup_password">
-            <div class='validation'>
-              <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/tick.png'>
-            </div>
-            <input placeholder='IdentificationKey' type='password' id="signup_identification_key">
-            <div class='validation'>
-              <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/tick.png'>
-            </div>
+          <div class='success'>
+            <h2 id="Login_After_Title">Authentication Success</h2>
+            <p id="Login_After_Para">Welcome back. Redirecting to your profile..</p>
           </div>
-          <div class='login_fields__submit'>
-            <input type='button' value='signUp' id='signUpbtn'>
-            <div class='forgot'>
-            </div>
+          <div class='disclaimer'>
+            <p>&#169; All rights reserved. Work in progress by Ramisa</p>
           </div>
-        <div class='success'>
-          <h2 id="Login_After_Title">Authentication Success</h2>
-          <p id="Login_After_Para">Welcome back. Redirecting to your profile..</p>
-        </div>
-        <div class='disclaimer'>
-          <p>&#169; All rights reserved. Work in progress by Ramisa</p>
-        </div>
-        </div>
-        </div>
+          </div>
+          </div>
 
 
   <div class='authent'>
@@ -121,6 +128,7 @@
   <div class="load-4">
   <div class="ring-1"></div>
 
+<!-- <script src="src/database.js"></script> -->
 <script src="src/login.js"></script>
 </body>
 
