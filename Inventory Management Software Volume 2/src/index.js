@@ -1,10 +1,6 @@
 
 //this file will work with index.html
 
-// let items_with_zero_quantity = parseInt($('#zero_quantity_data').attr("data-end")); //first tile number
-// let items_with_lessThan5_quantity = parseInt($('#lessThan5_quantity_data').attr("data-end")); //second tile number
-
-
 function initialLoad() {
 
     //Initializing variables after loading page

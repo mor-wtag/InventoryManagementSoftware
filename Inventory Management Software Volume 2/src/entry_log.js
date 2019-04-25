@@ -149,8 +149,11 @@ function initialLoad(){
 
                 console.log("CLICKED DELETE ICON WITH UNIQUE KEY: "+reversed_uniqueKey);
 
+                let itemName = fetchedData_entryLog[reversed_uniqueKey]['itemName'];
+                let quantity = fetchedData_entryLog[reversed_uniqueKey]['quantity'];
+
                 //Alert and Ask the user to confirm if they want to delete the data from the table
-                let delete_row = confirm(`Are you sure you want to delete item ${itemName} with quantity ${quantity} issued on ${issueDate} for the table?`);
+                let delete_row = confirm(`Are you sure you want to delete item ${itemName} with quantity ${quantity} from the table?`);
 
                 //if the user clicks ok
                 if (delete_row== true){
@@ -226,13 +229,6 @@ function initialLoad(){
              //get item name from the input field
             let search_entryLog = $("#search_entryLog").val();
 
-             //loop through unique keys and create an array in order to view get all the unique keys
-            // let uniqueKeyArray_index=0;
-            // for (let uniqueKey in fetchedData){
-            //     uniqueKey_Array[uniqueKeyArray_index] =  uniqueKey;
-            //     uniqueKeyArray_index++;
-            // }
-
             console.log('uniqueKey_Array: '+uniqueKey_Array);
 
             //from the unique key array, reverse it and set each variable so that the fetched data from that unique key can be found
@@ -247,9 +243,7 @@ function initialLoad(){
 
                 //loop through and parse the data then create TR in the table with this data
                 let string_itemName_filtered = itemName.toString();
-
                 let string_searched_itemName = search_entryLog.toString().toLowerCase();
-
                 let string_itemName_filtered_lowercase = string_itemName_filtered.toLowerCase();// lowercase version of the filtered string item so that it can be compared
 
                 //look for partial/complete match of the item Name searched string and the item name found in database string
