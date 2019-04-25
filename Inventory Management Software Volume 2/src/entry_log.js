@@ -227,39 +227,23 @@ function initialLoad(){
             let search_entryLog = $("#search_entryLog").val();
 
              //loop through unique keys and create an array in order to view get all the unique keys
-            let uniqueKeyArray_index=0;
-            for (let uniqueKey in fetchedData){
-                uniqueKey_Array[uniqueKeyArray_index] =  uniqueKey;
-                uniqueKeyArray_index++;
-            }
+            // let uniqueKeyArray_index=0;
+            // for (let uniqueKey in fetchedData){
+            //     uniqueKey_Array[uniqueKeyArray_index] =  uniqueKey;
+            //     uniqueKeyArray_index++;
+            // }
 
             console.log('uniqueKey_Array: '+uniqueKey_Array);
 
             //from the unique key array, reverse it and set each variable so that the fetched data from that unique key can be found
 
             for (let reversed_uniqueKey_index=uniqueKey_Array.length-1; reversed_uniqueKey_index>=0; reversed_uniqueKey_index--){
+                
                 let reversed_uniqueKey = uniqueKey_Array[reversed_uniqueKey_index];
 
                 //reversing the key value in the database so that the last entry shows up first
-                let itemCode = fetchedData[reversed_uniqueKey]['itemCode'];
-                let itemName = fetchedData[reversed_uniqueKey]['itemName'];
-                let uom = fetchedData[reversed_uniqueKey]['uom'];
-                let quantity = fetchedData[reversed_uniqueKey]['quantity'];
-                let unitRate = fetchedData[reversed_uniqueKey]['unitRate'];
-                let totalAmount = fetchedData[reversed_uniqueKey]['totalAmount'];
-                let mainContract = fetchedData[reversed_uniqueKey]['mainContract'];
-                let mainVendor = fetchedData[reversed_uniqueKey]['mainVendor'];
-                let novatedContract = fetchedData[reversed_uniqueKey]['novatedContract'];
-                let novatedVendor = fetchedData[reversed_uniqueKey]['novatedVendor'];
-                let PRnum = fetchedData[reversed_uniqueKey]['PRnum'];
-                let POnum = fetchedData[reversed_uniqueKey]['POnum'];
-                let delChalNum = fetchedData[reversed_uniqueKey]['delChalNum'];
-                let issueDate = fetchedData[reversed_uniqueKey]['issueDate'];
-                let user_email = fetchedData[reversed_uniqueKey]['user_email'];
-                let current_date = fetchedData[reversed_uniqueKey]['current_date'];
-                let seconds = fetchedData[reversed_uniqueKey]['seconds'];
+                let itemName = fetchedData_entryLog[reversed_uniqueKey]['itemName'];
 
-                let user_name = user_email.split("@"); //split the array so that you can display the name before the @ domain
 
                 //loop through and parse the data then create TR in the table with this data
                 let string_itemName_filtered = itemName.toString();
@@ -274,62 +258,12 @@ function initialLoad(){
 
                     console.log('Found the item code you were looking for: '+ string_itemName_filtered); //adding the item that's not converted to lowercase so that it can be used to get the correct information from the database
 
-                    // appending elements into the databaseTable
-                    $('#entry_log_tableBody').append(/*html*/`
-                        <tr data-key="${reversed_uniqueKey}">
-                            <td>
-                                ${itemCode}
-                            </td>
-                            <td>
-                                ${itemName}
-                            </td>
-                            <td>
-                                ${uom}
-                            </td>
-                            <td>
-                                ${quantity}
-                            </td>
-                            <td>
-                                ${unitRate}
-                            </td>
-                            <td>
-                                ${totalAmount}
-                            </td>
-                            <td>
-                                ${mainContract}
-                            </td>
-                            <td>
-                                ${mainVendor}
-                            </td>
-                            <td>
-                                ${novatedContract}
-                            </td>
-                            <td>
-                                ${novatedVendor}
-                            </td>
-                            <td>
-                                ${PRnum}
-                            </td>
-                            <td>
-                                ${POnum}
-                            </td>
-                            <td>
-                                ${delChalNum}
-                            </td>
-                            <td>
-                                ${issueDate}
-                            </td>
-                            <td>
-                                ${user_name[0]}
-                            </td>
-                            <td>
-                                ${current_date}
-                            </td>
-                        </tr>
-                    `);
-                }
+                    let tableToAppendData = $("#entry_log_tableBody");
+                    let fetchedData = fetchedData_entryLog;
 
-    
+                    //calling function to append each item into the table
+                    appendItemsIntoTable(reversed_uniqueKey, fetchedData, tableToAppendData);
+                }
             }
         });
 
@@ -496,87 +430,19 @@ function initialLoad(){
 
                 //Now take the dates and search for them in the datebase
                 //search in database
-                for (let uniqueKey in fetchedData){
+                for (let uniqueKey in fetchedData_entryLog){
                     
-                    let issueDate = fetchedData[uniqueKey]['issueDate'];
+                    let issueDate = fetchedData_entryLog[uniqueKey]['issueDate'];
 
                     if (issueDate==finalDate){
                         console.log("Date matched!! "+issueDate);
 
-                        //reversing the key value in the database so that the last entry shows up first
-                        let itemCode = fetchedData[uniqueKey]['itemCode'];
-                        let itemName = fetchedData[uniqueKey]['itemName'];
-                        let uom = fetchedData[uniqueKey]['uom'];
-                        let quantity = fetchedData[uniqueKey]['quantity'];
-                        let unitRate = fetchedData[uniqueKey]['unitRate'];
-                        let totalAmount = fetchedData[uniqueKey]['totalAmount'];
-                        let mainContract = fetchedData[uniqueKey]['mainContract'];
-                        let mainVendor = fetchedData[uniqueKey]['mainVendor'];
-                        let novatedContract = fetchedData[uniqueKey]['novatedContract'];
-                        let novatedVendor = fetchedData[uniqueKey]['novatedVendor'];
-                        let PRnum = fetchedData[uniqueKey]['PRnum'];
-                        let POnum = fetchedData[uniqueKey]['POnum'];
-                        let delChalNum = fetchedData[uniqueKey]['delChalNum'];
-                        let user_email = fetchedData[uniqueKey]['user_email'];
-                        let current_date = fetchedData[uniqueKey]['current_date'];
+                        let tableToAppendData = $("#entry_log_tableBody");
+                        let fetchedData = fetchedData_entryLog;
 
+                        //calling function to append each item into the table
+                        appendItemsIntoTable(uniqueKey, fetchedData, tableToAppendData);
 
-                        let user_name = user_email.split("@"); //split the array so that you can display the name before the @ domain
-
-
-                        // appending elements into the databaseTable
-                        $('#entry_log_tableBody').append(/*html*/`
-                        <tr data-key="${uniqueKey}">
-                            <td>
-                                ${itemCode}
-                            </td>
-                            <td>
-                                ${itemName}
-                            </td>
-                            <td>
-                                ${uom}
-                            </td>
-                            <td>
-                                ${quantity}
-                            </td>
-                            <td>
-                                ${unitRate}
-                            </td>
-                            <td>
-                                ${totalAmount}
-                            </td>
-                            <td>
-                                ${mainContract}
-                            </td>
-                            <td>
-                                ${mainVendor}
-                            </td>
-                            <td>
-                                ${novatedContract}
-                            </td>
-                            <td>
-                                ${novatedVendor}
-                            </td>
-                            <td>
-                                ${PRnum}
-                            </td>
-                            <td>
-                                ${POnum}
-                            </td>
-                            <td>
-                                ${delChalNum}
-                            </td>
-                            <td>
-                                ${issueDate}
-                            </td>
-                            <td>
-                                ${user_name[0]}
-                            </td>
-                            <td>
-                                ${current_date}
-                            </td>
-                        </tr>
-                    `);
                     }
                 }
 
