@@ -1,38 +1,12 @@
 //this file will work with entry_log.html
 
 
-// Initialize Firebase
-let config = {
-    apiKey: "AIzaSyAPITJ_b82lngDCMBkqOP4sf28fogy_QMc",
-    authDomain: "inventorymanagementsoftware-gp.firebaseapp.com",
-    databaseURL: "https://inventorymanagementsoftware-gp.firebaseio.com/",
-    projectId: "inventorymanagementsoftware-gp",
-    storageBucket: "inventorymanagementsoftware-gp.appspot.com",
-    messagingSenderId: "451262431109"
-};
-
-let initialize = firebase.initializeApp(config);
-let database = firebase.database();
-let today;
-
-let uniqueKey_Array=[];
-
-// RealTime listener
-//this checks to see if user is logged in 
-firebase.auth().onAuthStateChanged(user => {
-    if (user) {
-        //User is logged in, fetch the database using UID and populate everything
-        console.log("Already Signed in...");
-        initialLoad();
-    }
-    else {
-        //user is not logged in, send him to login page
-        console.log('Not logged in...');
-        window.location.href= "./login.html";
-    }
-});
-
 function initialLoad(){
+
+    //initialize variables after loading page
+
+    let today;
+    let uniqueKey_Array=[];
 
     get_currentDate();
 

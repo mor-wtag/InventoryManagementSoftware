@@ -1,40 +1,12 @@
 //this file will work with inventory.html
 
-
-// Initialize Firebase
-let config = {
-    apiKey: "AIzaSyAPITJ_b82lngDCMBkqOP4sf28fogy_QMc",
-    authDomain: "inventorymanagementsoftware-gp.firebaseapp.com",
-    databaseURL: "https://inventorymanagementsoftware-gp.firebaseio.com/",
-    projectId: "inventorymanagementsoftware-gp",
-    storageBucket: "inventorymanagementsoftware-gp.appspot.com",
-    messagingSenderId: "451262431109"
-};
-
-let initialize = firebase.initializeApp(config);
-let database = firebase.database();
-
-let uniqueKey_Array = [];
-let quantity_Array = [];
-
-let inventoryTablePopulated = false;
-
-// RealTime listener
-//this checks to see if user is logged in 
-firebase.auth().onAuthStateChanged(user => {
-    if (user) {
-        //User is logged in, fetch the database using UID and populate everything
-        console.log("Already Signed in...");
-        initialLoad();
-    }
-    else {
-        //user is not logged in, send him to login page
-        console.log('Not logged in...');
-        window.location.href = "./login.html";
-    }
-});
-
 function initialLoad() {
+
+    //Initializing variables after loading page
+    let uniqueKey_Array = [];
+    let quantity_Array = [];
+
+    let inventoryTablePopulated = false;
 
     //searching realtime database
     //checking to see if the item code is present in the database already
@@ -60,8 +32,6 @@ function initialLoad() {
             uniqueKeyArray_index++;
         }
 
-        //SORTING THE ARRAYS USING JS BUILT IN FUNCTION
-
         // Sort the numbers in the Quantity array in ascending order
 
         //SORTING ARRAYS
@@ -80,9 +50,6 @@ function initialLoad() {
 
         console.log('uniqueKey_Array: ' + uniqueKey_Array);
         console.log('quantity_Array: ' + quantity_Array);
-        console.log(list_decending_sorted);
-        console.log(list_decending_sorted[0].quantity);
-        // console.log('ascending_sorted_array: ' + ascending_sorted_array);
 
         //FUNCTION TO APPEND ITEMS INTO THE TABLE
         function appendItemsIntoTable(uniqueKey, database_table, tableToAppendData) {
@@ -122,7 +89,6 @@ function initialLoad() {
             //Calling the function to append the items into the table in the reversed order, providing uniquekey, database table and table body
             appendItemsIntoTable(reversed_uniqueKey, fetchedData, inventory_tableBody);
         }
-
 
         //EXPORT TO EXCEL
 

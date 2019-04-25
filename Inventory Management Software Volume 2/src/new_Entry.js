@@ -1,55 +1,24 @@
-//this file is to work with the Login.html PAGE portion of authentication
+//this file is to work with the newEntry.html PAGE portion of authentication
 
+function initialLoad() {
 
-console.log("Initiallizing Firebase...");
+    //initialize variables on page loading
 
-// Initialize Firebase
-let config = {
-    apiKey: "AIzaSyAPITJ_b82lngDCMBkqOP4sf28fogy_QMc",
-    authDomain: "inventorymanagementsoftware-gp.firebaseapp.com",
-    databaseURL: "https://inventorymanagementsoftware-gp.firebaseio.com/",
-    projectId: "inventorymanagementsoftware-gp",
-    storageBucket: "inventorymanagementsoftware-gp.appspot.com",
-    messagingSenderId: "451262431109"
-};
+    let user_email;
+    let today;
+    let seconds;
+    let totalAmount;
+    let itemfound=false;
+    let item_uploaded=false;
+    let getting_selected_item_boolean=false;
 
-let initialize = firebase.initializeApp(config);
-let database = firebase.database();
+    let uniqueKey_Array=[];
 
-let user_email;
-let today;
-let seconds;
-let totalAmount;
-let itemfound=false;
-let item_uploaded=false;
-let getting_selected_item_boolean=false;
+    console.log('itemfound: '+itemfound);
 
-let uniqueKey_Array=[];
-
-console.log('itemfound: '+itemfound);
-
-// RealTime listener
-//this checks to see if user is logged in 
-firebase.auth().onAuthStateChanged(user => {
-    if (user) {
-        //User is logged in, redirect to profile page
-        console.log("Already Signed in...");
-        user_email = user.email;
-        console.log("user_email: "+user_email);
-        console.log("user: "+user.uid);
-    }
-    else {
-        //user is not logged in, do nothing
-        console.log('Not logged in...');
-        window.location.href= "./login.html";
-    }
-});
-
-const dbRefObject = firebase.database().ref().child('databases'); //children of database object
-const dbRefElement = dbRefObject.child('new_Entry'); //children of database object
-const dbRefInventory =  dbRefObject.child('Inventorydatabase'); //children of database object
-
-$(document).ready(function () {
+    const dbRefObject = firebase.database().ref().child('databases'); //children of database object
+    const dbRefElement = dbRefObject.child('new_Entry'); //children of database object
+    const dbRefInventory =  dbRefObject.child('Inventorydatabase'); //children of database object
 
     get_currentDate();
 
@@ -1116,4 +1085,4 @@ $(document).ready(function () {
         });
     });
 
-});
+}

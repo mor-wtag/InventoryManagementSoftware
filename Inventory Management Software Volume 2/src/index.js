@@ -1,48 +1,22 @@
 
 //this file will work with index.html
 
-// Initialize Firebase
-let config = {
-    apiKey: "AIzaSyAPITJ_b82lngDCMBkqOP4sf28fogy_QMc",
-    authDomain: "inventorymanagementsoftware-gp.firebaseapp.com",
-    databaseURL: "https://inventorymanagementsoftware-gp.firebaseio.com/",
-    projectId: "inventorymanagementsoftware-gp",
-    storageBucket: "inventorymanagementsoftware-gp.appspot.com",
-    messagingSenderId: "451262431109"
-};
-
-let initialize = firebase.initializeApp(config);
-let database = firebase.database();
-
 // let items_with_zero_quantity = parseInt($('#zero_quantity_data').attr("data-end")); //first tile number
 // let items_with_lessThan5_quantity = parseInt($('#lessThan5_quantity_data').attr("data-end")); //second tile number
 
-let items_with_zero_quantity = 0;
-let items_with_lessThan5_quantity = 0;
-let total_quantity = 0;
-let total_quantity_delivered = 0;
-let quantity_by_destination_array=[];
-let destination_array = [];
-let quantity_deliveryDatabase = [];
-let itemName_deliveryDatabase = [];
-let decending_sorted_array =[];
-
-// RealTime listener
-//this checks to see if user is logged in 
-firebase.auth().onAuthStateChanged(user => {
-    if (user) {
-        //User is logged in, fetch the database using UID and populate everything
-        console.log("Already Signed in...");
-        initialLoad();
-    }
-    else {
-        //user is not logged in, send him to login page
-        console.log('Not logged in...');
-        window.location.href = "./login.html";
-    }
-});
 
 function initialLoad() {
+
+    //Initializing variables after loading page
+
+    let items_with_zero_quantity = 0;
+    let items_with_lessThan5_quantity = 0;
+    let total_quantity = 0;
+    let total_quantity_delivered = 0;
+    let quantity_by_destination_array=[];
+    let destination_array = [];
+    let quantity_deliveryDatabase = [];
+    let itemName_deliveryDatabase = [];
 
     //FETCH DATA FROM THE DATABASE AND INITIALIZE EVERYTHING IN PAGE
 
