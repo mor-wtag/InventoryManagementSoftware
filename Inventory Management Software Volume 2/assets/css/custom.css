@@ -332,3 +332,11 @@ label + .inputField {margin-top:0.2857rem;}
     font-weight:bold;
     color: darkslateblue;
 }
+
+#password_icon{
+    top:35%;
+}
+
+#key_icon{
+    color: #afb1be;
+}
