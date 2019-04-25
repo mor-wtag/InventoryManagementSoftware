@@ -496,7 +496,7 @@ function initialLoad(){
 
         //from the unique key array, reverse it and set each variable so that the fetched data from that unique key can be found
 
-        for (let reversed_uniqueKey_index = uniqueKey_Array.length - 1; reversed_uniqueKey_index >= 0; reversed_uniqueKey_index--) {
+        for (let reversed_uniqueKey_index = uniqueKey_Array.length - 1; reversed_uniqueKey_index >= uniqueKey_Array.length-10; reversed_uniqueKey_index--) {
             let reversed_uniqueKey = uniqueKey_Array[reversed_uniqueKey_index];
 
             //loop through and parse the data then create TR in the table with this data

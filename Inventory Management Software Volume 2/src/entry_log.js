@@ -36,52 +36,45 @@ function initialLoad(){
     //READING FROM FIREBASE DATABASE
     database.ref('databases/entry_log').once('value').then(function(snapshot){
 
-        let fetchedData = snapshot.val();
-        console.log(fetchedData);
+        let fetchedData_entryLog = snapshot.val();
 
         //Code in order to show the last entry first (LAST IN FIRST OUT)
 
         //loop through unique keys and create an array in order to view get all the unique keys
         let uniqueKeyArray_index=0;
-        for (let uniqueKey in fetchedData){
+        for (let uniqueKey in fetchedData_entryLog){
             uniqueKey_Array[uniqueKeyArray_index] =  uniqueKey;
             uniqueKeyArray_index++;
         }
 
         console.log('uniqueKey_Array: '+uniqueKey_Array);
 
-        //from the unique key array, reverse it and set each variable so that the fetched data from that unique key can be found
-
-        for (let reversed_uniqueKey_index=uniqueKey_Array.length-1; reversed_uniqueKey_index>=0; reversed_uniqueKey_index--){
-            let reversed_uniqueKey = uniqueKey_Array[reversed_uniqueKey_index];
-
-        //loop through and parse the data then create TR in the table with this data
-        // for (let uniqueKey in fetchedData){
+        //APPEND ITEMS TO TABLE FUNCTION
+        function appendItemsIntoTable(uniqueKey, fetchedData, tableToAppendData){
 
             //reversing the key value in the database so that the last entry shows up first
-            let itemCode = fetchedData[reversed_uniqueKey]['itemCode'];
-            let itemName = fetchedData[reversed_uniqueKey]['itemName'];
-            let uom = fetchedData[reversed_uniqueKey]['uom'];
-            let quantity = fetchedData[reversed_uniqueKey]['quantity'];
-            let unitRate = fetchedData[reversed_uniqueKey]['unitRate'];
-            let totalAmount = fetchedData[reversed_uniqueKey]['totalAmount'];
-            let mainContract = fetchedData[reversed_uniqueKey]['mainContract'];
-            let mainVendor = fetchedData[reversed_uniqueKey]['mainVendor'];
-            let novatedContract = fetchedData[reversed_uniqueKey]['novatedContract'];
-            let novatedVendor = fetchedData[reversed_uniqueKey]['novatedVendor'];
-            let PRnum = fetchedData[reversed_uniqueKey]['PRnum'];
-            let POnum = fetchedData[reversed_uniqueKey]['POnum'];
-            let delChalNum = fetchedData[reversed_uniqueKey]['delChalNum'];
-            let issueDate = fetchedData[reversed_uniqueKey]['issueDate'];
-            let user_email = fetchedData[reversed_uniqueKey]['user_email'];
-            let current_date = fetchedData[reversed_uniqueKey]['current_date'];
-            let seconds = fetchedData[reversed_uniqueKey]['seconds'];
+            let itemCode = fetchedData[uniqueKey]['itemCode'];
+            let itemName = fetchedData[uniqueKey]['itemName'];
+            let uom = fetchedData[uniqueKey]['uom'];
+            let quantity = fetchedData[uniqueKey]['quantity'];
+            let unitRate = fetchedData[uniqueKey]['unitRate'];
+            let totalAmount = fetchedData[uniqueKey]['totalAmount'];
+            let mainContract = fetchedData[uniqueKey]['mainContract'];
+            let mainVendor = fetchedData[uniqueKey]['mainVendor'];
+            let novatedContract = fetchedData[uniqueKey]['novatedContract'];
+            let novatedVendor = fetchedData[uniqueKey]['novatedVendor'];
+            let PRnum = fetchedData[uniqueKey]['PRnum'];
+            let POnum = fetchedData[uniqueKey]['POnum'];
+            let delChalNum = fetchedData[uniqueKey]['delChalNum'];
+            let issueDate = fetchedData[uniqueKey]['issueDate'];
+            let user_email = fetchedData[uniqueKey]['user_email'];
+            let current_date = fetchedData[uniqueKey]['current_date'];
 
             let user_name = user_email.split("@"); //split the array so that you can display the name before the @ domain
 
             // appending elements into the databaseTable
-            $('#entry_log_tableBody').append(/*html*/`
-                <tr data-key="${reversed_uniqueKey}">
+            tableToAppendData.append(/*html*/`
+                <tr data-key="${uniqueKey}">
                     <td>
                         ${itemCode}
                     </td>
@@ -130,11 +123,94 @@ function initialLoad(){
                     <td>
                         ${current_date}
                     </td>
+                    <td>
+                        <div class="icon" id="edit_data_icon_${uniqueKey}" style="display:inline-block; padding:5%;"><i class="fas fa-edit"></i></div>
+                        <div class="icon" id="delete_data_icon_${uniqueKey}" style="display:inline-block; padding:5%;"><i class="fas fa-trash-alt"></i></div>
+                    </td>
                 </tr>
             `);
         }
 
-         //----EVENT LISTENER FOR SEARCH FIELD IN INVENTORY----
+        //from the unique key array, reverse it and set each variable so that the fetched data from that unique key can be found
+
+        for (let reversed_uniqueKey_index=uniqueKey_Array.length-1; reversed_uniqueKey_index>=0; reversed_uniqueKey_index--){
+            
+            let reversed_uniqueKey = uniqueKey_Array[reversed_uniqueKey_index];
+            let tableToAppendData = $("#entry_log_tableBody");
+            let fetchedData = fetchedData_entryLog;
+
+            //calling function to append each item into the table
+            appendItemsIntoTable(reversed_uniqueKey, fetchedData, tableToAppendData);
+
+            //---EVENT LISTENER FOR CLICKING ON EDIT/ DELETE DATA ICON
+
+            //DELETE
+            $(`#delete_data_icon_${reversed_uniqueKey}`).click(function(){
+
+                console.log("CLICKED DELETE ICON WITH UNIQUE KEY: "+reversed_uniqueKey);
+
+                //Alert and Ask the user to confirm if they want to delete the data from the table
+                let delete_row = confirm(`Are you sure you want to delete item ${itemName} with quantity ${quantity} issued on ${issueDate} for the table?`);
+
+                //if the user clicks ok
+                if (delete_row== true){
+
+                    //remove bode with unique key from ENTRY_LOG Database
+                    database.ref('databases/entry_log/'+reversed_uniqueKey).remove().then(function(){
+
+                        //update inventory database
+                        //have to add the deleted item with the same quantity
+                        update_inventory_database(itemName, quantity);
+                    });
+                }
+                //if user clicks cancel
+                else{
+                    return false;
+                }
+            });
+
+            //function to update inventory
+            function update_inventory_database(itemName, quantity){
+
+                console.log("...Deleted row, now updating inventory...");
+                console.log("itemName: "+itemName);
+                console.log("quantity: "+quantity);
+
+                //fetch data from inventory database to get quantity of the item
+                database.ref('databases/InventoryDatabase').once('value').then(function(snapshot){
+
+                    let fetchedData_inventory = snapshot.val();
+
+                    for (let uniqueKey in fetchedData_inventory){
+
+                        let itemName_inventory = fetchedData_inventory[uniqueKey]['itemName'];
+                        let quantity_inventory = fetchedData_inventory[uniqueKey]['quantity'];
+
+                        //if item names match
+                        if (itemName_inventory == itemName){
+
+                            console.log("ITEM NAMES MATCHED!");
+
+                            //update quantity by subtracting back the added quantity
+                            let updatedQuantity = parseInt(quantity_inventory) - parseInt(quantity);
+                            
+                            let update_inventory=
+                            {
+                                'quantity': updatedQuantity
+                            }
+
+                            //now update inventory database
+                            database.ref('databases/InventoryDatabase/' + uniqueKey).update(update_inventory).then(function(){
+                                window.location.reload();
+                            });
+                        }
+                    }
+                });
+
+            }
+        }
+
+        //----EVENT LISTENER FOR SEARCH FIELD IN INVENTORY----
 
         //this code here is for dynamically searching (on key press) for the item in the inventory
         //as the user will be searching, the table will keep populating and appending similar items like the dropdown created previously 

@@ -4,7 +4,6 @@ function initialLoad() {
 
     //initialize variables on page loading
 
-    let user_email;
     let today;
     let seconds;
     let totalAmount;
@@ -17,8 +16,6 @@ function initialLoad() {
     console.log('itemfound: '+itemfound);
 
     const dbRefObject = firebase.database().ref().child('databases'); //children of database object
-    const dbRefElement = dbRefObject.child('new_Entry'); //children of database object
-    const dbRefInventory =  dbRefObject.child('Inventorydatabase'); //children of database object
 
     get_currentDate();
 
@@ -595,8 +592,8 @@ function initialLoad() {
         console.log('uniqueKey_Array: '+uniqueKey_Array);
 
         //from the unique key array, reverse it and set each variable so that the fetched data from that unique key can be found
-
-        for (let reversed_uniqueKey_index=uniqueKey_Array.length-1; reversed_uniqueKey_index>=0; reversed_uniqueKey_index--){
+        //only 10 items visible for the table
+        for (let reversed_uniqueKey_index=uniqueKey_Array.length-1; reversed_uniqueKey_index>=uniqueKey_Array.length-10; reversed_uniqueKey_index--){
             let reversed_uniqueKey = uniqueKey_Array[reversed_uniqueKey_index];
 
         //loop through and parse the data then create TR in the table with this data

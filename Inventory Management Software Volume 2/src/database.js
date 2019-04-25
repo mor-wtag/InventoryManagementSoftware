@@ -13,6 +13,8 @@ let config = {
 let initialize = firebase.initializeApp(config);
 let database = firebase.database();
 
+let user_email;
+
 // RealTime listener
 //this checks to see if user is logged in 
 firebase.auth().onAuthStateChanged(user => {
