@@ -25,13 +25,14 @@
 	<script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
 
 	<link rel='stylesheet' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css'>
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-	
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+	 crossorigin="anonymous">
+
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
-    <script src="assets\libraries\SheetJS\dist\xlsx.full.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
+	<script src="assets\libraries\SheetJS\dist\xlsx.full.min.js"></script>
 	<script src="assets\libraries\FileSaver\dist\FileSaver.min.js"></script>
-	
+
 </head>
 
 <body class="page-body  page-fade" data-url="http://neon.dev">
@@ -81,7 +82,7 @@
 							<span class="title">Dashboard</span>
 						</a>
 					</li>
-                    <li class="has-sub">
+					<li class="has-sub">
 						<a href="newEntry.html">
 							<i class="entypo-layout"></i>
 							<span class="title">New Entry</span>
@@ -99,13 +100,13 @@
 							<span class="title">Delivery</span>
 						</a>
 					</li>
-                    <li class="active opened active has-sub">
+					<li class="active opened active has-sub">
 						<a href="entry_log.html">
 							<i class="entypo-newspaper"></i>
 							<span class="title">Entry Log</span>
 						</a>
 					</li>
-					
+
 					<li class="has-sub">
 						<a href="delivery_log.html">
 							<i class="entypo-newspaper"></i>
@@ -149,12 +150,16 @@
 			<hr />
 			<div class="row">
 				<div class="col-md-12">
-					<div class="col-md-4"><h3>Entry Log</h3></div>
+					<div class="col-md-4">
+						<h3>Entry Log</h3>
+					</div>
 					<div class="active-cyan-3 active-cyan-4">
-						<input class="form-control search_field col-md-3" id="search_entryLog" type="text" placeholder="Search for Item" aria-label="Search">
+						<input class="form-control search_field col-md-3" id="search_entryLog" type="text" placeholder="Search for Item"
+						 aria-label="Search">
 					</div>
 					<form class="col-md-3" id="dateRange_form">
-						<input type="text" id="txtDateRange" name="txtDateRange" class="form-control inputField shortInputField dateRangeField" placeholder="Select a date-range" data-from-field="txtDateFrom" data-to-field="txtDateTo"/>
+						<input type="text" id="txtDateRange" name="txtDateRange" class="form-control inputField shortInputField dateRangeField"
+						 placeholder="Select a date-range" data-from-field="txtDateFrom" data-to-field="txtDateTo" />
 						<input type="hidden" id="txtDateFrom" value="" />
 						<input type="hidden" id="txtDateTo" value="" />
 						<i class="far fa-calendar-alt" id="dateRange_icon"></i>
@@ -164,87 +169,92 @@
 			</div>
 			<br>
 
-            <table class="table table-bordered datatable" id="entryLog_table">
-                <thead>
-                    <tr class="odd gradeX">
-                        <th>Item Code.</th>
-                        <th>Item Description</th>
-                        <th>UOM</th>
-						<th>Quantity</th>
-						<th>Unit Rate</th>
-						<th>Total Amount</th>
-						<th>Main Contract</th>
-						<th>Main Vendor</th>
-						<th>Novated Contract</th>
-						<th>Novated Vendor</th>
-						<th>PR No.</th>
-						<th>PO No.</th>
-						<th>Delivery challan</th>
-						<th>Issue Date</th>
-						<th>Entry logged by</th>
-						<th>Entry logged date</th>
-                    </tr>
-                </thead>
-                <tbody id="entry_log_tableBody">
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th>Item Code.</th>
-                        <th>Item Description</th>
-                        <th>UOM</th>
-						<th>Quantity</th>
-						<th>Unit Rate</th>
-						<th>Total Amount</th>
-						<th>Main Contract</th>
-						<th>Main Vendor</th>
-						<th>Novated Contract</th>
-						<th>Novated Vendor</th>
-						<th>PR No.</th>
-						<th>PO No.</th>
-						<th>Delivery challan</th>
-						<th>Issue Date</th>
-						<th>Entry logged by</th>
-						<th>Entry logged date</th>
-                    </tr>
-                </tfoot>
-            </table>
-        	<br />
-        </div>
-    </div>
-    <br />
+			<div class="row">
+				<table class="table table-bordered datatable" id="entryLog_table">
+					<thead>
+						<tr class="odd gradeX">
+							<th>Item Code.</th>
+							<th>Item Description</th>
+							<th>UOM</th>
+							<th>Quantity</th>
+							<th>Unit Rate</th>
+							<th>Total Amount</th>
+							<th>Main Contract</th>
+							<th>Main Vendor</th>
+							<th>Novated Contract</th>
+							<th>Novated Vendor</th>
+							<th>PR No.</th>
+							<th>PO No.</th>
+							<th>Delivery challan</th>
+							<th>Issue Date</th>
+							<th>Entry logged by</th>
+							<th>Entry logged date</th>
+							<th>Edit/Delete data</th>
+						</tr>
+					</thead>
+					<tbody id="entry_log_tableBody">
+							
+					</tbody>
+					<tfoot>
+						<tr>
+							<th>Item Code.</th>
+							<th>Item Description</th>
+							<th>UOM</th>
+							<th>Quantity</th>
+							<th>Unit Rate</th>
+							<th>Total Amount</th>
+							<th>Main Contract</th>
+							<th>Main Vendor</th>
+							<th>Novated Contract</th>
+							<th>Novated Vendor</th>
+							<th>PR No.</th>
+							<th>PO No.</th>
+							<th>Delivery challan</th>
+							<th>Issue Date</th>
+							<th>Entry logged by</th>
+							<th>Entry logged date</th>
+							<th>Edit/Delete data</th>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+			<br />
+		</div>
+	</div>
+	<br />
 
 
-    <!-- Imported styles on this page -->
-    <link rel="stylesheet" href="assets/js/datatables/datatables.css">
-    <link rel="stylesheet" href="assets/js/select2/select2-bootstrap.css">
+	<!-- Imported styles on this page -->
+	<link rel="stylesheet" href="assets/js/datatables/datatables.css">
+	<link rel="stylesheet" href="assets/js/select2/select2-bootstrap.css">
 	<link rel="stylesheet" href="assets/js/select2/select2.css">
 
 
-    <!-- Bottom scripts (common) -->
-    <script src="assets/js/gsap/TweenMax.min.js"></script>
-    <script src="assets/js/jquery-ui/js/jquery-ui-1.10.3.minimal.min.js"></script>
-    <script src="assets/js/bootstrap.js"></script>
-    <script src="assets/js/joinable.js"></script>
-    <script src="assets/js/resizeable.js"></script>
-    <script src="assets/js/neon-api.js"></script>
+	<!-- Bottom scripts (common) -->
+	<script src="assets/js/gsap/TweenMax.min.js"></script>
+	<script src="assets/js/jquery-ui/js/jquery-ui-1.10.3.minimal.min.js"></script>
+	<script src="assets/js/bootstrap.js"></script>
+	<script src="assets/js/joinable.js"></script>
+	<script src="assets/js/resizeable.js"></script>
+	<script src="assets/js/neon-api.js"></script>
 
 
-    <!-- Imported scripts on this page -->
-    <script src="assets/js/datatables/datatables.js"></script>
-    <script src="assets/js/select2/select2.min.js"></script>
+	<!-- Imported scripts on this page -->
+	<script src="assets/js/datatables/datatables.js"></script>
+	<script src="assets/js/select2/select2.min.js"></script>
 
-    <!-- JavaScripts initializations and stuff -->
-    <script src="assets/js/neon-custom.js"></script>
+	<!-- JavaScripts initializations and stuff -->
+	<script src="assets/js/neon-custom.js"></script>
 
 
 	<!-- Demo Settings -->
 	<script src="src/database.js"></script>
 	<script src="assets/js/neon-demo.js"></script>
 	<script src="src/entry_log.js"></script>
-	<!-- <script src="src/new_Entry.js"></script> -->
 
 	<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 	<script src='http://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
 
 </body>
+
 </html>

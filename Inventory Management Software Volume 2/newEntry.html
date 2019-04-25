@@ -28,11 +28,14 @@
 	<script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
 
 	<script src="assets/js/jquery-1.11.3.min.js"></script>
+	
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
     <script src="assets\libraries\SheetJS\dist\xlsx.full.min.js"></script>
-    <script src="assets\libraries\FileSaver\dist\FileSaver.min.js"></script>
+	<script src="assets\libraries\FileSaver\dist\FileSaver.min.js"></script>
+	
+	<script src="src/database.js"></script>
 
 
 </head>
@@ -1081,26 +1084,6 @@
 					</thead>
 					<tbody id="entry_log_tableBody">
 					</tbody>
-					<tfoot>
-						<tr>
-							<th>Item Code.</th>
-							<th>Item Description</th>
-							<th>UOM</th>
-							<th>Quantity</th>
-							<th>Unit Rate</th>
-							<th>Total Amount</th>
-							<th>Main Contract</th>
-							<th>Main Vendor</th>
-							<th>Novated Contract</th>
-							<th>Novated Vendor</th>
-							<th>PR No.</th>
-							<th>PO No.</th>
-							<th>Delivery challan</th>
-							<th>Issue Date</th>
-							<th>Entry logged by</th>
-							<th>Entry logged date</th>
-						</tr>
-					</tfoot>
 				</table>
 				<br />
 
@@ -1129,7 +1112,6 @@
 
 	<!-- Demo Settings -->
 	<script src="assets/js/neon-demo.js"></script>
-	<script src="src/database.js"></script>
 	<script src="src/new_Entry.js"></script>
 	<!-- <script src="src/entry_log.js"></script> -->
 
