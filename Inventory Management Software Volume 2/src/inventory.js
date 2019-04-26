@@ -88,6 +88,7 @@ function initialLoad() {
 
             //Calling the function to append the items into the table in the reversed order, providing uniquekey, database table and table body
             appendItemsIntoTable(reversed_uniqueKey, fetchedData, inventory_tableBody);
+            
         }
 
         //EXPORT TO EXCEL

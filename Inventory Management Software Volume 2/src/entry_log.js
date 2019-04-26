@@ -142,9 +142,59 @@ function initialLoad(){
             //calling function to append each item into the table
             appendItemsIntoTable(reversed_uniqueKey, fetchedData, tableToAppendData);
 
-            //---EVENT LISTENER FOR CLICKING ON EDIT/ DELETE DATA ICON
+            //---EVENT LISTENER FOR CLICKING ON EDIT/ DELETE DATA ICON---
 
-            //DELETE
+            //EDIT ICON CLICKED
+            $(`#edit_data_icon_${reversed_uniqueKey}`).click(function(){
+
+                console.log("CLICKED DELETE ICON WITH UNIQUE KEY: "+reversed_uniqueKey);
+
+                let itemName = fetchedData_entryLog[reversed_uniqueKey]['itemName'];
+                let quantity = fetchedData_entryLog[reversed_uniqueKey]['quantity'];
+
+                //Alert and Ask the user to confirm if they want to delete the data from the table
+                let edit_row = confirm(`Are you sure you want to edit the item ${itemName}?`);
+
+                //if the user clicks ok
+                if (edit_row== true){
+
+                    //Make the form appear so that the user can edit it
+                    $("#entryLogForm_wrapper").css('display','inline-block');
+
+                    //set variables for each field in the form
+                    //now set the variables according to the database information respective to each uniqueKey
+                    let itemCode_entryLog = $("#itemCode").val(fetchedData_entryLog[reversed_uniqueKey]['itemCode']);
+                    let itemName_entryLog = $("#itemName").val(fetchedData_entryLog[reversed_uniqueKey]['itemName']);
+                    let uom_entryLog = $("#uom").val(fetchedData_entryLog[reversed_uniqueKey]['uom']);
+                    let quantity_entryLog = $("#quantity").val(fetchedData_entryLog[reversed_uniqueKey]['quantity']);
+                    let unitRate_entryLog = $("#unitRate").val(fetchedData_entryLog[reversed_uniqueKey]['unitRate']);
+                    let mainContract_entryLog = $("#mainContract").val(fetchedData_entryLog[reversed_uniqueKey]['mainContract']);
+                    let mainVendor_entryLog = $("#mainVendor").val(fetchedData_entryLog[reversed_uniqueKey]['mainVendor']);
+                    let novatedContract_entryLog = $("#novatedContract").val(fetchedData_entryLog[reversed_uniqueKey]['novatedContract']);
+                    let novatedVendor_entryLog = $("#novatedVendor").val(fetchedData_entryLog[reversed_uniqueKey]['novatedVendor']);
+                    let PRnum_entryLog = $("#PRnum").val(fetchedData_entryLog[reversed_uniqueKey]['PRnum']);
+                    let POnum_entryLog = $("#POnum").val(fetchedData_entryLog[reversed_uniqueKey]['POnum']);
+                    let delChalNum_entryLog = $("#delChalNum").val(fetchedData_entryLog[reversed_uniqueKey]['delChalNum']);
+                    let issueDate_entryLog = $("#issueDate").val(fetchedData_entryLog[reversed_uniqueKey]['issueDate']);
+
+                    
+
+
+                    // //remove bode with unique key from ENTRY_LOG Database
+                    // database.ref('databases/entry_log/'+reversed_uniqueKey).remove().then(function(){
+
+                    //     //update inventory database
+                    //     //have to add the deleted item with the same quantity
+                    //     update_inventory_database(itemName, quantity);
+                    // });
+                }
+                //if user clicks cancel
+                else{
+                    return false;
+                }
+            });
+
+            //DELETE ICON CLICKED
             $(`#delete_data_icon_${reversed_uniqueKey}`).click(function(){
 
                 console.log("CLICKED DELETE ICON WITH UNIQUE KEY: "+reversed_uniqueKey);
@@ -190,7 +240,7 @@ function initialLoad(){
                         let quantity_inventory = fetchedData_inventory[uniqueKey]['quantity'];
 
                         //if item names match
-                        if (itemName_inventory == itemName){
+                        if (itemName_inventory==itemName){
 
                             console.log("ITEM NAMES MATCHED!");
 
@@ -201,7 +251,6 @@ function initialLoad(){
                             {
                                 'quantity': updatedQuantity
                             }
-
                             //now update inventory database
                             database.ref('databases/InventoryDatabase/' + uniqueKey).update(update_inventory).then(function(){
                                 window.location.reload();
