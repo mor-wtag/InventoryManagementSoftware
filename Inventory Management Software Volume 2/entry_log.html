@@ -147,6 +147,176 @@
 
 			</div>
 
+			<div class="col-md-12" id='entryLogForm_wrapper' style="display:none;">
+				<div class="row">
+
+					<div class="panel panel-primary" data-collapsed="0">
+
+						<div class="panel-heading">
+							<div class="panel-title">
+								Please fill out the form below to edit the item in the Inventory
+							</div>
+						</div>
+
+						<form class='formClass' id='form_entryLog' action="#">
+							<div class="panel-body">
+
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group ss-item-required">
+											<label for="field-1" class="col-sm-4 control-label">Item code</label>
+
+											<div class="col-sm-8">
+												<input type="number" class="form-control" id="itemCode" placeholder="Item code" required>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group ss-item-required">
+											<label for="field-1" class="col-sm-4 control-label">Item name</label>
+
+											<div class="col-sm-8">
+												<input type="text" list="itemName_dropdown" class="form-control" id="itemName" placeholder="Item name"
+													required>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group ss-item-required">
+											<label for="field-1" class="col-sm-4 control-label">UoM</label>
+
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="uom" list="uom_dropdown" placeholder="Unit of Measurement"
+												 required>
+											</div>
+										</div>
+									</div>
+								</div>
+								<br>
+
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group ss-item-required">
+											<label for="field-1" class="col-sm-4 control-label">Quantity</label>
+
+											<div class="col-sm-8">
+												<!-- Spinner Markup -->
+												<div class="input-spinner">
+													<button type="button" class="btn btn-default">-</button>
+													<input type="text" class="form-control size-1" id="quantity" value="1" required>
+													<button type="button" class="btn btn-default">+</button>
+												</div>
+
+											</div>
+										</div>
+
+									</div>
+									<div class="col-md-4">
+										<div class="form-group ss-item-required">
+											<label for="field-1" class="col-sm-4 control-label">Unit Rate</label>
+
+											<div class="col-sm-8">
+												<input type="number" class="form-control" id="unitRate" placeholder="Unit Rate (inclusive of Tax & VAT)">
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group ss-item-required">
+											<label for="field-1" class="col-sm-4 control-label">Main Contract</label>
+
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="mainContract" placeholder="Main Contract No.">
+											</div>
+										</div>
+									</div>
+								</div>
+								<br>
+
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group ss-item-required">
+											<label for="field-1" class="col-sm-4 control-label">Main Vendor</label>
+
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="mainVendor" placeholder="Main Vendor">
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group ss-item-required">
+											<label for="field-1" class="col-sm-4 control-label">Novated Contract</label>
+
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="novatedContract" placeholder="Novated Contract No.">
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group ss-item-required">
+											<label for="field-1" class="col-sm-4 control-label">Novated Vendor</label>
+
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="novatedVendor" placeholder="Novated Vendor">
+											</div>
+										</div>
+									</div>
+								</div>
+								<br>
+
+								<div class="row">
+
+									<div class="col-md-4">
+										<div class="form-group ss-item-required">
+											<label for="field-1" class="col-sm-4 control-label">PR No.</label>
+
+											<div class="col-sm-8">
+												<input type="number" class="form-control" id="PRnum" placeholder="Purchase Request No.">
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group ss-item-required">
+											<label for="field-1" class="col-sm-4 control-label">PO No.</label>
+
+											<div class="col-sm-8">
+												<input type="number" class="form-control" id="POnum" placeholder="Purchase Order No.">
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group ss-item-required">
+											<label for="field-1" class="col-sm-4 control-label">Delivery challan</label>
+
+											<div class="col-sm-8">
+												<input type="number" class="form-control" id="delChalNum" placeholder="Delivery challan No.">
+											</div>
+										</div>
+									</div>
+								</div>
+								<br>
+								<div class=row>
+									<div class="col-md-4">
+										<div class="form-group ss-item-required">
+											<label for="field-1" class="col-sm-4 control-label">Issue Date</label>
+
+											<div class="col-sm-8">
+												<input type="date" class="form-control" id="issueDate" placeholder="Issue Date">
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4"></div>
+									<div class="col-md-4">
+										<button type="submit" class="btn btn-dark fileButton formButton" id='submit_entryLog' style="margin-right: 3%; float:right;">Submit</button>
+									</div>
+								</div>
+								<br>
+							</div>
+						</form>
+
+					</div>
+
+				</div>
+			</div>
 			<hr />
 			<div class="row">
 				<div class="col-md-12">
@@ -193,7 +363,7 @@
 						</tr>
 					</thead>
 					<tbody id="entry_log_tableBody">
-							
+
 					</tbody>
 					<tfoot>
 						<tr>
