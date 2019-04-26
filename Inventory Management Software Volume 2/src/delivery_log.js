@@ -525,7 +525,11 @@ function initialLoad() {
                 <td>
                     ${current_date}
                 </td>
-            </tr>
+                    <td>
+                        <div class="icon" id="edit_data_icon_${uniqueKey}" style="display:inline-block; padding:5%;"><i class="fas fa-edit"></i></div>
+                        <div class="icon" id="delete_data_icon_${uniqueKey}" style="display:inline-block; padding:5%;"><i class="fas fa-trash-alt"></i></div>
+                    </td>
+                </tr>
             `);
         }
 
@@ -542,7 +546,7 @@ function initialLoad() {
 
         //from the unique key array, reverse it and set each variable so that the fetched data from that unique key can be found
 
-        for (let reversed_uniqueKey_index = uniqueKey_Array.length - 1; reversed_uniqueKey_index >= uniqueKey_Array.length - 10; reversed_uniqueKey_index--) {
+        for (let reversed_uniqueKey_index = uniqueKey_Array.length - 1; reversed_uniqueKey_index >= 0; reversed_uniqueKey_index--) {
 
             let reversed_uniqueKey = uniqueKey_Array[reversed_uniqueKey_index];
             let tableToAppendData = $("#delivery_log_tableBody");
@@ -550,6 +554,75 @@ function initialLoad() {
 
             //loop through and parse the data then create TR in the table with this data
             appendItemsIntoTable(reversed_uniqueKey, fetchedData, tableToAppendData);
+            
+             //---EVENT LISTENER FOR CLICKING ON EDIT/ DELETE DATA ICON
+
+            //DELETE
+            $(`#delete_data_icon_${reversed_uniqueKey}`).click(function(){
+
+                console.log("CLICKED DELETE ICON WITH UNIQUE KEY: "+reversed_uniqueKey);
+
+                let itemName = fetchedData_deliveryLog[reversed_uniqueKey]['itemName'];
+                let quantity = fetchedData_deliveryLog[reversed_uniqueKey]['quantity'];
+
+                //Alert and Ask the user to confirm if they want to delete the data from the table
+                let delete_row = confirm(`Are you sure you want to delete item ${itemName} with quantity ${quantity} from the table?`);
+
+                //if the user clicks ok
+                if (delete_row== true){
+
+                    //remove bode with unique key from ENTRY_LOG Database
+                    database.ref('databases/delivery_log/'+reversed_uniqueKey).remove().then(function(){
+
+                        //update inventory database
+                        //have to add the deleted item with the same quantity
+                        update_inventory_database(itemName, quantity);
+                    });
+                }
+                //if user clicks cancel
+                else{
+                    return false;
+                }
+            });
+
+            //function to update inventory
+            function update_inventory_database(itemName, quantity){
+
+                console.log("...Deleted row, now updating inventory...");
+                console.log("itemName: "+itemName);
+                console.log("quantity: "+quantity);
+
+                //fetch data from inventory database to get quantity of the item
+                database.ref('databases/InventoryDatabase').once('value').then(function(snapshot){
+
+                    let fetchedData_inventory = snapshot.val();
+
+                    for (let uniqueKey in fetchedData_inventory){
+
+                        let itemName_inventory = fetchedData_inventory[uniqueKey]['itemName'];
+                        let quantity_inventory = fetchedData_inventory[uniqueKey]['quantity'];
+
+                        //if item names match
+                        if (itemName_inventory == itemName){
+
+                            console.log("ITEM NAMES MATCHED!");
+
+                            //update quantity by adding back the subtracted quantity
+                            let updatedQuantity = parseInt(quantity_inventory) + parseInt(quantity);
+                            
+                            let update_inventory=
+                            {
+                                'quantity': updatedQuantity
+                            }
+                            //now update inventory database
+                            database.ref('databases/InventoryDatabase/' + uniqueKey).update(update_inventory).then(function(){
+                                window.location.reload();
+                            });
+                        }
+                    }
+                });
+
+            }
         }
 
 
@@ -766,15 +839,13 @@ function initialLoad() {
                 for (let uniqueKey in fetchedData_deliveryLog) {
 
                     let issueDate = fetchedData_deliveryLog[uniqueKey]['issueDate'];
+                    let tableToAppendData = $("#delivery_log_tableBody");
 
                     if (issueDate == finalDate) {
+                        console.log("Date matched!! " + issueDate);
 
-                            console.log("Date matched!! " + issueDate);
-
-                            let tableToAppendData = $("#delivery_log_tableBody");
-
-                            //loop through and parse the data then create TR in the table with this data
-                            appendItemsIntoTable(uniqueKey, fetchedData_deliveryLog, tableToAppendData);
+                        //loop through and parse the data then create TR in the table with this data
+                        appendItemsIntoTable(uniqueKey, fetchedData_deliveryLog, tableToAppendData);
                     }
                 }
             });
