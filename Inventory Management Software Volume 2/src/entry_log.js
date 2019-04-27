@@ -10,7 +10,7 @@ function initialLoad(){
 
     get_currentDate();
 
-    //get the date of current day
+    //function to get the date of current day
 
     function get_currentDate(){
         today = new Date();
@@ -32,7 +32,6 @@ function initialLoad(){
     console.log("today: "+today);
 
     //FETCH DATA FROM THE DATABASE AND INITIALIZE EVERYTHING IN OUR PAGE
-
     //READING FROM FIREBASE DATABASE
     database.ref('databases/entry_log').once('value').then(function(snapshot){
 
@@ -132,7 +131,6 @@ function initialLoad(){
         }
 
         //from the unique key array, reverse it and set each variable so that the fetched data from that unique key can be found
-
         for (let reversed_uniqueKey_index=uniqueKey_Array.length-1; reversed_uniqueKey_index>=0; reversed_uniqueKey_index--){
             
             let reversed_uniqueKey = uniqueKey_Array[reversed_uniqueKey_index];
@@ -147,7 +145,7 @@ function initialLoad(){
             //EDIT ICON CLICKED
             $(`#edit_data_icon_${reversed_uniqueKey}`).click(function(){
 
-                console.log("CLICKED DELETE ICON WITH UNIQUE KEY: "+reversed_uniqueKey);
+                console.log("CLICKED EDIT ICON WITH UNIQUE KEY: "+reversed_uniqueKey);
 
                 let itemName = fetchedData_entryLog[reversed_uniqueKey]['itemName'];
                 let quantity = fetchedData_entryLog[reversed_uniqueKey]['quantity'];
@@ -161,32 +159,87 @@ function initialLoad(){
                     //Make the form appear so that the user can edit it
                     $("#entryLogForm_wrapper").css('display','inline-block');
 
-                    //set variables for each field in the form
-                    //now set the variables according to the database information respective to each uniqueKey
-                    let itemCode_entryLog = $("#itemCode").val(fetchedData_entryLog[reversed_uniqueKey]['itemCode']);
-                    let itemName_entryLog = $("#itemName").val(fetchedData_entryLog[reversed_uniqueKey]['itemName']);
-                    let uom_entryLog = $("#uom").val(fetchedData_entryLog[reversed_uniqueKey]['uom']);
-                    let quantity_entryLog = $("#quantity").val(fetchedData_entryLog[reversed_uniqueKey]['quantity']);
-                    let unitRate_entryLog = $("#unitRate").val(fetchedData_entryLog[reversed_uniqueKey]['unitRate']);
-                    let mainContract_entryLog = $("#mainContract").val(fetchedData_entryLog[reversed_uniqueKey]['mainContract']);
-                    let mainVendor_entryLog = $("#mainVendor").val(fetchedData_entryLog[reversed_uniqueKey]['mainVendor']);
-                    let novatedContract_entryLog = $("#novatedContract").val(fetchedData_entryLog[reversed_uniqueKey]['novatedContract']);
-                    let novatedVendor_entryLog = $("#novatedVendor").val(fetchedData_entryLog[reversed_uniqueKey]['novatedVendor']);
-                    let PRnum_entryLog = $("#PRnum").val(fetchedData_entryLog[reversed_uniqueKey]['PRnum']);
-                    let POnum_entryLog = $("#POnum").val(fetchedData_entryLog[reversed_uniqueKey]['POnum']);
-                    let delChalNum_entryLog = $("#delChalNum").val(fetchedData_entryLog[reversed_uniqueKey]['delChalNum']);
-                    let issueDate_entryLog = $("#issueDate").val(fetchedData_entryLog[reversed_uniqueKey]['issueDate']);
+                    //complete the fields with the pre fetched previous data that is to be edited
+                    let itemCode_entryLog_prev = $("#itemCode").val(fetchedData_entryLog[reversed_uniqueKey]['itemCode']);
+                    let itemName_entryLog_prev = $("#itemName").val(fetchedData_entryLog[reversed_uniqueKey]['itemName']);
+                    let uom_entryLog_prev = $("#uom").val(fetchedData_entryLog[reversed_uniqueKey]['uom']);
+                    let quantity_entryLog_prev = $("#quantity").val(fetchedData_entryLog[reversed_uniqueKey]['quantity']);
+                    let unitRate_entryLog_prev = $("#unitRate").val(fetchedData_entryLog[reversed_uniqueKey]['unitRate']);
+                    let mainContract_entryLog_prev = $("#mainContract").val(fetchedData_entryLog[reversed_uniqueKey]['mainContract']);
+                    let mainVendor_entryLog_prev = $("#mainVendor").val(fetchedData_entryLog[reversed_uniqueKey]['mainVendor']);
+                    let novatedContract_entryLog_prev = $("#novatedContract").val(fetchedData_entryLog[reversed_uniqueKey]['novatedContract']);
+                    let novatedVendor_entryLog_prev = $("#novatedVendor").val(fetchedData_entryLog[reversed_uniqueKey]['novatedVendor']);
+                    let PRnum_entryLog_prev = $("#PRnum").val(fetchedData_entryLog[reversed_uniqueKey]['PRnum']);
+                    let POnum_entryLog_prev = $("#POnum").val(fetchedData_entryLog[reversed_uniqueKey]['POnum']);
+                    let delChalNum_entryLog_prev = $("#delChalNum").val(fetchedData_entryLog[reversed_uniqueKey]['delChalNum']);
+                    let issueDate_entryLog_prev = $("#issueDate").val(fetchedData_entryLog[reversed_uniqueKey]['issueDate']);
 
-                    
+                    let quantity_entryLog_prev_value = quantity_entryLog_prev.val();
+                    console.log("quantity_entryLog_prev= "+quantity_entryLog_prev_value); //noty writing .val() will not show the value of each of the variables
+
+                    //SUBMIT ENTRY LOG FORM
+                    $('#submit_entryLog').click( function(event){
+
+                        event.preventDefault();
+
+                        //On submission of the form, take the values of the fields in order to update them
+                        let itemCode_entryLog = $("#itemCode").val();
+                        let itemName_entryLog = $("#itemName").val();
+                        let uom_entryLog = $("#uom").val();
+                        let quantity_entryLog = $("#quantity").val();
+                        let unitRate_entryLog = $("#unitRate").val();
+                        let mainContract_entryLog = $("#mainContract").val();
+                        let mainVendor_entryLog = $("#mainVendor").val();
+                        let novatedContract_entryLog = $("#novatedContract").val();
+                        let novatedVendor_entryLog = $("#novatedVendor").val();
+                        let PRnum_entryLog = $("#PRnum").val();
+                        let POnum_entryLog = $("#POnum").val();
+                        let delChalNum_entryLog = $("#delChalNum").val();
+                        let issueDate_entryLog = $("#issueDate").val();
 
 
-                    // //remove bode with unique key from ENTRY_LOG Database
-                    // database.ref('databases/entry_log/'+reversed_uniqueKey).remove().then(function(){
+                        let totalAmount_entryLog = (unitRate_entryLog*quantity_entryLog);
 
-                    //     //update inventory database
-                    //     //have to add the deleted item with the same quantity
-                    //     update_inventory_database(itemName, quantity);
-                    // });
+                        console.log("quantity_entryLog_new= "+quantity_entryLog);
+
+                        //Check if quantity is the same as before. If not, need to Update Inventory
+                        if (parseInt(quantity_entryLog) != parseInt(quantity_entryLog_prev_value)){
+
+                            console.log("The quantities are not equal!");
+                            //update inventory
+                            //this code is a complicated!!
+                            //since we want to call the update_inventory_database function, we have to adjust the value of quantity before sending it as an argument so that it changes in the inventoru database accordingly
+                            let quantity_sendingTo_inventoryFunction = parseInt(quantity_entryLog_prev_value) - ( parseInt(quantity_entryLog) );
+                            
+                            console.log("quantity_sendingTo_inventoryFunction= "+quantity_sendingTo_inventoryFunction);
+                            
+                            //call the function to update the inventory
+                            update_inventory_database(itemCode_entryLog, quantity_sendingTo_inventoryFunction);
+
+                        }
+                        //Now to update the Entry Log
+                        let update_data_entryLog = 
+                        {
+                            'itemCode': itemCode_entryLog,
+                            'itemName': itemName_entryLog,
+                            'uom': uom_entryLog,
+                            'quantity': quantity_entryLog,
+                            'unitRate': unitRate_entryLog,
+                            'totalAmount': totalAmount_entryLog,
+                            'mainContract': mainContract_entryLog,
+                            'mainVendor': mainVendor_entryLog,
+                            'novatedContract': novatedContract_entryLog,
+                            'novatedVendor': novatedVendor_entryLog,
+                            'PRnum': PRnum_entryLog,
+                            'POnum': POnum_entryLog,
+                            'delChalNum': delChalNum_entryLog,
+                            'issueDate': issueDate_entryLog
+                        }
+
+                        let update_entryLog = database.ref('databases/entry_log/'+reversed_uniqueKey).update(update_data_entryLog).then(function() {
+                            alert("Item successfully updated");
+                        });                      
+                    });
                 }
                 //if user clicks cancel
                 else{
@@ -199,7 +252,7 @@ function initialLoad(){
 
                 console.log("CLICKED DELETE ICON WITH UNIQUE KEY: "+reversed_uniqueKey);
 
-                let itemName = fetchedData_entryLog[reversed_uniqueKey]['itemName'];
+                let itemCode = fetchedData_entryLog[reversed_uniqueKey]['itemCode'];
                 let quantity = fetchedData_entryLog[reversed_uniqueKey]['quantity'];
 
                 //Alert and Ask the user to confirm if they want to delete the data from the table
@@ -213,7 +266,9 @@ function initialLoad(){
 
                         //update inventory database
                         //have to add the deleted item with the same quantity
-                        update_inventory_database(itemName, quantity);
+                        update_inventory_database(itemCode, quantity).then(function(){
+                            window.location.reload();
+                        });
                     });
                 }
                 //if user clicks cancel
@@ -223,42 +278,43 @@ function initialLoad(){
             });
 
             //function to update inventory
-            function update_inventory_database(itemName, quantity){
+            function update_inventory_database(itemCode, quantity){
 
                 console.log("...Deleted row, now updating inventory...");
                 console.log("itemName: "+itemName);
                 console.log("quantity: "+quantity);
 
                 //fetch data from inventory database to get quantity of the item
-                database.ref('databases/InventoryDatabase').once('value').then(function(snapshot){
+                let myPromise = database.ref('databases/InventoryDatabase').once('value').then(function(snapshot){
 
                     let fetchedData_inventory = snapshot.val();
 
                     for (let uniqueKey in fetchedData_inventory){
 
-                        let itemName_inventory = fetchedData_inventory[uniqueKey]['itemName'];
+                        let itemCode_inventory = fetchedData_inventory[uniqueKey]['itemCode'];
                         let quantity_inventory = fetchedData_inventory[uniqueKey]['quantity'];
 
                         //if item names match
-                        if (itemName_inventory==itemName){
+                        if (itemCode_inventory == itemCode){
 
                             console.log("ITEM NAMES MATCHED!");
 
                             //update quantity by subtracting back the added quantity
-                            let updatedQuantity = parseInt(quantity_inventory) - parseInt(quantity);
+                            let updatedQuantity = parseInt(quantity_inventory) - ( parseInt(quantity) );
+
+                            console.log('updatedQuantity= '+updatedQuantity);
                             
                             let update_inventory=
                             {
                                 'quantity': updatedQuantity
                             }
+
                             //now update inventory database
-                            database.ref('databases/InventoryDatabase/' + uniqueKey).update(update_inventory).then(function(){
-                                window.location.reload();
-                            });
+                        database.ref('databases/InventoryDatabase/' +uniqueKey).update(update_inventory);
                         }
                     }
                 });
-
+                return myPromise
             }
         }
 
@@ -491,10 +547,8 @@ function initialLoad(){
 
             });
         });
-
-                
+         
         //EXPORT TABLE TO EXCEL FILE
-
         $("#exportToExcel_entryLog").click(function(){
 
             $("#exportToExcel_entryLog").css('color','white');
@@ -555,3 +609,5 @@ function initialLoad(){
         
     });
 }
+
+
