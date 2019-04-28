@@ -145,7 +145,117 @@
 
 			</div>
 
+			<br/>
+
+			<div class="col-md-12" id='deliveryLogForm_wrapper' style='display:none;'>
+				<hr />
+				<div class="row">
+
+					<div class="panel panel-primary" data-collapsed="0">
+
+						<div class="panel-heading">
+							<div class="panel-title">
+								Please fill out the form below to edit the item.
+							</div>
+						</div>
+
+						<form class='formClass' id='form_deliveryLog' action="#">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group ss-item-required">
+                                            <label for="field-1" class="col-sm-4 control-label">Item code</label>
+
+                                            <div class="col-sm-8">
+                                                <div class="col-sm-9 itemCode_col_length">
+                                                    <input type="number" class="form-control" id="itemCode"
+                                                        placeholder="Item code" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group ss-item-required">
+                                            <label for="field-1" class="col-sm-4 control-label">Item name</label>
+
+                                            <div class="col-sm-8">
+                                                <div class="col-sm-9 itemCode_col_length">
+                                                    <input type="text" list="itemName_dropdown" class="form-control"
+                                                        id="itemName" placeholder="Item name" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group ss-item-required">
+                                            <label for="field-1" class="col-sm-4 control-label">UoM</label>
+
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" list="uom_dropdown" id="uom"
+                                                    placeholder="Unit of Measurement" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group ss-item-required">
+                                            <label for="field-1" class="col-sm-4 control-label">Quantity</label>
+
+                                            <div class="col-sm-8">
+                                                <!-- Spinner Markup -->
+                                                <div class="input-spinner">
+                                                    <button type="button" class="btn btn-default">-</button>
+                                                    <input type="text" class="form-control size-1" id="quantity" value="1"
+                                                        required>
+                                                    <button type="button" class="btn btn-default">+</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group ss-item-required">
+                                            <label for="field-1" class="col-sm-4 control-label">Destination</label>
+
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" list="destination_dropdown" id="destination"
+                                                    placeholder="Enter where the item is being delivered" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group ss-item-required">
+                                            <label for="field-1" class="col-sm-4 control-label">Issue Date</label>
+
+                                            <div class="col-sm-8">
+                                                <input type="date" class="form-control" id="issueDate" placeholder="Issue Date"
+                                                    required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="row">
+                                    <div class="col-md-4"></div>
+                                    <div class="col-md-4"></div>
+                                    <div class="col-md-4">
+                                        <button class="btn btn-dark fileButton formButton" id='submit_deliveryLog'
+                                            style="margin-left: 30%;">Submit</button>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                        </form>
+
+					</div>
+
+				</div>
+			</div>
 			<hr />
+
 			<div class="row">
 				<div class="col-md-12">
 					<div class="col-md-4"><h3>Delivery Log</h3></div>
