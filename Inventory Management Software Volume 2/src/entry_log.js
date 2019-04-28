@@ -158,6 +158,8 @@ function initialLoad(){
 
                     //Make the form appear so that the user can edit it
                     $("#entryLogForm_wrapper").css('display','inline-block');
+                    //redirect the user to the top of the page
+                    window.location.href = "#entryLogForm_wrapper";
 
                     //complete the fields with the pre fetched previous data that is to be edited
                     let itemCode_entryLog_prev = $("#itemCode").val(fetchedData_entryLog[reversed_uniqueKey]['itemCode']);
@@ -238,6 +240,7 @@ function initialLoad(){
 
                         let update_entryLog = database.ref('databases/entry_log/'+reversed_uniqueKey).update(update_data_entryLog).then(function() {
                             alert("Item successfully updated");
+                            window.location.reload();
                         });                      
                     });
                 }
