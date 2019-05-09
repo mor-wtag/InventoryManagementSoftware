@@ -182,8 +182,11 @@ function initialLoad() {
                     top: '30%'
                 }, 200);
 
+                //redirect to the delivery log
+                window.location.href = "./delivery_log.html";
+
                 //making the table visible
-                $('#index_delivery_table').toggle();
+                // $('#index_delivery_table').toggle();
             });
 
             //---BAR CHART---
